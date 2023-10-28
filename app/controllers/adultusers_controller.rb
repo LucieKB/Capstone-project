@@ -1,0 +1,2 @@
+class AdultusersController < ApplicationController
+end
