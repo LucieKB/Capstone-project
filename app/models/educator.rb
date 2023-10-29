@@ -1,0 +1,2 @@
+class Educator < Adultuser
+end

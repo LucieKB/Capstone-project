@@ -1,0 +1,2 @@
+class Parent < Adultuser
+end

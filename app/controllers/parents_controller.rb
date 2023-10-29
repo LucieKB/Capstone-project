@@ -1,0 +1,2 @@
+class ParentsController < Adultuser
+end
