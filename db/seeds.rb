@@ -7,3 +7,12 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+require 'faker'
+puts "seeding..."
+
+    20.times do
+    Adultuser.create!(username: Faker::Internet.username(specifier: 4-10), email: Faker::Internet.email, password: "1234", user_type: ["parent", "educator"].sample )
+    end
+
+puts "✅ Done seeding!"
+
