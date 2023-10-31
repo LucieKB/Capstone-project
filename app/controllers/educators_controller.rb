@@ -1,2 +1,2 @@
-class EducatorsController < Adultuser
+class EducatorsController < User
 end

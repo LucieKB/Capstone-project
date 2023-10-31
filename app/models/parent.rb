@@ -1,2 +1,2 @@
-class Parent < Adultuser
+class Parent < User
 end

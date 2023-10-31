@@ -1,3 +1,3 @@
-class ParentSerializer < Adultuser
+class ParentSerializer < User
   attributes :id
 end

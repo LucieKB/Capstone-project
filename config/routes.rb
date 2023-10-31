@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
+  resources :schools, only: :index
+  resources :users
   resources :parents
   resources :educators
   resources :messages
   resources :goals
   resources :students
-  resources :adultusers
+
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -14,6 +17,8 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   # Rails.application.routes.draw do
+  # resources :schools
+  # resources :users
   # resources :parents
   # resources :educators
   # resources :messages
@@ -21,13 +26,14 @@ Rails.application.routes.draw do
   # resources :students
   # resources :adultusers
     # route to test your configuration
-    get '/hello', to: 'application#hello_world'
 
-    post "/signup", to: "adultusers#create"
-    get "/me", to: "adultusers#show"
+    post "/signup", to: "users#create"
+    get "/me", to: "users#show"
 
     post "/login", to: "sessions#create"
     delete"/logout", to: "sessions#destroy"
-  end
+
+    get "/schools/name", to: "schools#schools_by_name"
+  # end
   
 end

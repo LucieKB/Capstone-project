@@ -1,2 +1,2 @@
-class ParentsController < Adultuser
+class ParentsController < User
 end

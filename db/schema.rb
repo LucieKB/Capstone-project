@@ -10,56 +10,55 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_28_173317) do
+ActiveRecord::Schema[7.1].define(version: 2023_10_31_201728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "adultusers", force: :cascade do |t|
-    t.string "username"
-    t.string "email"
-    t.string "password_digest"
-    t.string "user_type"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
 
   create_table "goals", force: :cascade do |t|
     t.string "title"
     t.text "description"
     t.date "date_created"
-    t.date "goal_date"
+    t.date "deadline"
     t.boolean "achieved"
     t.integer "value"
-    t.bigint "students_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["students_id"], name: "index_goals_on_students_id"
   end
 
   create_table "messages", force: :cascade do |t|
-    t.string "message_text"
-    t.string "message_status"
+    t.string "text"
+    t.string "status"
     t.bigint "goals_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["goals_id"], name: "index_messages_on_goals_id"
   end
 
-  create_table "students", force: :cascade do |t|
+  create_table "schools", force: :cascade do |t|
+    t.string "name"
+    t.boolean "public"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "users", force: :cascade do |t|
     t.string "username"
     t.string "email"
     t.string "password_digest"
+    t.string "type"
     t.string "avatar"
     t.integer "grade"
     t.string "school"
     t.integer "wallet"
-    t.bigint "adultusers_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["adultusers_id"], name: "index_students_on_adultusers_id"
+    t.bigint "parents_id"
+    t.bigint "educators_id"
+    t.index ["educators_id"], name: "index_users_on_educators_id"
+    t.index ["parents_id"], name: "index_users_on_parents_id"
   end
 
-  add_foreign_key "goals", "students", column: "students_id"
   add_foreign_key "messages", "goals", column: "goals_id"
-  add_foreign_key "students", "adultusers", column: "adultusers_id"
+  add_foreign_key "users", "users", column: "educators_id"
+  add_foreign_key "users", "users", column: "parents_id"
 end

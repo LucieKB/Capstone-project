@@ -1,2 +1,2 @@
-class Educator < Adultuser
+class Educator < User
 end
