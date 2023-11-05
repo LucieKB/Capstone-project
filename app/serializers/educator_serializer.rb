@@ -1,3 +1,3 @@
 class EducatorSerializer < User
-  attributes :id
+  attributes :id, :username, :email, :password_digest, :type
 end

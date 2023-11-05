@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_10_31_201728) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_04_184452) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,13 +52,13 @@ ActiveRecord::Schema[7.1].define(version: 2023_10_31_201728) do
     t.integer "wallet"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "parents_id"
-    t.bigint "educators_id"
-    t.index ["educators_id"], name: "index_users_on_educators_id"
-    t.index ["parents_id"], name: "index_users_on_parents_id"
+    t.bigint "parent_id"
+    t.bigint "educator_id"
+    t.index ["educator_id"], name: "index_users_on_educator_id"
+    t.index ["parent_id"], name: "index_users_on_parent_id"
   end
 
   add_foreign_key "messages", "goals", column: "goals_id"
-  add_foreign_key "users", "users", column: "educators_id"
-  add_foreign_key "users", "users", column: "parents_id"
+  add_foreign_key "users", "users", column: "educator_id"
+  add_foreign_key "users", "users", column: "parent_id"
 end

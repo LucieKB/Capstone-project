@@ -11,7 +11,7 @@ function SignUpHomePage(){
     return(
         <>
         <div>
-        <button onClick={() => setUserType("student")}> I'm a Student </button>
+        {/* <button onClick={() => setUserType("student")}> I'm a Student </button> */}
         <button onClick={() => setUserType("parent")}> I'm a Parent </button>
         <button onClick={() => setUserType("educator")}> I'm an Educator </button>
         <button onClick={() => setUserType("business_owner")}> I'm a Business Owner </button>
@@ -20,8 +20,8 @@ function SignUpHomePage(){
         <div>
             {(() => {
                 switch (userType){
-                    case 'student':
-                        return <StudentSignUpForm />
+                    // case 'student':
+                    //     return <StudentSignUpForm />
                     case 'parent' :
                         return <ParentSignUpForm />
                     case 'educator' :

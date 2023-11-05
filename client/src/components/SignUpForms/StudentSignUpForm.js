@@ -2,8 +2,8 @@ import React, {useState, useEffect, useContext} from "react";
 import { UserContext } from "../../contexts/UserContext";
 import "./custom.css"
 
-function StudentSignUpForm(){
-    const {setUser} = useContext(UserContext)
+function StudentSignUpForm(parentId){
+    const {user, setUser} = useContext(UserContext)
     const [schools, setSchools] = useState ("")
     const [schoolSuggestions, setSchoolSuggestions] = useState([])
     const [studentFormData, setStudentFormData] = useState({
@@ -15,7 +15,8 @@ function StudentSignUpForm(){
         avatar: (""),
         grade: (0),
         school: (""),
-        wallet: (0)
+        wallet: (0),
+        parent_id: (Object.values(parentId)[0])
     })
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState([])
@@ -38,7 +39,7 @@ function StudentSignUpForm(){
         e.preventDefault();
         setErrors([]);
         setIsLoading(true);
-        fetch("/signup", {
+        fetch("/students", {
             method: "POST", 
             headers: {
             "Content-Type": "application/json",

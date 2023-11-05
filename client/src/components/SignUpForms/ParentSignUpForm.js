@@ -1,8 +1,9 @@
 import React, {useState, useContext} from "react";
 import { UserContext } from "../../contexts/UserContext";
+// import StudentSignUpForm from "./StudentSignUpForm";
 
 function ParentSignUpForm(){
-    const {setUser} = useContext(UserContext)
+    const {user, setUser} = useContext(UserContext)
     const [parentFormData, setParentFormData] = useState({
         username:(""),
         password:(""),
@@ -10,9 +11,10 @@ function ParentSignUpForm(){
         type: ("Parent"),
         email: (""),
     })
-
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState([])
+    // const [showParentForm, setShowParentForm] = useState(true);
+    // const [showStudentForm, setShowStudentForm] = useState(false);
 
 
     const handleSubmit = (e) => {
@@ -35,13 +37,22 @@ function ParentSignUpForm(){
                     )
                   }
               });
+            //   setShowParentForm(false)   
       }
 
+    // const handleChildRegistration = () =>{
+    //     setShowStudentForm(true)
+    // }
       console.log(parentFormData)
 
     return(
+        
         <>
+        
+        
         <h1>Parent Sign Up Form</h1>
+        {/* {showParentForm?
+        ( */}
         <form onSubmit={handleSubmit}>
             <div className="form-wrapper">
             <label><strong><u>Username:</u></strong><em style={{color:"red"}}>*</em>
@@ -95,9 +106,9 @@ function ParentSignUpForm(){
             </label>
           </div>
 
-          <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
-              
-              <label style={{color:"red"}}>
+          <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>       
+             
+            <label style={{color:"red"}}>
                 {errors.map((err) => (
                   <em key={err}>{err}</em>
                   ))}
@@ -105,6 +116,15 @@ function ParentSignUpForm(){
               </label>
 
         </form>
+        {/* // ) :
+        // (<button onClick = {() => {handleChildRegistration}}> Register a Child </button>)
+        // (<button onClick = {() => setShowStudentForm(true)}> Register a Child </button>)
+        // }
+        // {showStudentForm? */}
+        {/* // (<StudentSignUpForm parent_id={user.id} setShowStudentForm={setShowStudentForm}/>):
+        // ("")
+        // (<button onClick = {() => setShowStudentForm(!showStudentForm)}> Get back to Parent Sign Up </button>)
+        // } */}
         </>
     )
 
