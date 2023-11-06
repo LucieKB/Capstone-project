@@ -1,5 +1,6 @@
 class GoalSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :date_created, :goal_date, :achieved, :value
-  has_one :students
-  has_one :adultusers
+  attributes :id, :goal_category, :title, :description, :user_id, :goal_date, :achieved, :value, :created_at
+  
+  belongs_to :user
+  has_many :messages
 end

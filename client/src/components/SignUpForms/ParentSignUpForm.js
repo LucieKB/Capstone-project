@@ -10,6 +10,7 @@ function ParentSignUpForm(){
         password_confirmation: (""),
         type: ("Parent"),
         email: (""),
+        number_of_children: ("")
     })
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState([])
@@ -102,6 +103,20 @@ function ParentSignUpForm(){
                 value={parentFormData.password_confirmation}
                 onChange={(e) => setParentFormData({...parentFormData, password_confirmation:e.target.value})}
                 autoComplete="current-password"
+              />
+            </label>
+          </div>
+
+          <div className="form-wrapper">
+            <label> <strong><u>Number of Children I Want to Register:</u></strong>
+              <input
+                  className="form-control"
+                  type="number"
+                  pattern="[1-12]*"
+                  name="children_number"
+                  value={parentFormData.number_of_children}
+                  placeholder="Number of Children"
+                  onChange={(e)=>setParentFormData({...parentFormData, number_of_children:e.target.value})}
               />
             </label>
           </div>

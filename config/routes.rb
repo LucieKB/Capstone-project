@@ -1,11 +1,13 @@
 Rails.application.routes.draw do
   resources :schools, only: :index
-  resources :users
+  resources :users 
   resources :parents
   resources :educators
   resources :messages
   resources :goals
-  resources :students
+  resources :students do
+    resources :goals, only: [:index, :show, :create]
+  end
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

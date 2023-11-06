@@ -13,7 +13,7 @@ function StudentSignUpForm(parentId){
         type: ("Student"),
         email: (""),
         avatar: (""),
-        grade: (0),
+        grade: (""),
         school: (""),
         wallet: (0),
         parent_id: (Object.values(parentId)[0])

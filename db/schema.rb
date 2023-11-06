@@ -10,19 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_04_184452) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_05_232324) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "goals", force: :cascade do |t|
     t.string "title"
     t.text "description"
-    t.date "date_created"
     t.date "deadline"
     t.boolean "achieved"
     t.integer "value"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "user_id"
+    t.string "goal_category"
+    t.index ["user_id"], name: "index_goals_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -54,10 +56,12 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_04_184452) do
     t.datetime "updated_at", null: false
     t.bigint "parent_id"
     t.bigint "educator_id"
+    t.integer "number_of_children"
     t.index ["educator_id"], name: "index_users_on_educator_id"
     t.index ["parent_id"], name: "index_users_on_parent_id"
   end
 
+  add_foreign_key "goals", "users"
   add_foreign_key "messages", "goals", column: "goals_id"
   add_foreign_key "users", "users", column: "educator_id"
   add_foreign_key "users", "users", column: "parent_id"

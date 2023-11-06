@@ -19,6 +19,7 @@ function NavBar(){
         <div className="navbar">
             <nav>
                 <Link to ="/">Home</Link>
+                <Link to ="/goals">{user.type === "Student"?("My Goals Page"):("My Student's Goals Page")}</Link>
             </nav>
         </div>
         <div>

@@ -4,6 +4,8 @@ import { UserContext } from "../contexts/UserContext";
 import GeneralLogin from "./GeneralLogin";
 import NavBar from "./NavBar";
 import Home from "./Home"
+import NewGoalForm from "./Goals/NewGoalForm";
+import GoalList from "./Goals/GoalList";
 
 function App() {
   const {user, setUser} = useContext(UserContext)
@@ -16,6 +18,8 @@ function App() {
     <main>
       <Routes>
         <Route exact path="/" element = {<Home />}/>
+        <Route path = "/goals" element = {<GoalList />} />
+        <Route path = "/goals/new" element = {<NewGoalForm />} />
       </Routes>
     </main>
     </>

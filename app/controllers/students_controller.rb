@@ -5,6 +5,10 @@ class StudentsController < UsersController
         render json: students, status: :ok
     end
 
+    def show
+        student = Student.find_by(id: params[:id])
+        render json: student, status: :ok
+
     def create
         student = Student.create!(student_params)
         session[:user_id] = student.id
