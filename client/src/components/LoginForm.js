@@ -10,7 +10,7 @@ function LoginForm(){
     const [isLoading, setIsLoading] = useState(false)
     const {setUser} = useContext(UserContext)
     const navigate = useNavigate()
-    console.log(errors)
+   
 
     function handleSubmit(e) {
         e.preventDefault();

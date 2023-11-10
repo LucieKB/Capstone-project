@@ -19,16 +19,28 @@ class GoalsController < ApplicationController
         end
         render json: goals
     end
+
+    def show
+        goal = Goal.all.find_by(id: params[:id])
+        render json: goal
+    end
     
     def create
         goal = @current_user.goals.create!(goal_params)
         render json: goal, status: :created
     end
 
+    def update
+        student = Student.find_by(id: params[:student_id])
+        goal = Goal.all.find_by(id: params[:id])
+        goal.update!(goal_params)
+        render json: goal, status: :accepted
+    end
+
     private
 
     def goal_params
-        params.permit(:id, :goal_category, :title, :description, :user_id, :goal_date, :achieved, :value)
+        params.permit(:id, :goal_category, :title, :description, :user_id, :deadline, :achieved, :value, :validated_by_educator, :validated_by_parent)
     end
 
     def render_not_found_response

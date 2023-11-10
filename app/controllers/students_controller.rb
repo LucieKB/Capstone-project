@@ -8,6 +8,7 @@ class StudentsController < UsersController
     def show
         student = Student.find_by(id: params[:id])
         render json: student, status: :ok
+    end
 
     def create
         student = Student.create!(student_params)

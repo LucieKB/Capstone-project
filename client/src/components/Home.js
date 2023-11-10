@@ -7,7 +7,6 @@ import NewGoalForm from "./Goals/NewGoalForm";
 function Home(){
     const {user, setUser} = useContext(UserContext)
     const [showStudentForm, setShowStudentForm] = useState(false)
-    const [showGoalForm, setShowGoalForm] = useState(false)
     const [showButtonAddStudent, setShowButtonAddStudent] = useState(false)
     const [showLinkAddGoal, setShowLinkAddGoal] = useState(false)
 
@@ -29,16 +28,14 @@ function Home(){
    console.log(user.id)
    console.log(user.type)
    console.log(user.number_of_children)
-//    console.log(user.students.length)
+
    console.log(showButtonAddStudent)
 
    const handleRegisterStudent = () =>{
     setShowStudentForm(true)
    }
 
-   const handleAddGoal = () =>{
-    setShowGoalForm(true)
-   }
+   
 
     return(
         <div>

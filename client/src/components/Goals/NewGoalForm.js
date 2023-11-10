@@ -4,18 +4,20 @@ import { useNavigate } from "react-router-dom";
 import Star from "./Star";
 
 
-function NewGoalForm({onAddNewGoal, setShowGoalForm, showGoalForm}){
+function NewGoalForm(){
     const {user, setUser} = useContext(UserContext)
     const [formData, setFormData]=useState({
         goal_category : (""),
         title: (""),
         description : (""),
-        goal_date: (""),
+        deadline: (""),
         achieved: (false),
         value:(0)
       })
 
-    const categories = ["Ready", "Respectful", "Responsible", "Academic", "Other"]
+    const goals = user.goals
+
+    const coffees = ["Ready", "Respectful", "Responsible", "Academic", "Other"]
     const navigate = useNavigate()
 
     const handleChangeCategory = (e) => {
@@ -40,27 +42,29 @@ console.log(formData)
                  goal_category: formData.goal_category,
                  title: formData.title,
                  description: formData.description,
-                 goal_date: formData.deadline,
+                 deadline: formData.deadline,
                  achieved: formData.achieved,
                  value: formData.value,
+                 validated_by_parent: false,
+                 validated_by_educator: false,
                  user_id: user.id
             }),
         })
             .then(r=>r.json())
             .then ((newGoal) => {
-                onAddNewGoal(newGoal);
+                setUser({...user, goals:[...goals, newGoal]});
                 
                 setFormData({
                     goal_category : (""),
                     title: (""),
                     description : (""),
-                    goal_date: (""),
+                    deadline: (""),
                     achieved: (false),
                     value:(0)
                 });
             });
-            setShowGoalForm((showGoalForm) => !showGoalForm)
-            navigate(`/students/${user.id}`);
+            // setShowGoalForm((showGoalForm) => !showGoalForm)
+            navigate('/goals');
     }
 
     
@@ -74,15 +78,15 @@ console.log(formData)
             <hr />
 
         <form className="new-goal-form" onSubmit={handleSubmit}>
-            <ul className = "category-list">
+            <ul className = "coffee-list">
                 <h3><u> Pick your Goal Category</u></h3>
-                {categories.map((catname)=>{
+                {coffees.map((catname)=>{
                     return(
                         <div key={catname} className="radio-Btn">
                             <label>
                                 <input 
                                 type="radio"
-                                name="category-name"
+                                name="coffee-name"
                                 value={catname}
                                 checked={formData.goal_category === catname}
                                 onChange={handleChangeCategory}
@@ -115,10 +119,10 @@ console.log(formData)
             <h3><u> When would you like this goal to be achieved by?</u></h3>
                 <input
                     type="date"
-                    name="goal_date"
-                    value={formData.goal_date}
+                    name="deadline"
+                    value={formData.deadline}
                     placeholder="Deadline to reach my goal"
-                    onChange={(e)=>setFormData({...formData, goal_date:e.target.value})}/>
+                    onChange={(e)=>setFormData({...formData, deadline:e.target.value})}/>
             
             <br />
 
@@ -134,16 +138,8 @@ console.log(formData)
                 onClick={() => setFormData({...formData, value:index + 1})} />
                 ))}
             </span>
-                
-                
+                                
             </label>
-
-            {/* <h3><u> How many starts would you say your goal is worth?</u></h3>
-                <input
-                    type="radio"
-                    name="value"
-                    value="5"
-                    onChange={(e)=>setFormData({...formData, value:e.target.value})}/> */}
             
             <br />
             <br />
@@ -155,3 +151,4 @@ console.log(formData)
     )
 }
 export default NewGoalForm;
+

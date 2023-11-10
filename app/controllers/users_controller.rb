@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-    skip_before_action :authorized
+    skip_before_action :authorized, only: :create
 
     def index
         users = User.all
@@ -38,6 +38,11 @@ class UsersController < ApplicationController
         #     end
         # end  
     end
+
+    # def only_my_student
+
+    #     render json: "Hello", status: :ok
+    # end
 
     private
 

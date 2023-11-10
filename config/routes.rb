@@ -1,10 +1,26 @@
 Rails.application.routes.draw do
+   
+ 
+  
   resources :schools, only: :index
-  resources :users 
-  resources :parents
+
+  resources :users, only: [:index, :show, :create]
+
+  resources :parents do
+    collection do
+      get "/mystudent", to: "parents#only_my_student", as: :mystudent
+    end
+  end
+
+  patch "parents/students/:student_id/goals/:id", to: "goals#update"
+  
+
   resources :educators
+
   resources :messages
+
   resources :goals
+
   resources :students do
     resources :goals, only: [:index, :show, :create]
   end
@@ -28,6 +44,7 @@ Rails.application.routes.draw do
   # resources :students
   # resources :adultusers
     # route to test your configuration
+   
 
     post "/signup", to: "users#create"
     get "/me", to: "users#show"

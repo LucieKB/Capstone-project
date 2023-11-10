@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_05_232324) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_07_170247) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -24,16 +24,18 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_05_232324) do
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.string "goal_category"
+    t.boolean "validated_by_parent"
+    t.boolean "validated_by_educator"
     t.index ["user_id"], name: "index_goals_on_user_id"
   end
 
   create_table "messages", force: :cascade do |t|
     t.string "text"
     t.string "status"
-    t.bigint "goals_id", null: false
+    t.bigint "goal_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["goals_id"], name: "index_messages_on_goals_id"
+    t.index ["goal_id"], name: "index_messages_on_goal_id"
   end
 
   create_table "schools", force: :cascade do |t|
@@ -62,7 +64,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_05_232324) do
   end
 
   add_foreign_key "goals", "users"
-  add_foreign_key "messages", "goals", column: "goals_id"
+  add_foreign_key "messages", "goals"
   add_foreign_key "users", "users", column: "educator_id"
   add_foreign_key "users", "users", column: "parent_id"
 end

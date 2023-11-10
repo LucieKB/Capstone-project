@@ -6,6 +6,9 @@ import NavBar from "./NavBar";
 import Home from "./Home"
 import NewGoalForm from "./Goals/NewGoalForm";
 import GoalList from "./Goals/GoalList";
+import MyStudentsGoals from "./Goals/MyStudentsGoals";
+import GoalCard from "./Goals/GoalCard";
+import MyStudentGoalCard from "./Goals/MyStudentGoalCard";
 
 function App() {
   const {user, setUser} = useContext(UserContext)
@@ -20,6 +23,9 @@ function App() {
         <Route exact path="/" element = {<Home />}/>
         <Route path = "/goals" element = {<GoalList />} />
         <Route path = "/goals/new" element = {<NewGoalForm />} />
+        <Route path = "/parents/mystudent" element = {<MyStudentsGoals />} />
+        {/* <Route path = "/students/:student_id/goals/:id" element = {<MyStudentGoalCard />} />  */}
+        <Route path = "/goals/:id" element = {<GoalCard />} />
       </Routes>
     </main>
     </>
