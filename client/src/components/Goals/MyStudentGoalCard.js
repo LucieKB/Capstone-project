@@ -6,7 +6,7 @@ function MyStudentgoalCard({goal}){
     const [errors, setErrors] = useState([]);
     const {user, setUser} = useContext(UserContext)
     const [showValidate, setShowValidate] = useState(true)
-    const [showAchieved, setShowAchieved] = useState(false)
+    const [showPay, setShowPay] = useState(false)
     const student = user.students.find(student => student.id === goal.user_id)
 
     useEffect(()=>{
@@ -23,7 +23,7 @@ function MyStudentgoalCard({goal}){
 
     useEffect(()=>{
         if (goal.validated_by_educator == true && goal.validated_by_parent == true){
-            setShowAchieved(true)
+            setShowPay(true)
         }
     }, [])
 
@@ -38,7 +38,55 @@ console.log(goal)
         
     }
 
-   
+    const onPayGoal = (updatedGoal) =>{
+        const modifiedgoal = 
+        goal.id == updatedGoal.id?
+            ( updatedGoal) : (goal)
+        
+        const updatedStudent = {...student, goals: modifiedgoal }
+        setUser({...user, students: updatedStudent})
+        
+    }
+
+    function handlePay(){
+        if (user.type === "Parent"){
+        console.log("clicked")
+        fetch(`students/${student.id}/goals/${goal.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json", 
+            },
+            body: JSON.stringify({
+                achieved_by_parent: true
+            }),
+        }).then((r) => {
+            if (r.ok) {
+                r.json().then((updatedGoal) => (onPayGoal(updatedGoal)));
+            } else {
+                r.json().then((err)=>setErrors(err.errors))  
+            }
+            
+        });
+        }
+        else if (user.type === "Educator"){
+            console.log("clicked")
+            fetch(`students/${student.id}/goals/${goal.id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json", 
+                },
+                body: JSON.stringify({
+                    achieved_by_educator: true
+                }),
+            }).then((r) => {
+                if (r.ok) {
+                    r.json().then((updatedGoal) => (onPayGoal(updatedGoal)));
+                } else {
+                    r.json().then((err)=>setErrors(err.errors))  
+                }   
+            });
+        }
+    }
     
 
     
@@ -110,8 +158,8 @@ console.log(goal)
                                 </li>
                                 {showValidate?
                                 (<button onClick={handleValidate}>Validate this goal</button>) : (null)}
-                                {showAchieved?
-                                (<button> Goal Achieved </button>) : (null)}
+                                {showPay?
+                                (<button onClick={handlePay}> Pay {student.username} <strong style={{color:"orange"}}>{goal.value} ☆</strong></button>) : (null)}
                                 <button>Add Message</button>
                             </div>
                

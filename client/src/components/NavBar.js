@@ -1,9 +1,16 @@
-import React, {useState, useContext} from "react";
+import React, {useState, useContext, useEffect} from "react";
 import { UserContext } from "../contexts/UserContext";
 import { Link } from "react-router-dom";
 
 function NavBar(){
     const {user, setUser} = useContext(UserContext)
+    const [showId, setShowId] = useState(false)
+
+    useEffect(()=>{
+        if (user.type === "Educator"){
+            setShowId(true)
+        }
+    })
    
 
     function handleLogoutClick() {
@@ -25,8 +32,11 @@ function NavBar(){
                 (<Link to ="/parents/mystudent"> My Student's Goals Page </Link>)}
             </nav>
         </div>
-        <p style={{color:"red"}}> Id # {user.id} </p>
-        <div>
+            {showId?
+                (<div><p style={{color:"red"}}> Id # {user.id} </p></div>)
+                :(null)
+            }
+        <div> 
             <button id="Btn-Logout" onClick={handleLogoutClick}>Logout</button>
         </div>
         </>
