@@ -25,6 +25,7 @@ function NavBar(){
                 (<Link to ="/parents/mystudent"> My Student's Goals Page </Link>)}
             </nav>
         </div>
+        <p style={{color:"red"}}> Id # {user.id} </p>
         <div>
             <button id="Btn-Logout" onClick={handleLogoutClick}>Logout</button>
         </div>

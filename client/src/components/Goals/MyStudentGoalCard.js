@@ -1,35 +1,52 @@
-import React, {useState} from "react";
+import React, {useState, useEffect, useContext} from "react";
+import { UserContext } from "../../contexts/UserContext";
 import StarConditional from "./StarConditional";
 
-function MyStudentGoalCard({goal, student, user, setUser}){
+function MyStudentgoalCard({goal}){
     const [errors, setErrors] = useState([]);
-    
-console.log(user)
-    const onUpdateGoal = (updatedGoal) =>{
-        const modifiedGoal = 
-        goal.id == updatedGoal.id?
-            ( updatedGoal) : (goal)
-        
-        const updatedStudent = {...student, goals: modifiedGoal }
-        setUser({...user, students: updatedStudent})
-        //update user
+    const {user, setUser} = useContext(UserContext)
+    const [showValidate, setShowValidate] = useState(true)
+    const [showAchieved, setShowAchieved] = useState(false)
+    const student = user.students.find(student => student.id === goal.user_id)
+
+    useEffect(()=>{
+        const adultType = (user.type)
+    console.log(adultType)
+    if (adultType == "Parent" && goal.validated_by_parent == true){
+        setShowValidate(false)
+    } else if 
+        (adultType == "Educator" && goal.validated_by_educator == true){
+        setShowValidate(false)
     }
+    console.log(showValidate)
+    }, [])
+
+    useEffect(()=>{
+        if (goal.validated_by_educator == true && goal.validated_by_parent == true){
+            setShowAchieved(true)
+        }
+    }, [])
+
+console.log(goal)
+    const onUpdategoal = (updatedgoal) =>{
+        const modifiedgoal = 
+        goal.id == updatedgoal.id?
+            ( updatedgoal) : (goal)
+        
+        const updatedStudent = {...student, goals: modifiedgoal }
+        setUser({...user, students: updatedStudent})
+        
+    }
+
+   
     
 
-    // const onUpdatePost = (thisUpdatedPost) => {
-    //     const modifiedPosts = user.posts.map((post)=>{
-    //         if (post.id === thisUpdatedPost.id) {
-    //             return thisUpdatedPost;
-    //         } else {
-    //             return post
-    //         }
-    //     })
-    //     const updatedUser = {...user, posts: modifiedPosts};
-    //     setUser(updatedUser);
-    //     navigate(`/users/${user.id}/posts`)
-    // }
+    
+    
+    
 
     function handleValidate(){
+        if (user.type === "Parent"){
         console.log("clicked")
         fetch(`students/${student.id}/goals/${goal.id}`, {
             method: "PATCH",
@@ -41,28 +58,44 @@ console.log(user)
             }),
         }).then((r) => {
             if (r.ok) {
-                r.json().then((updatedGoal) => (onUpdateGoal(updatedGoal)));
+                r.json().then((updatedgoal) => (onUpdategoal(updatedgoal)));
             } else {
                 r.json().then((err)=>setErrors(err.errors))  
             }
             
         });
+        }
+        else if (user.type === "Educator"){
+            console.log("clicked")
+            fetch(`students/${student.id}/goals/${goal.id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json", 
+                },
+                body: JSON.stringify({
+                    validated_by_educator: true
+                }),
+            }).then((r) => {
+                if (r.ok) {
+                    r.json().then((updatedgoal) => (onUpdategoal(updatedgoal)));
+                } else {
+                    r.json().then((err)=>setErrors(err.errors))  
+                }   
+            });
+        }
     }
 
-    console.log(goal)
-    console.log(student.goals)
+   
     return(
         <div>
            
             <div>
-                {student.goals.map((g)=>{
-                    return(
-                <div key={g.id}>
-                                <em> Created on {g.created_at}</em>
-                                <li>Title : {g.title}</li>
-                                <li>Description : {g.description}</li>
-                                <li>Deadline : {g.deadline}</li>
-                                <li>Category : {g.goal_category}</li>
+                <div>
+                                <em> Created on {goal.created_at}</em>
+                                <li>Title : {goal.title}</li>
+                                <li>Description : {goal.description}</li>
+                                <li>Deadline : {goal.deadline}</li>
+                                <li>Category : {goal.goal_category}</li>
                                 <li>Value : 
                                     <span>
                                         {Array(5)
@@ -70,18 +103,21 @@ console.log(user)
                                         .map((_, index) => (
                                         <StarConditional 
                                         key={index} 
-                                        filled={index < g.value}
-                                        goal = {g} />
+                                        filled={index < goal.value}
+                                        goal = {goal} />
                                         ))}
                                     </span>
                                 </li>
-                                <button onClick={handleValidate}>Validate this goal</button>
+                                {showValidate?
+                                (<button onClick={handleValidate}>Validate this goal</button>) : (null)}
+                                {showAchieved?
+                                (<button> Goal Achieved </button>) : (null)}
                                 <button>Add Message</button>
                             </div>
-                )})}
+               
             </div> 
      </div>                            
 
 )}
 
-export default MyStudentGoalCard
+export default MyStudentgoalCard

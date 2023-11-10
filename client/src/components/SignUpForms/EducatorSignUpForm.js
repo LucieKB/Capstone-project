@@ -41,7 +41,7 @@ function EducatorSignUpForm(){
 
     return(
         <>
-        <h1>Parent Sign Up Form</h1>
+        <h1>Educator Sign Up Form</h1>
         <form onSubmit={handleSubmit}>
             <div className="form-wrapper">
             <label><strong><u>Username:</u></strong><em style={{color:"red"}}>*</em>

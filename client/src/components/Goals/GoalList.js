@@ -31,6 +31,9 @@ function GoalList(){
         <div>
             <h1>List of My Goals</h1>
             <div>
+            <Link to={"/goals/new"}> Create a New Goal </Link>
+            </div>
+            <div>
                 <ul>
                     <div>
                         <h3><u>My Validated Goals</u></h3>

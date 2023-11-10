@@ -16,6 +16,12 @@ class StudentsController < UsersController
         render json:student, status: :created
     end
 
+    def update
+        student = Student.find_by(id: params[:id])
+        student.update!(student_params)
+        render json: student, status: :accepted
+    end
+
     private
 
     def student_params

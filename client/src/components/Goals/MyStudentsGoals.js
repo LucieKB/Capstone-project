@@ -9,20 +9,22 @@ function MyStudentsGoals(){
     const [showGoals, setShowGoals] = useState(false)
  
 const userStudents = user.students
-console.log(user.students)
-console.log(showGoals)
+
     const myStudents = Object.keys(userStudents).map((student, i)=>{
+        // console.log(userStudents[student].goals.length)
    return(
     <div key={i}>
         <li>
             {userStudents[student].username}
             <ul>
                 <button onClick={()=>setShowGoals(!showGoals)}>{userStudents[student].username} has {userStudents[student].goals.length} goals.</button>
+                {/* why doesn't it work after validation_by_parent? */}
+                
                 {showGoals?
                 (userStudents[student].goals.map((goal) => {
                     return(
                 <div key = {goal.id}>
-                    <MyStudentGoalCard goal={goal} student={goal.user}/>
+                    <MyStudentGoalCard goal={goal}/>
                 </div>)
                 })
                 ):("")
