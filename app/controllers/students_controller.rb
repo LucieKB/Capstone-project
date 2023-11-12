@@ -22,10 +22,24 @@ class StudentsController < UsersController
         render json: student, status: :accepted
     end
 
+    def update_payment
+        student = Student.find_by(id: params[:student_id])
+        goal = student.goals.find_by(id: params[:id])
+        byebug
+        value = goal.value
+        student.wallet += value/2
+        student.update!(payment_params)
+        render json: goal, status: :accepted
+    end
+
     private
 
     def student_params
         params.permit(:username, :password, :password_confirmation, :email, :type, :avatar, :grade, :school, :wallet, :parent_id, :educator_id)
+    end
+
+    def payment_params
+        params.permit(:goals, :wallet)
     end
 
     def render_not_found_response

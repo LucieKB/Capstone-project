@@ -12,6 +12,10 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :parents do
+    patch "/payment/:student_id/goals/:id", to: "students#update_payment"
+  end
+
   patch "parents/students/:student_id/goals/:id", to: "goals#update"
   
 
@@ -24,6 +28,9 @@ Rails.application.routes.draw do
   resources :students do
     resources :goals, only: [:index, :show, :create]
   end
+
+ 
+  # patch "/payment/:student_id/goals/:id", to: "students#update_payment"
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

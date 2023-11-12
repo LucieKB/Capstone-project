@@ -37,10 +37,17 @@ class GoalsController < ApplicationController
         render json: goal, status: :accepted
     end
 
+    
+    
+
     private
 
     def goal_params
         params.permit(:id, :goal_category, :title, :description, :user_id, :deadline, :achieved, :value, :validated_by_educator, :validated_by_parent)
+    end
+
+    def payment_params
+        params.permit(:achieved_by_educator, :achieved_by_parent)
     end
 
     def render_not_found_response

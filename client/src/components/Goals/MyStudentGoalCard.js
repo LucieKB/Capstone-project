@@ -7,6 +7,7 @@ function MyStudentgoalCard({goal}){
     const {user, setUser} = useContext(UserContext)
     const [showValidate, setShowValidate] = useState(true)
     const [showPay, setShowPay] = useState(false)
+    const [isDisabled, setIsDisabled] = useState(false)
     const student = user.students.find(student => student.id === goal.user_id)
 
     useEffect(()=>{
@@ -18,7 +19,7 @@ function MyStudentgoalCard({goal}){
         (adultType == "Educator" && goal.validated_by_educator == true){
         setShowValidate(false)
     }
-    console.log(showValidate)
+    
     }, [])
 
     useEffect(()=>{
@@ -27,6 +28,21 @@ function MyStudentgoalCard({goal}){
         }
     }, [])
 
+    useEffect(()=>{
+        const adultType = (user.type)
+        if (adultType == "Parent" && goal.achieved_by_parent == true){
+            setIsDisabled(true)
+        }
+        else if 
+        (adultType == "Educator" && goal.achieved_by_educator == true){
+        setIsDisabled(true)
+    }
+    }, [student.goals])
+
+    
+        
+
+console.log(student.wallet)
 console.log(goal)
     const onUpdategoal = (updatedgoal) =>{
         const modifiedgoal = 
@@ -43,7 +59,7 @@ console.log(goal)
         goal.id == updatedGoal.id?
             ( updatedGoal) : (goal)
         
-        const updatedStudent = {...student, goals: modifiedgoal }
+        const updatedStudent = {...student, goals: modifiedgoal}
         setUser({...user, students: updatedStudent})
         
     }
@@ -51,7 +67,7 @@ console.log(goal)
     function handlePay(){
         if (user.type === "Parent"){
         console.log("clicked")
-        fetch(`students/${student.id}/goals/${goal.id}`, {
+        fetch(`students/payment/${student.id}/goals/${goal.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json", 
@@ -65,12 +81,12 @@ console.log(goal)
             } else {
                 r.json().then((err)=>setErrors(err.errors))  
             }
-            
+           
         });
         }
         else if (user.type === "Educator"){
             console.log("clicked")
-            fetch(`students/${student.id}/goals/${goal.id}`, {
+            fetch(`students/payment/${student.id}/goals/${goal.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json", 
@@ -159,7 +175,9 @@ console.log(goal)
                                 {showValidate?
                                 (<button onClick={handleValidate}>Validate this goal</button>) : (null)}
                                 {showPay?
-                                (<button onClick={handlePay}> Pay {student.username} <strong style={{color:"orange"}}>{goal.value} ☆</strong></button>) : (null)}
+                                (<button 
+                                onClick={handlePay}
+                                disabled = {isDisabled}> Pay {student.username} <strong style={{color:"orange"}}>{goal.value/2} ☆</strong></button>) : (null)}
                                 <button>Add Message</button>
                             </div>
                

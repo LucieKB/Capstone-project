@@ -30,6 +30,10 @@ function NavBar(){
                 (<Link to ="/goals"> My Goals Page </Link>)
                 :
                 (<Link to ="/parents/mystudent"> My Student's Goals Page </Link>)}
+                {user.type === "Student"?
+                (<p> My Wallet : {user.wallet} 🌟 </p>)
+                :
+                ("")}
             </nav>
         </div>
             {showId?
