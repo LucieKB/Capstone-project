@@ -27,9 +27,9 @@ function NavBar(){
             <nav>
                 <Link to ="/">Home</Link>
                 {user.type === "Student"?
-                (<Link to ="/goals"> My Goals Page </Link>)
+                (<Link to = {`students/${user.id}/goals`}> My Goals Page </Link>)
                 :
-                (<Link to ="/parents/mystudent"> My Student's Goals Page </Link>)}
+                (<Link to ="/users/mystudent"> My Students Page </Link>)}
                 {user.type === "Student"?
                 (<p> My Wallet : {user.wallet} 🌟 </p>)
                 :

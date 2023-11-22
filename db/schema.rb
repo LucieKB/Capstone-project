@@ -10,9 +10,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_10_213742) do
+ActiveRecord::Schema[7.1].define(version: 2023_11_21_215518) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "avatars", force: :cascade do |t|
+    t.string "head"
+    t.string "ears"
+    t.string "eyes"
+    t.string "eyebrows"
+    t.string "nose"
+    t.string "mouth"
+    t.string "hair"
+    t.string "accessories"
+    t.integer "student_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "goals", force: :cascade do |t|
     t.string "title"
@@ -55,7 +69,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_10_213742) do
     t.string "avatar"
     t.integer "grade"
     t.string "school"
-    t.integer "wallet"
+    t.float "wallet"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "parent_id"

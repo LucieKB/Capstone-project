@@ -12,12 +12,16 @@ function NewGoalForm(){
         description : (""),
         deadline: (""),
         achieved: (false),
-        value:(0)
+        value:(0), 
+        validated_by_educator:(false),
+        validated_by_parent:(false),
+        achieved_by_educator:(false),
+        achieved_by_parent: (false)
       })
 
     const goals = user.goals
 
-    const coffees = ["Ready", "Respectful", "Responsible", "Academic", "Other"]
+    const categories = ["Ready", "Respectful", "Responsible", "Academic", "Other"]
     const navigate = useNavigate()
 
     const handleChangeCategory = (e) => {
@@ -47,7 +51,9 @@ console.log(formData)
                  value: formData.value,
                  validated_by_parent: false,
                  validated_by_educator: false,
-                 user_id: user.id
+                 user_id: user.id,
+                 achieved_by_educator:(false),
+                 achieved_by_parent: (false)
             }),
         })
             .then(r=>r.json())
@@ -60,11 +66,15 @@ console.log(formData)
                     description : (""),
                     deadline: (""),
                     achieved: (false),
-                    value:(0)
+                    value:(0),
+                    validated_by_educator:(false),
+                    validated_by_parent:(false),
+                    achieved_by_educator:(false),
+                    achieved_by_parent: (false)
                 });
             });
             // setShowGoalForm((showGoalForm) => !showGoalForm)
-            navigate('/goals');
+            navigate(`/students/${user.id}/me`);
     }
 
     
@@ -78,15 +88,15 @@ console.log(formData)
             <hr />
 
         <form className="new-goal-form" onSubmit={handleSubmit}>
-            <ul className = "coffee-list">
+            <ul className = "categories-list">
                 <h3><u> Pick your Goal Category</u></h3>
-                {coffees.map((catname)=>{
+                {categories.map((catname)=>{
                     return(
                         <div key={catname} className="radio-Btn">
                             <label>
                                 <input 
                                 type="radio"
-                                name="coffee-name"
+                                name="categories-name"
                                 value={catname}
                                 checked={formData.goal_category === catname}
                                 onChange={handleChangeCategory}

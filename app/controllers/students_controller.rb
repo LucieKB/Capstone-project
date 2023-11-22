@@ -25,7 +25,7 @@ class StudentsController < UsersController
     def update_payment
         student = Student.find_by(id: params[:student_id])
         goal = student.goals.find_by(id: params[:id])
-        byebug
+        goal.update!(goal_params)
         value = goal.value
         student.wallet += value/2
         student.update!(payment_params)
@@ -40,6 +40,10 @@ class StudentsController < UsersController
 
     def payment_params
         params.permit(:goals, :wallet)
+    end
+
+    def goal_params
+        params.permit(:achieved_by_educator, :achieved_by_parent)
     end
 
     def render_not_found_response

@@ -5,14 +5,19 @@ import App from './components/App';
 import reportWebVitals from './components/reportWebVitals';
 import { BrowserRouter as Router } from "react-router-dom";
 import { UserProvider } from "./contexts/UserContext";
+import { GoalsProvider } from './contexts/GoalsContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>
   <React.StrictMode>
+    <GoalsProvider>
     <UserProvider>
+    
     <App />
+    
     </UserProvider>
+    </GoalsProvider>
   </React.StrictMode>
   </Router>
 );

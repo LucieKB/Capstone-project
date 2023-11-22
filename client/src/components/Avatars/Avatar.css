@@ -1,0 +1,28 @@
+* {box-sizing: border-box;}
+
+.radio-btn{
+    display: block;
+    width: 150px;
+    height: auto;
+}
+
+.Avatar-container {
+    position: relative;
+    width: 50%;
+    max-width: 300px;
+  }
+  
+  .Avatar-image {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: solid, black, 1px;
+  }
+  
+  .Avatar-overlay {
+    position: absolute; 
+    bottom: 0; 
+    color: #f1f1f1; 
+    width: 100%;  
+   
+  }

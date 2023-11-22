@@ -1,6 +1,8 @@
 import React, {useState, useEffect, useContext} from "react";
 import { UserContext } from "../../contexts/UserContext";
 import StarConditional from "./StarConditional";
+import { useNavigate } from "react-router-dom";
+import NewMessageForm from "../Messages/NewMessageForm";
 
 function MyStudentgoalCard({goal}){
     const [errors, setErrors] = useState([]);
@@ -8,11 +10,24 @@ function MyStudentgoalCard({goal}){
     const [showValidate, setShowValidate] = useState(true)
     const [showPay, setShowPay] = useState(false)
     const [isDisabled, setIsDisabled] = useState(false)
+    const [showMessageForm, setShowMessageForm] = useState(false)
     const student = user.students.find(student => student.id === goal.user_id)
+    const navigate = useNavigate();
+    const deadline = goal.deadline
+    const goalDeadline = new Date(`${goal.deadline}`)
+    const today = (new Date())
+    const difference_in_time = goalDeadline.getTime() - today.getTime()
+    const difference_in_days = difference_in_time / (1000 * 3600 * 24);
+    const difference_in_hours = Math.round(((difference_in_days + Number.EPSILON)*100)/100 * 60) 
+
+    // console.log(goal)
+    // console.log(today)
+    // console.log(goalDeadline)
+    // console.log(difference_in_days)
+    // console.log(difference_in_hours)
 
     useEffect(()=>{
         const adultType = (user.type)
-    console.log(adultType)
     if (adultType == "Parent" && goal.validated_by_parent == true){
         setShowValidate(false)
     } else if 
@@ -23,12 +38,14 @@ function MyStudentgoalCard({goal}){
     }, [])
 
     useEffect(()=>{
+        if (goal.achieved == true){
         if (goal.validated_by_educator == true && goal.validated_by_parent == true){
             setShowPay(true)
-        }
+        }}
     }, [])
 
     useEffect(()=>{
+        if (goal.achieved === true){
         const adultType = (user.type)
         if (adultType == "Parent" && goal.achieved_by_parent == true){
             setIsDisabled(true)
@@ -36,14 +53,10 @@ function MyStudentgoalCard({goal}){
         else if 
         (adultType == "Educator" && goal.achieved_by_educator == true){
         setIsDisabled(true)
-    }
-    }, [student.goals])
+    }}
+    }, [goal.achieved_by_educator, goal.achieved_by_parent]) 
 
-    
-        
 
-console.log(student.wallet)
-console.log(goal)
     const onUpdategoal = (updatedgoal) =>{
         const modifiedgoal = 
         goal.id == updatedgoal.id?
@@ -102,11 +115,23 @@ console.log(goal)
                 }   
             });
         }
+        
     }
     
-
-    
-    
+    const handleShowMessageForm = () =>{
+        setShowMessageForm(!showMessageForm)
+     }  
+     
+     const addMessageToGoal = (newMessage) =>{
+        console.log(goal)
+        const goalWithNewMessage = [...goal.messages, newMessage]
+        const copyGoalMessage = {...goal, messages:goalWithNewMessage}
+        if (copyGoalMessage.id === goal.id){
+            return copyGoalMessage
+        } else {
+            return goal
+        }
+        }
     
 
     function handleValidate(){
@@ -149,13 +174,15 @@ console.log(goal)
         }
     }
 
+    
    
     return(
-        <div>
+        <div id={goal.id}>
            
             <div>
                 <div>
-                                <em> Created on {goal.created_at}</em>
+                                <li><strong>Time Left to Complete This Goal: {(Math.abs(difference_in_days) >= 1) ? (Math.round(difference_in_days)+" days"):(difference_in_hours+" hours")}</strong></li>
+                                <em> Created on {goal.created_at.split('T')[0]}</em>
                                 <li>Title : {goal.title}</li>
                                 <li>Description : {goal.description}</li>
                                 <li>Deadline : {goal.deadline}</li>
@@ -178,7 +205,11 @@ console.log(goal)
                                 (<button 
                                 onClick={handlePay}
                                 disabled = {isDisabled}> Pay {student.username} <strong style={{color:"orange"}}>{goal.value/2} ☆</strong></button>) : (null)}
-                                <button>Add Message</button>
+                                <button onClick={handleShowMessageForm}>Add Message</button>
+                                {showMessageForm?
+                (<div>
+                    <NewMessageForm goal={goal} onAddNewMessage={addMessageToGoal}/>
+                </div>): (<button>Read my messages</button>)}
                             </div>
                
             </div> 

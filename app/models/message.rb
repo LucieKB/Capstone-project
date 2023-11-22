@@ -1,3 +1,3 @@
 class Message < ApplicationRecord
-  belongs_to :goals
+  belongs_to :goal
 end

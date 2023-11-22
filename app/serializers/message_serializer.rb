@@ -1,4 +1,4 @@
 class MessageSerializer < ActiveModel::Serializer
-  attributes :id, :message_text, :message_status
-  has_one :goals
+  attributes :id, :text, :status, :goal_id
+  belongs_to :goal
 end

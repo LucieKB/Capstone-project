@@ -1,16 +1,22 @@
 import React, {useState, useContext, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
-import StarConditional from "./StarConditional";
+import { GoalsContext } from "../../contexts/GoalsContext";
+import { useNavigate } from "react-router-dom";
+import StarConditional from "../Goals/StarConditional";
+import NewMessageForm from "../Messages/NewMessageForm";
 
 function GoalCard(){
     const {user, setUser} = useContext(UserContext)
     const {id} = useParams()
-    const goal = user.goals.find(goal => goal.id === parseInt(id))
+    const {goals, setGoals} = useContext(GoalsContext)
     const [showAchieved, setShowAchieved] = useState(false)
     const [errors, setErrors] = useState([]);
-    const [achieved, setAchieved] = useState (goal.achieved)
     const [buttonColor, setButtonColor] = useState("")
+    const [showMessageForm, setShowMessageForm] = useState(false)
+    const goal = goals.find(goal => goal.id === parseInt(id))
+    const [achieved, setAchieved] = useState (goal.achieved)
+    const navigate = useNavigate()
 
     useEffect(()=>{
         if (goal.validated_by_educator == true && goal.validated_by_parent == true){
@@ -28,11 +34,11 @@ function GoalCard(){
         const modifiedgoal = 
         goal.id == updatedgoal.id?
             ( updatedgoal) : (goal)
-    
+        setGoals({...goals, modifiedgoal})
         setUser({...user, goals: modifiedgoal})   
     }
 
-    console.log(user.goals)
+    
 
     function handleGoalAchieved(){
         fetch(`${goal.id}`, {
@@ -53,13 +59,31 @@ function GoalCard(){
         });
         }
     
-        
+     const handleShowMessageForm = () =>{
+        setShowMessageForm(!showMessageForm)
+     }  
+     
+     const addMessageToGoal = (newMessage) =>{
+        const goalWithNewMessage = [...goal.messages, newMessage]
+        const copyGoalMessage = {...goal, messages:goalWithNewMessage}
+        // if (copyGoalMessage.id == goal.id){
+        //     return copyGoalMessage
+        // } else {
+        //     return goal
+        // }
+        }
+     
+        const handleBackHome = () => {
+            navigate(`/students/${user.id}/me`)
+           }
+   
         
 
     return(
         <div>
         <h2> {user.username}'s Goal #{goal.id}</h2>
-        <em> Created on {goal.created_at}</em>
+        <button onClick={handleBackHome}> 🔙 </button>
+        <em> Created on {goal.created_at.split('T')[0]}</em>
         <li>Title : {goal.title}</li>
         <li>Description : {goal.description}</li>
         <li>Deadline : {goal.deadline}</li>
@@ -76,11 +100,18 @@ function GoalCard(){
                 ))}
             </span>
         </li>
+        {/* <li>Messages : <em>{goal.messages}</em></li> */}
+        
             {showAchieved?
                 (<button 
                 onClick={handleGoalAchieved}
                 style = {{backgroundColor:buttonColor}}> Goal Achieved </button>) : (null)}
-                    <button>Add Message</button>
+
+                <button onClick={handleShowMessageForm}>Add Message</button>
+                {showMessageForm?
+                (<div>
+                    <NewMessageForm goal={goal} onAddNewMessage={addMessageToGoal}/>
+                </div>): (<button>Read my messages</button>)}
         </div>
 
     )

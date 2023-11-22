@@ -21,28 +21,28 @@ class UsersController < ApplicationController
         session[:user_id] = user.id
         render json: user, status: :created
 
-        # @user = User.new(user_params)
-        # session[:user_id] = @user.id
-        # if @user.save && @user.type == "Student" || @user.save && @user.type == "BusinessOwner"
-        #     render json: @user, status: :created
-        # else respond_to do |format|
-        #         if @user.save && @user.type == "Parent"
-        #             UserMailer.with(user: @user).Parent_signup_email.deliver_later
-        #             format.json {render json: @user, status: :created, location: @user }
-        #         elsif @user.save && @user.type == "Educator"
-        #             UserMailer.with(user: @user).Educator_signup_email.deliver_later
-        #             format.json {render json: @user, status: :created, location: @user }
-        #         else
-        #             format.json {render json: @user.errors, status: :unprocessable_entity}
-        #         end
-        #     end
-        # end  
     end
 
-    # def only_my_student
+    def user_and_goals
+        user = User.find_by(id: params[:id])
+        if user.type == "Student"
+            goals = user.goals
+        elsif user.type == "Parent" || user.type == "Educator"
+            students = user.students
+            goals = students.map {|s| s.goals}
+        end 
+        render json: goals, status: :ok
+    end
 
-    #     render json: "Hello", status: :ok
-    # end
+    def only_my_student
+        user = User.find_by(id: session[:user_id])
+        byebug
+        if user.students.count > 0
+            students = user.students.map{|s| [s.username, s.goals]}.to_h
+            render json: students, status: :ok
+        end
+    end
+
 
     private
 

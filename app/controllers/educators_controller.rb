@@ -1,2 +1,2 @@
-class EducatorsController < User
+class EducatorsController < UsersController
 end

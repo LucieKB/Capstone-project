@@ -1,5 +1,7 @@
 import React, {useState, useEffect, useContext} from "react";
 import { UserContext } from "../../contexts/UserContext";
+import { Link } from "react-router-dom";
+import Avatar from "../Avatars/Avatar"
 import "./custom.css"
 
 function StudentSignUpForm(parentId){
@@ -49,6 +51,7 @@ function StudentSignUpForm(parentId){
             setIsLoading(false);
                 if (r.ok) {
                     r.json().then((user) => setUser(user));
+                    // cahnger setUser
                 } else {
                     r.json().then((err) => {console.log(err.errors)
                     setErrors(err.errors)}
@@ -57,7 +60,8 @@ function StudentSignUpForm(parentId){
               });
       }
 
-      console.log(studentFormData)
+    const handleShowAvatarForm = () =>{
+    return(<Avatar user={user}/>)}
 
     return(
         <>
@@ -153,13 +157,9 @@ function StudentSignUpForm(parentId){
           </div>
 
           <div className="form-wrapper">
-            <label><strong><u>My avatar:</u></strong>
-              <input
-                className="form-control"
-                type="text"
-                // place avatar component here
-              />
-            </label>
+            <Link to="students/avatar">
+            <strong><u>Create My Avatar</u></strong>
+            </Link> 
           </div>
 
           <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>   

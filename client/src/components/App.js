@@ -1,19 +1,30 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { Routes, Route } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
+import {GoalsContext} from "../contexts/GoalsContext";
 import GeneralLogin from "./GeneralLogin";
 import NavBar from "./NavBar";
 import Home from "./Home"
 import NewGoalForm from "./Goals/NewGoalForm";
-import GoalList from "./Goals/GoalList";
+import GoalList from "./Student_View/GoalList";
 import MyStudentsGoals from "./Goals/MyStudentsGoals";
-import GoalCard from "./Goals/GoalCard";
-import MyStudentGoalCard from "./Goals/MyStudentGoalCard";
+import GoalCard from "./Student_View/GoalCard";
+import MyStudent from "./Goals/MyStudent";
+import Student from "./Student_View/Student";
+import Avatar from "./Avatars/Avatar";
 
 function App() {
   const {user, setUser} = useContext(UserContext)
+  const {goals, setGoals} = useContext(GoalsContext)
+  
 
   if (!user) return <GeneralLogin />
+
+  // const myGoals = goals.filter((goals) => goals.user_id === user.id)
+  // const myActiveGoals = myGoals.filter((goal) => goal.achieved_by_parent === false || goal.achieved_by_educator === false)
+
+  console.log(goals)
+  // console.log(myGoals)
 
   return(
     <>
@@ -21,11 +32,14 @@ function App() {
     <main>
       <Routes>
         <Route exact path="/" element = {<Home />}/>
-        <Route path = "/goals" element = {<GoalList />} />
+        <Route exact path="students/:id" element = {<MyStudent />} />
+        <Route exact path="students/:id/me" element = {<Student goals={goals}/>} />
+        <Route exact path = "students/:id/goals" element = {<GoalList />} />
         <Route path = "/goals/new" element = {<NewGoalForm />} />
-        <Route path = "/parents/mystudent" element = {<MyStudentsGoals />} />
+        <Route path = "users/mystudent" element = {<MyStudentsGoals />} />
         {/* <Route path = "/students/:student_id/goals/:id" element = {<MyStudentGoalCard />} />  */}
         <Route path = "/goals/:id" element = {<GoalCard />} />
+        <Route path = "/students/avatar" element = {<Avatar />} />
       </Routes>
     </main>
     </>
