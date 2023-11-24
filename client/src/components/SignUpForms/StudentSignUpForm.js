@@ -60,8 +60,8 @@ function StudentSignUpForm(parentId){
               });
       }
 
-    const handleShowAvatarForm = () =>{
-    return(<Avatar user={user}/>)}
+    // const handleShowAvatarForm = () =>{
+    // return(<Avatar user={user}/>)}
 
     return(
         <>

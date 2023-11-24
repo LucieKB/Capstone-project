@@ -31,7 +31,7 @@ Rails.application.routes.draw do
   end
 
   resources :students do
-    resources :goals, only: [:index, :show, :create]
+    resources :goals, only: [:index, :show, :create, :update]
   end
 
  

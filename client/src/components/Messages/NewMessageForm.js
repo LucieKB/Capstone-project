@@ -3,32 +3,22 @@ import { UserContext } from "../../contexts/UserContext";
 
 function NewMessageForm({goal, onAddNewMessage}){
     const {user, setUser} = useContext(UserContext)
-    const [messageData, setMessageData]=useState({
-        text : (""),
-        status: ("unread")
-      })
+    const [myMessage, setMyMessage]=useState("")
 
     const handleSubmitMessage = (e) =>{
         e.preventDefault()
-        fetch (`/goals/${goal.id}/messages`, {
+        fetch (`/goals/${goal.id}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json", 
                },
-               body: JSON.stringify({
-                text : messageData.text,
-                status : messageData.status,
-                goal_id : goal.id
-        }),
+               body: JSON.stringify({message: myMessage}),
     })
     .then(r=>r.json())
     .then ((newMessage) => {
         onAddNewMessage(newMessage)});
     
-    setMessageData({
-        text : (""),
-        status: ("unread")
-    })
+    setMyMessage("")
     }
 
     return(
@@ -39,9 +29,9 @@ function NewMessageForm({goal, onAddNewMessage}){
                 <input
                     type="text"
                     name="text"
-                    value={messageData.text}
+                    value={myMessage}
                     placeholder="Write your comment here"
-                    onChange={(e)=>setMessageData({...messageData, text:e.target.value})}/>
+                    onChange={(e)=>setMyMessage(e.target.value)}/>
             <br /> 
                 </ul>
                 <button>Submit my message</button>

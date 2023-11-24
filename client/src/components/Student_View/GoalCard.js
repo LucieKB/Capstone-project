@@ -38,7 +38,7 @@ function GoalCard(){
         setUser({...user, goals: modifiedgoal})   
     }
 
-    
+    console.log(goal)
 
     function handleGoalAchieved(){
         fetch(`${goal.id}`, {
@@ -66,11 +66,12 @@ function GoalCard(){
      const addMessageToGoal = (newMessage) =>{
         const goalWithNewMessage = [...goal.messages, newMessage]
         const copyGoalMessage = {...goal, messages:goalWithNewMessage}
-        // if (copyGoalMessage.id == goal.id){
-        //     return copyGoalMessage
-        // } else {
-        //     return goal
-        // }
+        if (copyGoalMessage.id === goal.id){
+            // return copyGoalMessage
+            setGoals({...goals, copyGoalMessage})
+        } else {
+            return goal
+        }
         }
      
         const handleBackHome = () => {

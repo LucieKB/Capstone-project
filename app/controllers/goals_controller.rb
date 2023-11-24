@@ -31,7 +31,6 @@ class GoalsController < ApplicationController
     
     def create
         goal = @current_user.goals.create(goal_params)
-        byebug
         render json: goal, status: :created
     end
 
@@ -48,7 +47,7 @@ class GoalsController < ApplicationController
     private
 
     def goal_params
-        params.permit(:id, :goal_category, :title, :description, :user_id, :deadline, :achieved, :value, :validated_by_educator, :validated_by_parent, :achieved_by_educator, :achieved_by_parent)
+        params.permit(:id, :goal_category, :title, :description, :user_id, :deadline, :achieved, :value, :validated_by_educator, :validated_by_parent, :achieved_by_educator, :achieved_by_parent, :messages)
     end
 
     def payment_params

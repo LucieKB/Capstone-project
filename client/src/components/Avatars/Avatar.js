@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useState, useContext, useRef} from "react";
+import { UserContext } from "../../contexts/UserContext";
 import Head1 from "./images/Head1.png";
 import Head2 from "./images/Head2.png";
 import Head3 from "./images/Head3.png";
@@ -23,13 +24,17 @@ import Hair1 from "./images/Hair1.png";
 import Hair2 from "./images/Hair2.png";
 import Hair3 from "./images/Hair3.png";
 import Hair4 from "./images/Hair4.png";
-import Acc1 from "./images/Acc1.png"
-import Acc2 from "./images/Acc2.png"
-import Acc3 from "./images/Acc3.png"
-import Acc4 from "./images/Acc4.png"
+import Acc1 from "./images/Acc1.png";
+import Acc2 from "./images/Acc2.png";
+import Acc3 from "./images/Acc3.png";
+import Acc4 from "./images/Acc4.png";
+import html2canvas from 'html2canvas';
+import ReactDOM from "react-dom";
 import "./Avatar.css"
+import AvatarScreenShot from "./AvatarScreenShot";
 
-function Avatar({user}){
+function Avatar(){
+    const {user, setUser} = useContext(UserContext)
     const [errors, setErrors] = useState([])
     const [head, setHead] = useState("")
     const [showHeads, setShowHeads] = useState(true)
@@ -47,6 +52,8 @@ function Avatar({user}){
     const [showHair, setShowHair] = useState(false)
     const [accessories, setAccessories] = useState("")
     const [showAccessories, setShowAccessories] = useState(false)
+    const [showSubmitBtn, setShowSubmitBtn] = useState(false)
+    const myRef = useRef(null)
 
 
     const allHeads = [Head1, Head2, Head3, Head4];
@@ -102,29 +109,20 @@ function Avatar({user}){
     const handleChangeAcc = (e) =>{
         setAccessories(e.target.value)
         setShowAccessories(!showAccessories)
+        setShowSubmitBtn(!showSubmitBtn)
     }
 
-    const handleSubmitAvatar = (e) => {
-        e.preventDefault();
-            const myAvatar = {
-                student_id: user.id,
-                head: head,
-                ears: ears, 
-                eyes:eyes,
-                nose:nose,
-                mouth:mouth,
-                accessories:accessories,
-                hair:hair}
-        fetch(`/avatars`,{
-            method: "POST",
+    const handleSubmitAvatar = (imgData) => {
+        fetch(`/students/${user.id}`,{
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(myAvatar),
+            body: JSON.stringify({avatar: imgData}),
         }).then((r) => {
             if (r.ok) {
                 r.json().then((myNewAvatar) => {
-                    console.log(myNewAvatar);  
+                   setUser(myNewAvatar)
                 });
 
                 setHead("");
@@ -133,21 +131,58 @@ function Avatar({user}){
                 setEyes("");
                 setMouth("");
                 setHair("");
-                setNose("")
+                setNose("");
+                setEyeBrows("")
 
             } else {
                 r.json().then((err)=>setErrors(err.errors))
             }
          });    
 }
-                
 
+    // const getScreenshotOfAvatar = () => {
+    //     const avatarImage = myRef.current
+    //     console.log(avatarImage)
+    //     debugger
+    // //     captureScreenshot(avatarImage)
+    // //     debugger
+    // // };
 
-    
-    
+    // // const captureScreenshot = (avatarImage) =>{
+    //     alert("Smile for the picture!");
+    //     html2canvas(avatarImage
+    //         ,{
+    //         useCORS: true,
+    //         taintTest: false,
+    //         allowTaint: false,
+    //         width: "400px",
+    //         height: "400px",
+    //     }
+    //     ).then(canvas =>{
+    //         console.log(canvas)
+    //         // const handleCanvas = canvas.toDataURL(`${user.username}Avatar/png`);
+    //         // console.log(handleCanvas)
+    //         // setMyAvatar(handleCanvas)
+    //         // handleSubmitAvatar(handleCanvas)
+    //         debugger
+    //     })
+    // }
+
+  const saveAvatarURL = () =>{
+    const input = myRef.current
+    html2canvas(input, {logging:true, letterRendering:1, useCORS:true}).then( canvas =>{
+        const imgWidth = 400;
+        const imgHeight = 400;
+        const imgData = canvas.toDataURL(`${user.username}Avatar/png`)
+        console.log(imgData)
+        handleSubmitAvatar(imgData)
+    })
+
+  }
+
     return(
         <div>
-            <form onSubmit={handleSubmitAvatar}>
+            <form >
                 {showHeads?
                 (<div>
                     <p>Choose a head: </p>
@@ -297,10 +332,17 @@ function Avatar({user}){
                     </div>
                     )}  
                 </div>):
-                (<button> Submit my Avatar </button>)
-                }                           
-            </form>
-        <div className = "Avatar-container">
+                (null)
+                }
+                </form>
+
+                {showSubmitBtn?(<div>
+        <button onClick={()=> saveAvatarURL()}> Submit my Avatar </button>
+        </div> ):(null)}  
+                <div ref={myRef} className = "Avatar-container"> 
+                <AvatarScreenShot head={head} ears={ears} eyes={eyes} eyeBrows={eyeBrows} nose={nose} mouth={mouth} hair={hair} accessories={accessories} />
+                </div> 
+                {/* <div ref={myRef} className = "Avatar-container">
             <img src={head}  className="Avatar-image" />
             <img src={ears}  className="Avatar-overlay" />  
             <img src={eyes}  className="Avatar-overlay" />  
@@ -309,7 +351,11 @@ function Avatar({user}){
             <img src={mouth} className="Avatar-overlay" />  
             <img src={hair} className="Avatar-overlay" />    
             <img src={accessories} className="Avatar-overlay" />    
-        </div >
+        </div > */}
+        
+                               
+            
+      
         </div>
 
        

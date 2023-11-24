@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from "react";
 import { UserContext } from "../../contexts/UserContext";
+import {GoalsContext} from "../../contexts/GoalsContext";
 import StarConditional from "./StarConditional";
 import { useNavigate } from "react-router-dom";
 import NewMessageForm from "../Messages/NewMessageForm";
@@ -7,13 +8,13 @@ import NewMessageForm from "../Messages/NewMessageForm";
 function MyStudentgoalCard({goal}){
     const [errors, setErrors] = useState([]);
     const {user, setUser} = useContext(UserContext)
+    const {goals, setGoals} = useContext(GoalsContext)
     const [showValidate, setShowValidate] = useState(true)
     const [showPay, setShowPay] = useState(false)
     const [isDisabled, setIsDisabled] = useState(false)
     const [showMessageForm, setShowMessageForm] = useState(false)
     const student = user.students.find(student => student.id === goal.user_id)
     const navigate = useNavigate();
-    const deadline = goal.deadline
     const goalDeadline = new Date(`${goal.deadline}`)
     const today = (new Date())
     const difference_in_time = goalDeadline.getTime() - today.getTime()
@@ -61,25 +62,23 @@ function MyStudentgoalCard({goal}){
         const modifiedgoal = 
         goal.id == updatedgoal.id?
             ( updatedgoal) : (goal)
-        
         const updatedStudent = {...student, goals: modifiedgoal }
         setUser({...user, students: updatedStudent})
-        
+        setGoals(...goals, modifiedgoal)  
     }
 
     const onPayGoal = (updatedGoal) =>{
         const modifiedgoal = 
         goal.id == updatedGoal.id?
             ( updatedGoal) : (goal)
-        
         const updatedStudent = {...student, goals: modifiedgoal}
         setUser({...user, students: updatedStudent})
+        setGoals({...goals, modifiedgoal})
         
     }
 
     function handlePay(){
         if (user.type === "Parent"){
-        console.log("clicked")
         fetch(`students/payment/${student.id}/goals/${goal.id}`, {
             method: "PATCH",
             headers: {
@@ -98,7 +97,6 @@ function MyStudentgoalCard({goal}){
         });
         }
         else if (user.type === "Educator"){
-            console.log("clicked")
             fetch(`students/payment/${student.id}/goals/${goal.id}`, {
                 method: "PATCH",
                 headers: {
@@ -123,11 +121,11 @@ function MyStudentgoalCard({goal}){
      }  
      
      const addMessageToGoal = (newMessage) =>{
-        console.log(goal)
         const goalWithNewMessage = [...goal.messages, newMessage]
         const copyGoalMessage = {...goal, messages:goalWithNewMessage}
         if (copyGoalMessage.id === goal.id){
-            return copyGoalMessage
+            // return copyGoalMessage
+            setGoals({...goals, copyGoalMessage})
         } else {
             return goal
         }
@@ -137,7 +135,7 @@ function MyStudentgoalCard({goal}){
     function handleValidate(){
         if (user.type === "Parent"){
         console.log("clicked")
-        fetch(`students/${student.id}/goals/${goal.id}`, {
+        fetch(`${student.id}/goals/${goal.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json", 
@@ -148,6 +146,9 @@ function MyStudentgoalCard({goal}){
         }).then((r) => {
             if (r.ok) {
                 r.json().then((updatedgoal) => (onUpdategoal(updatedgoal)));
+                console.log(user)
+                console.log(goals)
+                navigate(`/students/${student.id}`)
             } else {
                 r.json().then((err)=>setErrors(err.errors))  
             }
@@ -156,7 +157,7 @@ function MyStudentgoalCard({goal}){
         }
         else if (user.type === "Educator"){
             console.log("clicked")
-            fetch(`students/${student.id}/goals/${goal.id}`, {
+            fetch(`${student.id}/goals/${goal.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json", 
@@ -167,6 +168,7 @@ function MyStudentgoalCard({goal}){
             }).then((r) => {
                 if (r.ok) {
                     r.json().then((updatedgoal) => (onUpdategoal(updatedgoal)));
+                    navigate(`/students/${student.id}`)
                 } else {
                     r.json().then((err)=>setErrors(err.errors))  
                 }   
@@ -174,6 +176,16 @@ function MyStudentgoalCard({goal}){
         }
     }
 
+        
+            let wordColor;
+            if (difference_in_days < 1){
+                wordColor = "#FF003F"
+            }
+            else if (difference_in_days <3 && difference_in_days>1){
+                wordColor = "#FFA500"
+            }
+            else {wordColor = "#66FF00"}
+        
     
    
     return(
@@ -181,9 +193,10 @@ function MyStudentgoalCard({goal}){
            
             <div>
                 <div>
-                                <li><strong>Time Left to Complete This Goal: {(Math.abs(difference_in_days) >= 1) ? (Math.round(difference_in_days)+" days"):(difference_in_hours+" hours")}</strong></li>
+                                <h4><u>Title : {goal.title}</u></h4>
+                                <h5 style={{backgroundColor: `${wordColor}`}}><strong>Time Left to Complete This Goal: {(Math.abs(difference_in_days) >= 1) ? (Math.round(difference_in_days)+" days"):(difference_in_hours+" hours")}</strong></h5>
                                 <em> Created on {goal.created_at.split('T')[0]}</em>
-                                <li>Title : {goal.title}</li>
+                                
                                 <li>Description : {goal.description}</li>
                                 <li>Deadline : {goal.deadline}</li>
                                 <li>Category : {goal.goal_category}</li>
@@ -211,7 +224,7 @@ function MyStudentgoalCard({goal}){
                     <NewMessageForm goal={goal} onAddNewMessage={addMessageToGoal}/>
                 </div>): (<button>Read my messages</button>)}
                             </div>
-               
+               <hr></hr>
             </div> 
      </div>                            
 

@@ -1,19 +1,22 @@
 import React, {useState, useEffect, useContext} from "react";
 import { UserContext } from "../contexts/UserContext";
-// import { GoalsContext } from "../contexts/GoalsContext";
+import { GoalsContext } from "../contexts/GoalsContext";
 import { Link } from "react-router-dom";
 import StudentSignUpForm from "./SignUpForms/StudentSignUpForm";
 import UpdateStudentEdId from "./Associations/UpdateStudentEdId";
 import Student from "./Student_View/Student"
+import Avatar from "./Avatars/Avatar"
 
 function Home(){
     const {user, setUser} = useContext(UserContext)
-    // const {goals, setGoals} = useContext(GoalsContext)
-    const [goals, setGoals] = useState([])
+    const {goals, setGoals} = useContext(GoalsContext)
+    // const [goals, setGoals] = useState([])
     const [showStudentForm, setShowStudentForm] = useState(false)
     const [showButtonAddStudent, setShowButtonAddStudent] = useState(false)
     const [showAddEducatorId, setShowAddEducatorId] = useState(false)
     const [showStudentHome, setShowStudentHome] = useState(false)
+    const [showAvatarGenerator, setShowAvatarGenerator] = useState(false)
+    
 
 
     useEffect(() => {
@@ -29,15 +32,21 @@ function Home(){
             setShowStudentHome(true)  
         }
         },[])
+    
+    useEffect(() => {
+        if (user.type === "Student"){
+        user.avatar? (console.log("avatar is generated")) : (setShowAvatarGenerator(true))
+        }
+    },[])
 
-        useEffect(()=>{
-            fetch (`/goals`).then((r)=> {
-                if (r.ok) {
-                  r.json().then((goals)=>{
-                    setGoals(goals)})
-                }
-              });
-            }, []);
+        // useEffect(()=>{
+        //     fetch (`/goals`).then((r)=> {
+        //         if (r.ok) {
+        //           r.json().then((goals)=>{
+        //             setGoals(goals)})
+        //         }
+        //       });
+        //     }, []);
 
    const handleRegisterStudent = () =>{
     setShowStudentForm(true)
@@ -52,6 +61,7 @@ function Home(){
     return(
         <div>
             <h1>Welcome {user.username}</h1>
+            <img src={user.avatar} height={"150px"}/>
             {showButtonAddStudent?
            (<button onClick = {handleRegisterStudent}>Register a Child</button>):(null)
             }
@@ -75,6 +85,10 @@ function Home(){
 
             {showStudentHome?
             (<Student goals = {goals}/>) : (null)}
+
+            {showAvatarGenerator?
+            (<Avatar />):(null)}
+
 
            
            

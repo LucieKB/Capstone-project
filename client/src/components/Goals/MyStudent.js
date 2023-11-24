@@ -2,13 +2,22 @@ import React, {useContext, useState} from "react";
 import { useParams} from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import MyStudentgoalCard from "./MyStudentGoalCard";
+import dateFormat from "dateformat";
 
 function MyStudent(){
     const {user, setUser} = useContext(UserContext)
     const {id}=useParams()
     const student = user.students.find(student => student.id === parseInt(id))
-    
-const goalsINeedToValidate = student.goals.filter((g) => {
+    const now = new Date()
+    const today = dateFormat(now, "isoDateTime")
+    const myStudentGoals = student.goals
+    const myStudentActiveGoals = myStudentGoals.filter((goal)=>{
+        const deadline = dateFormat(goal.deadline, "isoDateTime")
+        return(goal.achieved === false && deadline>today)
+    })
+
+
+const goalsINeedToValidate = myStudentActiveGoals.filter((g) => {
     if (user.type === "Parent" && g.validated_by_parent === false){
         return g
     } else if (user.type === "Educator" && g.validated_by_educator === false){
@@ -16,7 +25,7 @@ const goalsINeedToValidate = student.goals.filter((g) => {
     }
 })
 
-const goalsIValidated = student.goals.filter((g) => {
+const goalsIValidated = myStudentActiveGoals.filter((g) => {
     if ((user.type === "Parent" && g.validated_by_parent === true) && (g.validated_by_educator === false)){
         return g
     } else if ((user.type === "Educator" && g.validated_by_educator === true)&&(g.validated_by_parent === false)){
@@ -24,7 +33,7 @@ const goalsIValidated = student.goals.filter((g) => {
     }
 })
 
-const goalsINeedToPay = student.goals.filter((g) => {
+const goalsINeedToPay = myStudentActiveGoals.filter((g) => {
     if ((user.type === "Parent" && g.achieved_by_parent === false) && g.achieved === true) {
         return g
     } else if ((user.type === "Educator" && g.achieved_by_educator === false) && g.achieved === true){
@@ -32,7 +41,7 @@ const goalsINeedToPay = student.goals.filter((g) => {
     }
 })
 
-const goalsInTheWorks = student.goals.filter((g) => {
+const goalsInTheWorks = myStudentActiveGoals.filter((g) => {
     if ((g.validated_by_parent === true && g.validated_by_educator === true) && g.achieved === false) {
         return g
 }})
