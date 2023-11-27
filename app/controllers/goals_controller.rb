@@ -1,4 +1,5 @@
 class GoalsController < ApplicationController
+    wrap_parameters format: []
 
     def index
         user = User.find_by(id: session[:user_id])
@@ -35,11 +36,13 @@ class GoalsController < ApplicationController
     end
 
     def update
-        student = Student.find_by(id: params[:student_id])
-        goal = Goal.all.find_by(id: params[:id])
+        # student = Student.find_by(id: params[:student_id])
+        goal = Goal.find_by(id: params[:id])
         goal.update!(goal_params)
         render json: goal, status: :accepted
     end
+
+    
 
     
     

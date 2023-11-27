@@ -21,11 +21,6 @@ function MyStudentgoalCard({goal}){
     const difference_in_days = difference_in_time / (1000 * 3600 * 24);
     const difference_in_hours = Math.round(((difference_in_days + Number.EPSILON)*100)/100 * 60) 
 
-    // console.log(goal)
-    // console.log(today)
-    // console.log(goalDeadline)
-    // console.log(difference_in_days)
-    // console.log(difference_in_hours)
 
     useEffect(()=>{
         const adultType = (user.type)
@@ -79,7 +74,7 @@ function MyStudentgoalCard({goal}){
 
     function handlePay(){
         if (user.type === "Parent"){
-        fetch(`students/payment/${student.id}/goals/${goal.id}`, {
+        fetch(`/parents/${user.id}/payment/${student.id}/goals/${goal.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json", 
@@ -97,7 +92,7 @@ function MyStudentgoalCard({goal}){
         });
         }
         else if (user.type === "Educator"){
-            fetch(`students/payment/${student.id}/goals/${goal.id}`, {
+            fetch(`/payment/${student.id}/goals/${goal.id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json", 
@@ -189,7 +184,7 @@ function MyStudentgoalCard({goal}){
     
    
     return(
-        <div id={goal.id}>
+        <div key={goal.id} id={goal.id}>
            
             <div>
                 <div>

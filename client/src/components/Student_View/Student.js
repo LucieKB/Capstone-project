@@ -1,5 +1,6 @@
 import React, {useState, useContext} from "react"
 import { UserContext } from "../../contexts/UserContext";
+import { GoalsContext } from "../../contexts/GoalsContext";
 import { useNavigate } from "react-router-dom"
 import ArchievedGoalCard from "./ArchievedGoalCard";
 import dateFormat from "dateformat";
@@ -10,8 +11,9 @@ import UnpaidGoals from "./UnpaidGoals";
 
 
 
-function Student({goals}){
+function Student(){
     const {user, setUser} = useContext(UserContext)
+    const {goals, setGoals} = useContext(GoalsContext)
     const [seeArchived, setSeeArchived] = useState(false)
     const [seeExpired, setSeeExpired] = useState(false)
     const [seeGoalForm, setSeeGoalForm] = useState(false)
@@ -22,7 +24,6 @@ function Student({goals}){
     
     const now = new Date()
     const today = dateFormat(now, "isoDateTime")
-    // const myGoals = goals.filter((goals) => goals.user_id === user.id)
     const myArchievedGoals = goals.filter((goal) => goal.achieved_by_parent === true || goal.achieved_by_educator === true)
     const myExpiredGoals=goals.filter((goal) =>{
         const deadline = dateFormat(goal.deadline, "isoDateTime")

@@ -34,14 +34,14 @@ class UsersController < ApplicationController
         render json: goals, status: :ok
     end
 
-    def only_my_student
-        user = User.find_by(id: session[:user_id])
-        byebug
-        if user.students.count > 0
-            students = user.students.map{|s| [s.username, s.goals]}.to_h
-            render json: students, status: :ok
-        end
-    end
+    # def only_my_student
+    #     user = User.find_by(id: session[:user_id])
+    #     byebug
+    #     if user.students.count > 0
+    #         students = user.students.map{|s| [s.username, s.goals]}.to_h
+    #         render json: students, status: :ok
+    #     end
+    # end
 
 
     private

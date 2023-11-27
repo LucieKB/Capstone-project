@@ -20,11 +20,8 @@ function App() {
 
   if (!user) return <GeneralLogin />
 
-  // const myGoals = goals.filter((goals) => goals.user_id === user.id)
-  // const myActiveGoals = myGoals.filter((goal) => goal.achieved_by_parent === false || goal.achieved_by_educator === false)
-
   console.log(goals)
-  // console.log(myGoals)
+  
 
   return(
     <>
@@ -33,7 +30,7 @@ function App() {
       <Routes>
         <Route exact path="/" element = {<Home />}/>
         <Route exact path="students/:id" element = {<MyStudent />} />
-        <Route exact path="students/:id/me" element = {<Student goals={goals}/>} />
+        <Route exact path="students/:id/me" element = {<Student />} />
         <Route exact path = "students/:id/goals" element = {<GoalList />} />
         <Route path = "/goals/new" element = {<NewGoalForm />} />
         <Route path = "users/mystudent" element = {<MyStudentsGoals />} />

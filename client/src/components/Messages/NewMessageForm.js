@@ -1,24 +1,33 @@
 import React, {useState, useContext} from "react";
 import { UserContext } from "../../contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 function NewMessageForm({goal, onAddNewMessage}){
     const {user, setUser} = useContext(UserContext)
-    const [myMessage, setMyMessage]=useState("")
+    const [goalValue, setGoalValue]=useState({messages:[]})
+    const [errors, setErrors] = useState([])
+    const navigate = useNavigate()
 
     const handleSubmitMessage = (e) =>{
         e.preventDefault()
-        fetch (`/goals/${goal.id}`, {
-            method: "POST",
+        console.log(goalValue)
+        fetch (`${goal.id}`, {
+            method: "PATCH",
             headers: {
                 "Content-Type": "application/json", 
                },
-               body: JSON.stringify({message: myMessage}),
+               body: JSON.stringify(goalValue),
     })
-    .then(r=>r.json())
-    .then ((newMessage) => {
-        onAddNewMessage(newMessage)});
+    .then((r) => {
+        if (r.ok) {
+        r.json().then((newMessage) => onAddNewMessage(newMessage));
+        } else {
+        r.json().then((err)=>setErrors(err.errors))
+        }
+    })
     
-    setMyMessage("")
+    setGoalValue("")
+    navigate(`${goal.id}`)
     }
 
     return(
@@ -29,9 +38,9 @@ function NewMessageForm({goal, onAddNewMessage}){
                 <input
                     type="text"
                     name="text"
-                    value={myMessage}
+                    value= {goalValue.messages}
                     placeholder="Write your comment here"
-                    onChange={(e)=>setMyMessage(e.target.value)}/>
+                    onChange={(e)=>setGoalValue({...goalValue, messages:e.target.value})}/>
             <br /> 
                 </ul>
                 <button>Submit my message</button>

@@ -14,9 +14,19 @@ function GoalCard(){
     const [errors, setErrors] = useState([]);
     const [buttonColor, setButtonColor] = useState("")
     const [showMessageForm, setShowMessageForm] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
+   
+    const navigate = useNavigate()
+
+    if(!goals){
+        setIsLoading(!isLoading)
+    }
+
     const goal = goals.find(goal => goal.id === parseInt(id))
     const [achieved, setAchieved] = useState (goal.achieved)
-    const navigate = useNavigate()
+    // useEffect(()=>{
+    //     const goal = goals.find(goal => goal.id === parseInt(id))
+    // }, [goals])
 
     useEffect(()=>{
         if (goal.validated_by_educator == true && goal.validated_by_parent == true){
@@ -59,22 +69,24 @@ function GoalCard(){
         });
         }
     
-     const handleShowMessageForm = () =>{
+    const handleShowMessageForm = () =>{
         setShowMessageForm(!showMessageForm)
      }  
      
-     const addMessageToGoal = (newMessage) =>{
-        const goalWithNewMessage = [...goal.messages, newMessage]
-        const copyGoalMessage = {...goal, messages:goalWithNewMessage}
-        if (copyGoalMessage.id === goal.id){
-            // return copyGoalMessage
-            setGoals({...goals, copyGoalMessage})
-        } else {
-            return goal
-        }
+    const addMessageToGoal = (goalWithMessage) =>{
+        const modifiedGoals = goals.map((goal)=>{
+            if (goal.id === goalWithMessage.id) {
+                return goalWithMessage;
+            } else {
+                return goal
+            }
+        })
+        const updatedGoals = {...goals, goalWithMessage};
+        setGoals(updatedGoals);
+        navigate(`/students/${user.id}/me`)
         }
      
-        const handleBackHome = () => {
+    const handleBackHome = () => {
             navigate(`/students/${user.id}/me`)
            }
    

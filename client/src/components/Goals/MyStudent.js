@@ -33,7 +33,7 @@ const goalsIValidated = myStudentActiveGoals.filter((g) => {
     }
 })
 
-const goalsINeedToPay = myStudentActiveGoals.filter((g) => {
+const goalsINeedToPay = myStudentGoals.filter((g) => {
     if ((user.type === "Parent" && g.achieved_by_parent === false) && g.achieved === true) {
         return g
     } else if ((user.type === "Educator" && g.achieved_by_educator === false) && g.achieved === true){
@@ -46,6 +46,9 @@ const goalsInTheWorks = myStudentActiveGoals.filter((g) => {
         return g
 }})
 
+console.log(goalsINeedToPay)
+console.log(goalsIValidated)
+
     return(
         <div>
             <h2>{student.username}'s goals</h2>
@@ -53,28 +56,36 @@ const goalsInTheWorks = myStudentActiveGoals.filter((g) => {
 <h3> 🛑 <u>Goals that I need to validate : </u></h3>
             {goalsINeedToValidate.map((goal) => {
                 return(
-                   <MyStudentgoalCard goal = {goal}/>  
+                    <div key={goal.id}>
+                   <MyStudentgoalCard goal = {goal}/> 
+                   </div> 
                 )
             })}
 
 <h3> ⚙️ <u>Goals that I validated but awaiting validation from the other adult : </u></h3>
             {goalsIValidated.map((goal) => {
                 return(
-                   <MyStudentgoalCard goal = {goal}/>  
+                    <div key={goal.id}>
+                   <MyStudentgoalCard goal = {goal}/> 
+                   </div>  
                 )
             })}
 
 <h3> ⚙️⚙️ <u>Goals that {student.username} is currently working on : </u></h3>
             {goalsInTheWorks.map((goal) => {
                 return(
-                   <MyStudentgoalCard goal = {goal}/>  
+                    <div key={goal.id}>
+                   <MyStudentgoalCard goal = {goal}/> 
+                   </div>  
                 )
             })}
 
 <h3> 💰 <u>Goals that {student.username} achieved but that I haven't paid yet : </u></h3>
             {goalsINeedToPay.map((goal) => {
                 return(
-                   <MyStudentgoalCard goal = {goal}/>  
+                    <div key={goal.id}>
+                   <MyStudentgoalCard goal = {goal}/> 
+                   </div>  
                 )
             })}
            

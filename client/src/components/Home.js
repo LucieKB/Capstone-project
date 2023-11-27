@@ -10,7 +10,6 @@ import Avatar from "./Avatars/Avatar"
 function Home(){
     const {user, setUser} = useContext(UserContext)
     const {goals, setGoals} = useContext(GoalsContext)
-    // const [goals, setGoals] = useState([])
     const [showStudentForm, setShowStudentForm] = useState(false)
     const [showButtonAddStudent, setShowButtonAddStudent] = useState(false)
     const [showAddEducatorId, setShowAddEducatorId] = useState(false)
@@ -64,12 +63,7 @@ function Home(){
             <img src={user.avatar} height={"150px"}/>
             {showButtonAddStudent?
            (<button onClick = {handleRegisterStudent}>Register a Child</button>):(null)
-            }
-
-            {/* {showStudentHome?
-            (<button onClick={(handleShowHome)}>I'm ready to reach my goals !</button>):(null)
-            }    */}
-        
+            }        
             
             {showStudentForm?
             (<StudentSignUpForm parentId={user.id} setShowStudentForm={setShowStudentForm} showStudentForm={showStudentForm}/>):

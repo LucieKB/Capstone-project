@@ -1,13 +1,15 @@
 Rails.application.routes.draw do
+  resources :rewards
   resources :avatars
    
   resources :goals
+ 
   
   resources :schools, only: :index
 
   resources :users, only: [:index, :show, :create]
   get "users/:id/mygoals", to: "users#user_and_goals"
-  get "/mystudent", to: "users#only_my_student"
+  # get "/mystudent", to: "users#only_my_student"
 
   # resources :parents do
   #   collection do
@@ -23,12 +25,6 @@ Rails.application.routes.draw do
   
 
   resources :educators
-  
-  
-
-  resources :goals do 
-    resources :messages, only: [:index, :show, :create]
-  end
 
   resources :students do
     resources :goals, only: [:index, :show, :create, :update]
@@ -47,6 +43,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   # Rails.application.routes.draw do
+  resources :rewards
   resources :avatars
   # resources :schools
   # resources :users
