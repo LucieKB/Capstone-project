@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import { useParams} from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import MyStudentgoalCard from "./MyStudentGoalCard";
@@ -10,10 +10,20 @@ function MyStudent(){
     const student = user.students.find(student => student.id === parseInt(id))
     const now = new Date()
     const today = dateFormat(now, "isoDateTime")
+    const [otherAdult, setOtherAdult] = useState("")
     const myStudentGoals = student.goals
     const myStudentActiveGoals = myStudentGoals.filter((goal)=>{
         const deadline = dateFormat(goal.deadline, "isoDateTime")
         return(goal.achieved === false && deadline>today)
+    })
+
+    useEffect(()=>{
+        if (user.type === "Parent"){
+            setOtherAdult(" my child's teacher")
+        }
+        else if (user.type === "Educator"){
+            setOtherAdult(" my student's parent")
+        }
     })
 
 
@@ -46,8 +56,7 @@ const goalsInTheWorks = myStudentActiveGoals.filter((g) => {
         return g
 }})
 
-console.log(goalsINeedToPay)
-console.log(goalsIValidated)
+
 
     return(
         <div>
@@ -62,7 +71,7 @@ console.log(goalsIValidated)
                 )
             })}
 
-<h3> ⚙️ <u>Goals that I validated but awaiting validation from the other adult : </u></h3>
+<h3> ⚙️ <u>Goals that I validated but awaiting validation from {otherAdult} : </u></h3>
             {goalsIValidated.map((goal) => {
                 return(
                     <div key={goal.id}>

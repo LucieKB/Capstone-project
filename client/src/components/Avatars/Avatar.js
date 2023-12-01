@@ -7,27 +7,36 @@ import Head4 from "./images/Head4.png";
 import Ears1 from "./images/Ears1.png";
 import Ears2 from "./images/Ears2.png";
 import Ears3 from "./images/Ears3.png";
+import Ears4 from "./images/Ears4.png";
 import Eyes1 from "./images/Eyes1.png";
 import Eyes2 from "./images/Eyes2.png";
 import Eyes3 from "./images/Eyes3.png";
 import Eyes4 from "./images/Eyes4.png";
+import Eyes5 from "./images/Eyes5.png";
 import EyeBrows1 from "./images/EyeBrows1.png";
 import EyeBrows2 from "./images/EyeBrows2.png";
 import EyeBrows3 from "./images/EyeBrows3.png";
+import EyeBrows4 from "./images/EyeBrows4.png";
 import Nose1 from "./images/Nose1.png";
 import Nose2 from "./images/Nose2.png";
 import Nose3 from "./images/Nose3.png";
+import Nose4 from "./images/Nose4.png";
+import Nose5 from "./images/Nose5.png";
 import Mouth1 from "./images/Mouth1.png";
 import Mouth2 from "./images/Mouth2.png";
 import Mouth3 from "./images/Mouth3.png";
+import Mouth4 from "./images/Mouth4.png";
 import Hair1 from "./images/Hair1.png";
 import Hair2 from "./images/Hair2.png";
 import Hair3 from "./images/Hair3.png";
 import Hair4 from "./images/Hair4.png";
+import Acc0 from "./images/Acc0.png";
 import Acc1 from "./images/Acc1.png";
 import Acc2 from "./images/Acc2.png";
 import Acc3 from "./images/Acc3.png";
 import Acc4 from "./images/Acc4.png";
+import Acc5 from "./images/Acc5.png";
+import Acc6 from "./images/Acc6.png";
 import html2canvas from 'html2canvas';
 import ReactDOM from "react-dom";
 import "./Avatar.css"
@@ -63,35 +72,35 @@ function Avatar(){
         setShowEars(!showEars)
     }
 
-    const allEars = [Ears1, Ears2, Ears3];
+    const allEars = [Ears1, Ears2, Ears3, Ears4];
     const handleChangeEars = (e) =>{
         setEars(e.target.value);
         setShowEars(!showEars)
         setShowEyes (!showEyes)
     }
 
-    const allEyes = [Eyes1, Eyes2, Eyes3, Eyes4];
+    const allEyes = [Eyes1, Eyes2, Eyes3, Eyes4, Eyes5];
     const handleChangeEyes = (e) =>{
         setEyes(e.target.value);
         setShowEyes(!showEyes)
         setShowEyeBrows(!showEyeBrows)
     }
 
-    const allEyeBrows = [EyeBrows1, EyeBrows2, EyeBrows3];
+    const allEyeBrows = [EyeBrows1, EyeBrows2, EyeBrows3, EyeBrows4];
     const handleChangeEyeBrows = (e) =>{
         setEyeBrows(e.target.value);
         setShowEyeBrows(!showEyeBrows)
         setShowNose(!showNose)
     }
 
-    const allNoses = [Nose1, Nose2, Nose3]
+    const allNoses = [Nose1, Nose2, Nose3, Nose4, Nose5]
     const handleChangeNose = (e) =>{
         setNose(e.target.value);
         setShowNose(!showNose)
         setShowMouth(!showMouth)
     }
 
-    const allMouths = [Mouth1, Mouth2, Mouth3]
+    const allMouths = [Mouth1, Mouth2, Mouth3, Mouth4]
     const handleChangeMouth = (e) =>{
         setMouth(e.target.value);
         setShowMouth(!showMouth)
@@ -105,7 +114,7 @@ function Avatar(){
         setShowAccessories(!showAccessories)
     }
 
-    const allAccessories = [Acc1, Acc2, Acc3, Acc4]
+    const allAccessories = [Acc0, Acc1, Acc2, Acc3, Acc4, Acc5, Acc6]
     const handleChangeAcc = (e) =>{
         setAccessories(e.target.value)
         setShowAccessories(!showAccessories)
@@ -184,8 +193,16 @@ function Avatar(){
         <div>
             <form >
                 {showHeads?
-                (<div>
+                (<div
+               
+                >
                     <p>Choose a head: </p>
+                    <div  style = {{
+                    width: "fit-content",
+                    heigth: "fit-content",
+                    display: "flex",
+                    flexDirection: "row"
+                }}>
                     {allHeads.map((h)=>
                     <div key={h}>
                         <input
@@ -197,7 +214,8 @@ function Avatar(){
                         />
                         <img src={h} className="radio-btn"/>
                     </div>
-                    )}  
+                    )}
+                    </div>  
                 </div>):
                 (null)
                 }
@@ -205,6 +223,12 @@ function Avatar(){
                 {showEars?
                 (<div>
                     <p>Choose ears: </p>
+                    <div  style = {{
+                    width: "fit-content",
+                    heigth: "fit-content",
+                    display: "flex",
+                    flexDirection: "row"
+                }}>
                     {allEars.map((e)=>
                     <div key={e} >
                         <input
@@ -216,7 +240,8 @@ function Avatar(){
                         />
                         <img src={e} className="radio-btn"/>
                     </div>
-                    )}  
+                    )}
+                    </div>  
                 </div>):
                 (null)
                 }   
@@ -224,6 +249,12 @@ function Avatar(){
                 {showEyes?
                 (<div>
                     <p>Choose eyes: </p>
+                    <div  style = {{
+                    width: "fit-content",
+                    heigth: "fit-content",
+                    display: "flex",
+                    flexDirection: "row"
+                }}>
                     {allEyes.map((ey)=>
                     <div key={ey}>
                         <input
@@ -235,7 +266,8 @@ function Avatar(){
                         />
                         <img src={ey} className="radio-btn"/>
                     </div>
-                    )}  
+                    )}
+                    </div>  
                 </div>):
                 (null)
                 }    
@@ -243,6 +275,12 @@ function Avatar(){
                 {showEyeBrows?
                 (<div>
                     <p>Choose eyebrows: </p>
+                    <div  style = {{
+                    width: "fit-content",
+                    heigth: "fit-content",
+                    display: "flex",
+                    flexDirection: "row"
+                }}>
                     {allEyeBrows.map((eb)=>
                     <div key={eb}>
                         <input
@@ -254,7 +292,7 @@ function Avatar(){
                         />
                         <img src={eb} className="radio-btn"/>
                     </div>
-                    )}  
+                    )} </div> 
                 </div>):
                 (null)
                 }    
@@ -262,6 +300,12 @@ function Avatar(){
                 {showNose?
                 (<div>
                     <p>Choose nose: </p>
+                    <div  style = {{
+                    width: "fit-content",
+                    heigth: "fit-content",
+                    display: "flex",
+                    flexDirection: "row"
+                }}>
                     {allNoses.map((n)=>
                     <div key={n}>
                         <input
@@ -273,7 +317,7 @@ function Avatar(){
                         />
                         <img src={n} className="radio-btn"/>
                     </div>
-                    )}  
+                    )}</div>  
                 </div>):
                 (null)
                 }     
@@ -281,6 +325,12 @@ function Avatar(){
                 {showMouth?
                 (<div>
                     <p>Choose mouth: </p>
+                    <div  style = {{
+                    width: "fit-content",
+                    heigth: "fit-content",
+                    display: "flex",
+                    flexDirection: "row"
+                }}>
                     {allMouths.map((m)=>
                     <div key={m}>
                         <input
@@ -292,7 +342,7 @@ function Avatar(){
                         />
                         <img src={m} className="radio-btn"/>
                     </div>
-                    )}  
+                    )}</div>  
                 </div>):
                 (null)
                 }   
@@ -300,6 +350,12 @@ function Avatar(){
                 {showHair?
                 (<div>
                     <p>Choose hair: </p>
+                    <div  style = {{
+                    width: "fit-content",
+                    heigth: "fit-content",
+                    display: "flex",
+                    flexDirection: "row"
+                }}>
                     {allHair.map((h)=>
                     <div key={h}>
                         <input
@@ -311,7 +367,7 @@ function Avatar(){
                         />
                         <img src={h} className="radio-btn"/>
                     </div>
-                    )}  
+                    )}</div>  
                 </div>):
                 (null)
                 }                                                  
@@ -319,6 +375,12 @@ function Avatar(){
                 {showAccessories?
                 (<div>
                     <p>Choose an Accessory: </p>
+                    <div  style = {{
+                    width: "fit-content",
+                    heigth: "fit-content",
+                    display: "flex",
+                    flexDirection: "row"
+                }}>
                     {allAccessories.map((a)=>
                     <div key={a}>
                         <input
@@ -330,7 +392,7 @@ function Avatar(){
                         />
                         <img src={a} className="radio-btn"/>
                     </div>
-                    )}  
+                    )}</div>  
                 </div>):
                 (null)
                 }

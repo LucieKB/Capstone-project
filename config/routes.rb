@@ -17,9 +17,9 @@ Rails.application.routes.draw do
   #   end
   # end
 
-  resources :parents do
+  # resources :users do
     patch "/payment/:student_id/goals/:id", to: "students#update_payment"
-  end
+  # end
 
   patch "parents/students/:student_id/goals/:id", to: "goals#update"
   
@@ -44,6 +44,8 @@ Rails.application.routes.draw do
   # root "posts#index"
   # Rails.application.routes.draw do
   resources :rewards
+  patch "rewards/:id/buy", to:"rewards#buy_reward"
+
   resources :avatars
   # resources :schools
   # resources :users

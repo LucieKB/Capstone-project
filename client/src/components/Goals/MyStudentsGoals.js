@@ -1,26 +1,35 @@
 import React, {useState, useContext} from "react";
 import { UserContext } from "../../contexts/UserContext";
-import MyStudentGoalCard from "./MyStudentGoalCard";
-import MyStudentgoalCard from "./MyStudentGoalCard";
-import MyStudent from "./MyStudent";
 import { useNavigate } from "react-router-dom";
-
-
+import dateFormat from "dateformat";
 
 function MyStudentsGoals(){
     const {user, setUser} = useContext(UserContext)
     const [showGoals, setShowGoals] = useState(false)
-    
     const navigate = useNavigate()
+    const now = new Date()
+    const today = dateFormat(now, "isoDateTime")
  
 const userStudents = user.students
 
-
-
     const myStudents = userStudents.map((student)=>{
+        const myStudentGoals = student.goals
+        console.log(myStudentGoals)
+        const myStudentActiveGoals = myStudentGoals.filter((goal)=>{
+            const deadline = dateFormat(goal.deadline, "isoDateTime")
+            if(user.type === "Parent"){
+                return goal.achieved_by_parent === false && deadline>today
+            }
+            else if(user.type === "Educator"){
+                return goal.achieved_by_educator === false && deadline>today
+            }
+        
+    })
+
+        console.log(myStudentActiveGoals)
         return(
         <ul key={student.id}>
-        <button onClick={()=>{navigate(`/students/${student.id}`)}}> {student.username} has {student.goals.length} goals.</button>
+        <button onClick={()=>{navigate(`/students/${student.id}`)}}> {student.username} has {myStudentActiveGoals.length} goals.</button>
         </ul>
         )
     })

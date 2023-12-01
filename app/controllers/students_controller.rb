@@ -27,7 +27,7 @@ class StudentsController < UsersController
         goal = student.goals.find_by(id: params[:id])
         goal.update!(goal_params)
         value = goal.value
-        student.wallet += value/2
+        student.wallet += value/2.0
         student.update!(payment_params)
         render json: goal, status: :accepted
     end
@@ -35,7 +35,7 @@ class StudentsController < UsersController
     private
 
     def student_params
-        params.permit(:username, :password, :password_confirmation, :email, :type, :avatar, :grade, :school, :wallet, :parent_id, :educator_id)
+        params.permit(:id, :username, :password, :password_confirmation, :email, :type, :avatar, :grade, :school, :wallet, :parent_id, :educator_id, :student_id)
     end
 
     def payment_params
@@ -43,7 +43,7 @@ class StudentsController < UsersController
     end
 
     def goal_params
-        params.permit(:achieved_by_educator, :achieved_by_parent)
+        params.permit(:id, :achieved_by_educator, :achieved_by_parent)
     end
 
     def render_not_found_response

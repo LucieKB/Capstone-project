@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import LoginForm from "./LoginForm";
 import SignUpHomePage from "./SignUpHomePage";
+import RewardsList from "./Rewards/RewardsList";
 
 function GeneralLogin(){
     const [showLogin, setShowLogin] = useState(false)
@@ -24,6 +25,9 @@ return(
                 </div>
             </div>)
         }
+        {/* <div>
+            <RewardsList />
+        </div> */}
     </div>
 )    
 

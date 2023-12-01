@@ -1,0 +1,20 @@
+table {
+    border-spacing: 0;
+    border: 1px solid black;
+}
+
+ 
+    
+td {
+      padding: 0.5rem;
+      border-bottom: 1px solid black;
+      border-right: 1px solid black;
+ 
+}
+   
+th {
+      background: green;
+      border-bottom: 3px solid blue;
+      color: white;  
+}
+  

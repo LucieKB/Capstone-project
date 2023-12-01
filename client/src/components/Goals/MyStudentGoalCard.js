@@ -54,27 +54,51 @@ function MyStudentgoalCard({goal}){
 
 
     const onUpdategoal = (updatedgoal) =>{
-        const modifiedgoal = 
-        goal.id == updatedgoal.id?
-            ( updatedgoal) : (goal)
-        const updatedStudent = {...student, goals: modifiedgoal }
-        setUser({...user, students: updatedStudent})
-        setGoals(...goals, modifiedgoal)  
+        const modifiedgoal = student.goals.map((goal)=>{
+            if(goal.id === updatedgoal.id){
+                return updatedgoal
+            }else{
+                return goal
+            }
+            })
+        setGoals(modifiedgoal)
+        
+        const updatedStudent = [...student.goals, modifiedgoal] 
+        const updatedStudents = user.students.map((student) =>{
+        if (updatedStudent.id === student.id){
+            return updatedStudent
+        } else {
+            return student
+        }
+        })
+        setUser({...user, students: updatedStudents}) 
     }
 
     const onPayGoal = (updatedGoal) =>{
-        const modifiedgoal = 
-        goal.id == updatedGoal.id?
-            ( updatedGoal) : (goal)
-        const updatedStudent = {...student, goals: modifiedgoal}
-        setUser({...user, students: updatedStudent})
-        setGoals({...goals, modifiedgoal})
+        const modifiedgoal = student.goals.map((goal)=>{
+            if(goal.id === updatedGoal.id){
+                return updatedGoal
+            }else{
+                return goal
+            }
+            })
+        setGoals(modifiedgoal);
+
+        const updatedStudent = [...student.goals, modifiedgoal] 
+        const updatedStudents = user.students.map((student) =>{
+        if (updatedStudent.id === student.id){
+            return updatedStudent
+        } else {
+            return student
+        }
+        })
+        setUser({...user, students: updatedStudents})  
         
     }
 
     function handlePay(){
         if (user.type === "Parent"){
-        fetch(`/parents/${user.id}/payment/${student.id}/goals/${goal.id}`, {
+        fetch(`/payment/${student.id}/goals/${goal.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json", 
@@ -108,7 +132,7 @@ function MyStudentgoalCard({goal}){
                 }   
             });
         }
-        
+       navigate(`/students/${student.id}`) 
     }
     
     const handleShowMessageForm = () =>{
@@ -152,6 +176,7 @@ function MyStudentgoalCard({goal}){
         }
         else if (user.type === "Educator"){
             console.log("clicked")
+            debugger
             fetch(`${student.id}/goals/${goal.id}`, {
                 method: "PATCH",
                 headers: {

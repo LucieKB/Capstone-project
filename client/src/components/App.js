@@ -12,6 +12,13 @@ import GoalCard from "./Student_View/GoalCard";
 import MyStudent from "./Goals/MyStudent";
 import Student from "./Student_View/Student";
 import Avatar from "./Avatars/Avatar";
+import RewardsList from "./Rewards/RewardsList";
+import NewRewardForm from "./Rewards/NewRewardForm";
+import BoughtItemsList from "./Rewards/BoughtItemsList";
+import SMARTGoals from "./Home/SMARTGoals";
+import SetAGoal from "./Home/SetAGoal";
+import RewardsExplained from "./Home/RewardsExplained";
+import MarketPlaceExplained from "./Home/MarketPlaceExplained";
 
 function App() {
   const {user, setUser} = useContext(UserContext)
@@ -19,8 +26,10 @@ function App() {
   
 
   if (!user) return <GeneralLogin />
-
+  
+  console.log(user)
   console.log(goals)
+  
   
 
   return(
@@ -29,14 +38,20 @@ function App() {
     <main>
       <Routes>
         <Route exact path="/" element = {<Home />}/>
-        <Route exact path="students/:id" element = {<MyStudent />} />
-        <Route exact path="students/:id/me" element = {<Student />} />
-        <Route exact path = "students/:id/goals" element = {<GoalList />} />
+        <Route exact path="/students/:id" element = {<MyStudent />} />
+        <Route exact path="/students/:id/me" element = {<Student />} />
+        <Route exact path = "/students/:id/goals" element = {<GoalList />} />
         <Route path = "/goals/new" element = {<NewGoalForm />} />
-        <Route path = "users/mystudent" element = {<MyStudentsGoals />} />
-        {/* <Route path = "/students/:student_id/goals/:id" element = {<MyStudentGoalCard />} />  */}
+        <Route path = "/users/mystudent" element = {<MyStudentsGoals />} />
         <Route path = "/goals/:id" element = {<GoalCard />} />
         <Route path = "/students/avatar" element = {<Avatar />} />
+        <Route path = "/rewards" element = {<RewardsList />} />
+        <Route path = "/rewards/new" element = {<NewRewardForm />} />
+        <Route path = "/students/:id/myItems" element = {<BoughtItemsList />} />
+        <Route path = "/smartGoals" element = {<SMARTGoals />}/>
+        <Route path = "/setAGoal" element = {<SetAGoal />} />
+        <Route path = "rewardsExplained" element ={<RewardsExplained />} />
+        <Route path = "/marketPlaceExplained" element ={<MarketPlaceExplained />} />
       </Routes>
     </main>
     </>

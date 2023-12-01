@@ -13,14 +13,14 @@ import UnpaidGoals from "./UnpaidGoals";
 
 function Student(){
     const {user, setUser} = useContext(UserContext)
-    const {goals, setGoals} = useContext(GoalsContext)
+    // const {goals, setGoals} = useContext(GoalsContext)
     const [seeArchived, setSeeArchived] = useState(false)
     const [seeExpired, setSeeExpired] = useState(false)
     const [seeGoalForm, setSeeGoalForm] = useState(false)
     const [seeActiveGoals, setSeeActiveGoals] = useState(false) //doesn't work when set on true
     const [seeUnpaidGoals, setSeeUnpaidGoals] = useState(false)
     const navigate = useNavigate()
-
+    const goals=user.goals
     
     const now = new Date()
     const today = dateFormat(now, "isoDateTime")
@@ -101,7 +101,7 @@ function Student(){
             ):(null)}
 
             {seeActiveGoals?
-            ( <GoalList goals={myActiveGoals}/>
+            ( navigate(`/students/${user.id}/goals`)
             ):(null)}
 
             {seeArchived?

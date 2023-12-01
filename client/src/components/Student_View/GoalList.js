@@ -2,21 +2,27 @@ import React, {useState, useEffect, useContext} from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import { GoalsContext } from "../../contexts/GoalsContext";
+import dateFormat from "dateformat";
 
 
 
-function GoalList({goals}){
+function GoalList(){
     const [validatedGoals, setValidatedGoals] = useState([])
     const [halfValidatedGoals, setHalfValidatedGoals] = useState([])
     const [notValidatedGoals, setNotValidatedGoals] = useState([])
     const {user, setUser} = useContext(UserContext)
-    // const {goals, setGoals} = useContext(GoalsContext)
+    const {goals, setGoals} = useContext(GoalsContext)
     const navigate = useNavigate()
-
+console.log(goals)
     const myGoals = goals.filter((goal) => goal.user_id === user.id)
+    const now = new Date()
+    const today = dateFormat(now, "isoDateTime")
     console.log(myGoals)
-    const myActiveGoals = myGoals.filter((goal) => goal.achieved_by_parent === false || goal.achieved_by_educator === false)
-    
+    // const myActiveGoals = myGoals.filter((goal) => goal.achieved_by_parent === false || goal.achieved_by_educator === false)
+    const myActiveGoals = goals.filter((goal)=>{
+        const deadline = dateFormat(goal.deadline, "isoDateTime")
+        return(goal.achieved === false && deadline>today)
+    })
     
     useEffect(() => {
             const zeroValidation = [];
@@ -39,13 +45,14 @@ function GoalList({goals}){
         setValidatedGoals(twoValidations)
     }, [])
 
-//    const handleBackHome = () => {
-//     navigate("/")
-//    }
+    const handleBackHome = () => {
+        navigate(`/students/${user.id}/me`)
+       }
 
 
     return(
         <div>
+            <button onClick={handleBackHome}> 🔙 </button>
             <h2>List of My Goals</h2>
             {/* <button onClick={handleBackHome}> 🔙 </button> */}
             <div>

@@ -4,14 +4,14 @@ import { useNavigate } from "react-router-dom";
 
 function NewMessageForm({goal, onAddNewMessage}){
     const {user, setUser} = useContext(UserContext)
-    const [goalValue, setGoalValue]=useState({messages:[]})
+    const [goalValue, setGoalValue]=useState({...goal, messages:[]}) //added ..goal??
     const [errors, setErrors] = useState([])
     const navigate = useNavigate()
 
     const handleSubmitMessage = (e) =>{
         e.preventDefault()
         console.log(goalValue)
-        fetch (`${goal.id}`, {
+        fetch (`/goals/${goal.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json", 
@@ -20,7 +20,7 @@ function NewMessageForm({goal, onAddNewMessage}){
     })
     .then((r) => {
         if (r.ok) {
-        r.json().then((newMessage) => onAddNewMessage(newMessage));
+        r.json().then((newMessage) => console.log(newMessage));
         } else {
         r.json().then((err)=>setErrors(err.errors))
         }
@@ -28,6 +28,11 @@ function NewMessageForm({goal, onAddNewMessage}){
     
     setGoalValue("")
     navigate(`${goal.id}`)
+    }
+
+    const handleSetMessages =(e) =>{
+        const newMessages = [...goal.messages, e.target.value]
+        setGoalValue({...goalValue, messages:newMessages})
     }
 
     return(
@@ -40,7 +45,9 @@ function NewMessageForm({goal, onAddNewMessage}){
                     name="text"
                     value= {goalValue.messages}
                     placeholder="Write your comment here"
-                    onChange={(e)=>setGoalValue({...goalValue, messages:e.target.value})}/>
+                    onChange={(e)=>handleSetMessages
+                        // ...goalValue, messages:[...messages, e.target.value]
+                        }/>
             <br /> 
                 </ul>
                 <button>Submit my message</button>

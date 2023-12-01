@@ -1,11 +1,13 @@
 import React, {useState, useContext} from "react";
 import { UserContext } from "../../contexts/UserContext";
+import { GoalsContext } from "../../contexts/GoalsContext"
 import { useNavigate } from "react-router-dom";
 import Star from "./Star";
 
 
 function NewGoalForm(){
     const {user, setUser} = useContext(UserContext)
+    const {goals, setGoals} = useContext(GoalsContext)
     const [formData, setFormData]=useState({
         goal_category : (""),
         title: (""),
@@ -19,7 +21,7 @@ function NewGoalForm(){
         achieved_by_parent: (false)
       })
 
-    const goals = user.goals
+    // const goals = user.goals
 
     const categories = ["Ready", "Respectful", "Responsible", "Academic", "Other"]
     const navigate = useNavigate()
@@ -58,6 +60,7 @@ console.log(formData)
         })
             .then(r=>r.json())
             .then ((newGoal) => {
+                // setGoals({...goals, newGoal})
                 setUser({...user, goals:[...goals, newGoal]});
                 
                 setFormData({

@@ -41,14 +41,18 @@ function GoalCard(){
     }, [goal.achieved])
 
     const onUpdategoal = (updatedgoal) =>{
-        const modifiedgoal = 
-        goal.id == updatedgoal.id?
-            ( updatedgoal) : (goal)
-        setGoals({...goals, modifiedgoal})
+        const modifiedgoal = user.goals.map((goal)=>{
+            if(goal.id === updatedgoal.id){
+                return updatedgoal
+            }else{
+                return goal
+            }
+            })
+        setGoals(modifiedgoal)
         setUser({...user, goals: modifiedgoal})   
     }
 
-    console.log(goal)
+    
 
     function handleGoalAchieved(){
         fetch(`${goal.id}`, {
@@ -67,6 +71,7 @@ function GoalCard(){
             }
             
         });
+        navigate(`/students/${user.id}/me`)
         }
     
     const handleShowMessageForm = () =>{
@@ -85,12 +90,10 @@ function GoalCard(){
         setGoals(updatedGoals);
         navigate(`/students/${user.id}/me`)
         }
-     
-    const handleBackHome = () => {
-            navigate(`/students/${user.id}/me`)
+
+        const handleBackHome = () => {
+            navigate(`/students/${user.id}/goals`)
            }
-   
-        
 
     return(
         <div>

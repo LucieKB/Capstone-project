@@ -128,7 +128,7 @@ function StudentSignUpForm(parentId){
                 onChange={(e) => {
                     setSchoolSearch(e.target.value)
                     const mySchool = schools.filter((school) => {
-                    return school.toLowerCase().includes(schoolSearch.toLowerCase()) //Work on letter by letter
+                    return school.toLowerCase().includes(schoolSearch.toLowerCase()) 
                 })
                 console.log('mySchool', mySchool)
                 setSchoolSuggestions(mySchool)
@@ -156,11 +156,11 @@ function StudentSignUpForm(parentId){
             </label>
           </div>
 
-          <div className="form-wrapper">
+          {/* <div className="form-wrapper">
             <Link to="students/avatar">
             <strong><u>Create My Avatar</u></strong>
             </Link> 
-          </div>
+          </div> */}
 
           <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>   
           <label style={{color:"red"}}>

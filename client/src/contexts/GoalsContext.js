@@ -3,7 +3,7 @@ import React, { useState, useEffect, createContext } from 'react';
 const GoalsContext = createContext();
 
 const GoalsProvider = ({children}) =>{
-    const [goals, setGoals] = useState(null);
+    const [goals, setGoals] = useState([]);
     
     useEffect(()=>{
         fetch (`/goals`).then((r)=> {

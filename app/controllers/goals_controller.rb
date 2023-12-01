@@ -50,12 +50,9 @@ class GoalsController < ApplicationController
     private
 
     def goal_params
-        params.permit(:id, :goal_category, :title, :description, :user_id, :deadline, :achieved, :value, :validated_by_educator, :validated_by_parent, :achieved_by_educator, :achieved_by_parent, :messages)
+        params.permit(:id, :goal_category, :title, :created_at, :description, :user_id, :deadline, :achieved, :value, :validated_by_educator, :validated_by_parent, :achieved_by_educator, :achieved_by_parent, :messages)
     end
 
-    def payment_params
-        params.permit(:achieved_by_educator, :achieved_by_parent)
-    end
 
     def render_not_found_response
         render json: "Goal not found", status: :not_found

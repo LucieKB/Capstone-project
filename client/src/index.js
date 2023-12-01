@@ -6,6 +6,7 @@ import reportWebVitals from './components/reportWebVitals';
 import { BrowserRouter as Router } from "react-router-dom";
 import { UserProvider } from "./contexts/UserContext";
 import { GoalsProvider } from './contexts/GoalsContext';
+import { RewardsProvider } from './contexts/RewardsContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -13,9 +14,11 @@ root.render(
   <React.StrictMode>
     <GoalsProvider>
     <UserProvider>
+    <RewardsProvider>
     
     <App />
     
+    </RewardsProvider>
     </UserProvider>
     </GoalsProvider>
   </React.StrictMode>
