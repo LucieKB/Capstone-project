@@ -2,7 +2,7 @@ import React, {useState, useContext, useEffect} from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 
-function NewMessageForm({goal, onAddNewMessage}){
+function ParentMessageForm({goal, onAddNewMessage}){
     const {user, setUser} = useContext(UserContext)
     const [newContent, setNewContent]=useState("")
     const [newRecipient, setNewRecipient] = useState("")
@@ -11,27 +11,24 @@ function NewMessageForm({goal, onAddNewMessage}){
     const navigate = useNavigate()
 
     useEffect(()=>{
-        // if (user.type === "Parent" || user.type === "Educator"){
-        //     const possibleRecipients = user.students.map((s)=> s.username)
-        //     setRecipients(possibleRecipients)
-        // }
-        // if (user.type === "Parent"){
-        //     const student_id = goal.user_id
-        //     fetch (`/parents/${student_id}/mycontacts`).then((r)=> {
-        //         if (r.ok) {
-        //           r.json().then((names)=>{
-        //             console.log(names)
-        //             setRecipients(names)})
-        //         }
-        //     })}
-        if (user.type === "Student"){
-           fetch (`/students/${user.id}/myadults`).then((r)=> {
-            if (r.ok) {
-              r.json().then((names)=>{
-                console.log(names)
-                setRecipients(names)})
-            }
-        })};
+        if (user.type === "Parent"){
+            const student_id = goal.user_id
+            fetch (`/parents/${student_id}/mycontacts`).then((r)=> {
+                if (r.ok) {
+                  r.json().then((names)=>{
+                    console.log(names)
+                    setRecipients(names)})
+                }
+            })}
+        else if (user.type === "Educator"){
+            const student_id = goal.user_id
+            fetch (`/educators/${student_id}/mycontacts`).then((r)=> {
+                if (r.ok) {
+                  r.json().then((names)=>{
+                    console.log(names)
+                    setRecipients(names)})
+                }
+            })}
     }, []);
 
       const handleChangeRecipient = (e) =>{
@@ -40,7 +37,7 @@ function NewMessageForm({goal, onAddNewMessage}){
 
     const handleSubmitMessage = (e) =>{
         e.preventDefault()
-        console.log(newRecipient)
+        const student_id = goal.user_id
         const messageData ={
             content:newContent,
             recipient:newRecipient,
@@ -63,8 +60,8 @@ function NewMessageForm({goal, onAddNewMessage}){
     })
     
     setNewContent("");
-    setRecipients([]);
-    navigate(`/goals/${goal.id}`)
+    // setRecipients([]);
+    navigate(`/parents/${user.id}/students/${student_id}`)
     }
 
   
@@ -73,7 +70,7 @@ function NewMessageForm({goal, onAddNewMessage}){
         <div>
             <form onSubmit={handleSubmitMessage}>
                 <ul>
-                <strong><u> Message : </u>&nbsp;</strong>
+                <strong><u> Message :</u></strong>&nbsp;
                 <input
                     type="text"
                     name="text"
@@ -101,4 +98,4 @@ function NewMessageForm({goal, onAddNewMessage}){
     )
 }
 
-export default NewMessageForm;
+export default ParentMessageForm;

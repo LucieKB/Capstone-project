@@ -5,7 +5,6 @@ import dateFormat from "dateformat";
 
 function MyStudentsGoals(){
     const {user, setUser} = useContext(UserContext)
-    const [showGoals, setShowGoals] = useState(false)
     const navigate = useNavigate()
     const now = new Date()
     const today = dateFormat(now, "isoDateTime")
@@ -29,7 +28,7 @@ const userStudents = user.students
         console.log(myStudentActiveGoals)
         return(
         <ul key={student.id}>
-        <button onClick={()=>{navigate(`/students/${student.id}`)}}> {student.username} has {myStudentActiveGoals.length} goals.</button>
+        <button onClick={()=>{navigate(`/parents/${user.id}/students/${student.id}`)}}> {student.username} has {myStudentActiveGoals.length} goals.</button>
         </ul>
         )
     })

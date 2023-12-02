@@ -19,6 +19,8 @@ import SMARTGoals from "./Home/SMARTGoals";
 import SetAGoal from "./Home/SetAGoal";
 import RewardsExplained from "./Home/RewardsExplained";
 import MarketPlaceExplained from "./Home/MarketPlaceExplained";
+import MyStudentGoalCard from "./Goals/MyStudentGoalCard";
+import MyStudentGoalsList from "./Goals/MyStudentGoalsList";
 
 function App() {
   const {user, setUser} = useContext(UserContext)
@@ -38,11 +40,13 @@ function App() {
     <main>
       <Routes>
         <Route exact path="/" element = {<Home />}/>
-        <Route exact path="/students/:id" element = {<MyStudent />} />
+        <Route exact path="/parents/:id/students/:student_id" element = {<MyStudent />} />
         <Route exact path="/students/:id/me" element = {<Student />} />
         <Route exact path = "/students/:id/goals" element = {<GoalList />} />
+        {/* <Route exact path = "/parents/:id/students/:student_id/goals" element = {<MyStudentGoalsList />} /> */}
+        <Route exact path = "/parents/:id/students/:student_id/goals/:goal_id" element = {<MyStudentGoalCard />} />
         <Route path = "/goals/new" element = {<NewGoalForm />} />
-        <Route path = "/users/mystudent" element = {<MyStudentsGoals />} />
+        <Route path = "/users/mystudents" element = {<MyStudentsGoals />} />
         <Route path = "/goals/:id" element = {<GoalCard />} />
         <Route path = "/students/avatar" element = {<Avatar />} />
         <Route path = "/rewards" element = {<RewardsList />} />

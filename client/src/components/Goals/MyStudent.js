@@ -1,13 +1,13 @@
 import React, {useContext, useState, useEffect} from "react";
 import { useParams} from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
-import MyStudentgoalCard from "./MyStudentGoalCard";
+import MyStudentGoalsList from "./MyStudentGoalsList";
 import dateFormat from "dateformat";
 
 function MyStudent(){
     const {user, setUser} = useContext(UserContext)
-    const {id}=useParams()
-    const student = user.students.find(student => student.id === parseInt(id))
+    const {student_id}=useParams()
+    const student = user.students.find(student => student.id === parseInt(student_id))
     const now = new Date()
     const today = dateFormat(now, "isoDateTime")
     const [otherAdult, setOtherAdult] = useState("")
@@ -34,6 +34,7 @@ const goalsINeedToValidate = myStudentActiveGoals.filter((g) => {
         return g
     }
 })
+console.log(goalsINeedToValidate)
 
 const goalsIValidated = myStudentActiveGoals.filter((g) => {
     if ((user.type === "Parent" && g.validated_by_parent === true) && (g.validated_by_educator === false)){
@@ -66,7 +67,7 @@ const goalsInTheWorks = myStudentActiveGoals.filter((g) => {
             {goalsINeedToValidate.map((goal) => {
                 return(
                     <div key={goal.id}>
-                   <MyStudentgoalCard goal = {goal}/> 
+                   <MyStudentGoalsList goal = {goal} student={student} messages={goal.messages}/> 
                    </div> 
                 )
             })}
@@ -75,7 +76,7 @@ const goalsInTheWorks = myStudentActiveGoals.filter((g) => {
             {goalsIValidated.map((goal) => {
                 return(
                     <div key={goal.id}>
-                   <MyStudentgoalCard goal = {goal}/> 
+                   <MyStudentGoalsList goal = {goal} student={student}/> 
                    </div>  
                 )
             })}
@@ -84,7 +85,7 @@ const goalsInTheWorks = myStudentActiveGoals.filter((g) => {
             {goalsInTheWorks.map((goal) => {
                 return(
                     <div key={goal.id}>
-                   <MyStudentgoalCard goal = {goal}/> 
+                   <MyStudentGoalsList goal = {goal} student={student}/> 
                    </div>  
                 )
             })}
@@ -93,7 +94,7 @@ const goalsInTheWorks = myStudentActiveGoals.filter((g) => {
             {goalsINeedToPay.map((goal) => {
                 return(
                     <div key={goal.id}>
-                   <MyStudentgoalCard goal = {goal}/> 
+                   <MyStudentGoalsList goal = {goal} student={student}/> 
                    </div>  
                 )
             })}

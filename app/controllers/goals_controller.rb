@@ -50,7 +50,7 @@ class GoalsController < ApplicationController
     private
 
     def goal_params
-        params.permit(:id, :goal_category, :title, :created_at, :description, :user_id, :deadline, :achieved, :value, :validated_by_educator, :validated_by_parent, :achieved_by_educator, :achieved_by_parent, :messages)
+        params.permit(:id, :goal_category, :title, :created_at, :description, :user_id, :deadline, :achieved, :value, :validated_by_educator, :validated_by_parent, :achieved_by_educator, :achieved_by_parent)
     end
 
 

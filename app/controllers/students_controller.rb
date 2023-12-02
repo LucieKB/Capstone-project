@@ -32,6 +32,13 @@ class StudentsController < UsersController
         render json: goal, status: :accepted
     end
 
+    def my_adults
+        my_parent = @current_user.parent.username
+        my_educator = @current_user.educator.username
+        my_adults = ["", my_parent, my_educator]
+        render json: my_adults, status: :ok
+    end
+
     private
 
     def student_params

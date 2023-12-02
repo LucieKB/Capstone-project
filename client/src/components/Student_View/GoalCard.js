@@ -15,7 +15,7 @@ function GoalCard(){
     const [buttonColor, setButtonColor] = useState("")
     const [showMessageForm, setShowMessageForm] = useState(false)
     const [isLoading, setIsLoading] = useState(false)
-   
+    const [achieved, setAchieved] = useState (false)
     const navigate = useNavigate()
 
     if(!goals){
@@ -23,22 +23,20 @@ function GoalCard(){
     }
 
     const goal = goals.find(goal => goal.id === parseInt(id))
-    const [achieved, setAchieved] = useState (goal.achieved)
-    // useEffect(()=>{
-    //     const goal = goals.find(goal => goal.id === parseInt(id))
-    // }, [goals])
+   
+    
 
     useEffect(()=>{
-        if (goal.validated_by_educator == true && goal.validated_by_parent == true){
+        if (goal.validated_by_educator === true && goal.validated_by_parent == true){
             setShowAchieved(true)
         }
     }, [])
 
     useEffect(()=>{
-        if (achieved == true){
+        if (achieved === true){
             setButtonColor("green")
         }
-    }, [goal.achieved])
+    }, [achieved])
 
     const onUpdategoal = (updatedgoal) =>{
         const modifiedgoal = user.goals.map((goal)=>{
@@ -55,7 +53,7 @@ function GoalCard(){
     
 
     function handleGoalAchieved(){
-        fetch(`${goal.id}`, {
+        fetch(`/goals/${goal.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json", 
@@ -95,6 +93,20 @@ function GoalCard(){
             navigate(`/students/${user.id}/goals`)
            }
 
+        const receivedMessages = goal.messages.filter((m)=> m.recipient === user.username)
+        const sentMessages = goal.messages.filter((m)=> m.user_id === user.id)
+
+        console.log(goal)
+
+        const goalMessages = goal.messages.map((m)=> 
+        <div key={m.id}>
+            ➢{m.content} from <em>{m.sender} </em>
+        </div>)
+        
+
+        
+       
+
     return(
         <div>
         <h2> {user.username}'s Goal #{goal.id}</h2>
@@ -116,7 +128,7 @@ function GoalCard(){
                 ))}
             </span>
         </li>
-        {/* <li>Messages : <em>{goal.messages}</em></li> */}
+        <li>Messages : {goalMessages}</li>
         
             {showAchieved?
                 (<button 
@@ -127,7 +139,7 @@ function GoalCard(){
                 {showMessageForm?
                 (<div>
                     <NewMessageForm goal={goal} onAddNewMessage={addMessageToGoal}/>
-                </div>): (<button>Read my messages</button>)}
+                </div>): (null)}
         </div>
 
     )

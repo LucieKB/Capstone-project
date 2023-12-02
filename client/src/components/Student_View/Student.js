@@ -44,14 +44,9 @@ function Student(){
     console.log(myAchievedGoals)
     console.log(myGoalsAwaitingPayment)
 
-
-    // const handleClickCreateGoal = () =>{
-    //     navigate("/goals/new")
-    // }
-
-    // const handleClickMyList = () => {
-    //     navigate (`students/${user.id}/goals`)
-    // }
+    const handleNavigateToActiveGoals = () =>{
+        navigate(`/students/${user.id}/goals`)
+    }
 
     return(
         <div>
@@ -101,7 +96,7 @@ function Student(){
             ):(null)}
 
             {seeActiveGoals?
-            ( navigate(`/students/${user.id}/goals`)
+            (handleNavigateToActiveGoals()
             ):(null)}
 
             {seeArchived?

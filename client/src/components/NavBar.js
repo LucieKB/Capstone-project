@@ -1,13 +1,13 @@
 import React, {useState, useContext, useEffect} from "react";
 import { UserContext } from "../contexts/UserContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 function NavBar(){
     const {user, setUser} = useContext(UserContext)
     const [showId, setShowId] = useState(false)
     const [showMarketPlace, setShowMarketPlace] = useState(true)
-    
+    const navigate=useNavigate()
 
     useEffect(()=>{
         if (user.type === "Educator"){
@@ -22,6 +22,7 @@ function NavBar(){
             if (r.ok) {
                 setUser(null);
             }
+            navigate("/")
         });
     }
 
@@ -31,9 +32,9 @@ function NavBar(){
             <nav>
                 <Link to ="/">Home</Link>
                 {user.type === "Student"?
-                (<Link to = {`students/${user.id}/me`}> My Goals Page </Link>)
+                (<Link to = {`/students/${user.id}/me`}> My Goals Page </Link>)
                 :
-                (<Link to ="/users/mystudent"> My Students Page </Link>)}
+                (<Link to ="/users/mystudents"> My Students Page </Link>)}
                 {user.type === "Student"?
                 (<p> My Wallet : {user.wallet} 🌟 </p>)
                 :

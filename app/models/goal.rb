@@ -1,5 +1,6 @@
 class Goal < ApplicationRecord
   belongs_to :user
+  has_many :messages
 
   validates :title, presence:true
   validates :description, presence:true, length: {in: 20..200}
