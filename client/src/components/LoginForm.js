@@ -37,7 +37,7 @@ function LoginForm(){
         <div className="wrapper">
             <div className="inner">
 
-                <form onSubmit={handleSubmit}>
+                <form style={{width:"90%"}} onSubmit={handleSubmit}>
                     <div className="form-wrapper">
                         <label>
                             Username: 

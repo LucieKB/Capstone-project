@@ -34,20 +34,11 @@ class UsersController < ApplicationController
         render json: goals, status: :ok
     end
 
-    # def only_my_student
-    #     user = User.find_by(id: session[:user_id])
-    #     byebug
-    #     if user.students.count > 0
-    #         students = user.students.map{|s| [s.username, s.goals]}.to_h
-    #         render json: students, status: :ok
-    #     end
-    # end
-
 
     private
 
     def user_params
-        params.permit(:username, :password, :password_confirmation, :email, :type, :avatar, :grade, :school, :wallet, :parents_id, :educators_id)
+        params.permit(:username, :password, :password_confirmation, :email, :type, :avatar, :grade, :school, :wallet, :parents_id, :educators_id, :business)
     end
 
     def render_not_found_response

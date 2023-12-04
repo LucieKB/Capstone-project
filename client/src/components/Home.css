@@ -5,3 +5,93 @@
    
 }
 
+.wrapper{
+    background-color: green;
+    min-height: 80vh;
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    background-position: right center;
+    align-items: center
+}
+
+.inner-wrapper{
+    background-color: rgb(255, 255, 255);
+    align-items: center;
+    width: 90%;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+.inner-wrapper .description{
+    width: 100%;
+    height: auto;
+}
+
+.inner-wrapper .description table{ 
+        border-spacing: 10;
+        border: 1px solid black;
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+        
+}
+    
+     
+        
+.inner-wrapper .description td {
+          padding: 0.5rem;
+          border-bottom: 1px solid black;
+          border-right: 1px solid black;
+          text-align: center;
+}
+       
+.inner-wrapper .description th {
+    background: radial-gradient(circle, #568203 0%, #ACE1AF 100%);
+          border-bottom: 3px solid black;
+          border-right: 1px solid black;
+          color: white; 
+          font-family: "Rock Salt", cursive;
+          font-size: 16px 
+}
+      
+
+
+.description #image{
+    
+    text-align: center;
+    width: 50%; 
+    height: 270px; 
+    float:left; 
+    margin-bottom: 30px;
+    margin-top: 30px
+    
+}
+
+.description #image img{
+  
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.description #text{
+    border: 3px;
+    border-style: ridge;
+    border-color: rgb(144, 143, 143);
+    width:50%; 
+    min-height: 270px; 
+    float:left;
+    padding-left: 10px;
+    padding-right: 10px;
+    vertical-align: middle;
+    margin-bottom: 30px;
+    margin-top: 30px;
+    display:flex;
+    align-items:center;
+    font-size: medium;
+    text-indent: 50px;
+    line-height: 1.4
+}
+

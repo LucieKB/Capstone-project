@@ -1,10 +1,9 @@
 import React, {useState, useEffect, useContext} from "react";
 import { UserContext } from "../../contexts/UserContext";
-import { Link } from "react-router-dom";
-import Avatar from "../Avatars/Avatar"
+import { useNavigate } from "react-router-dom";
 import "./custom.css"
 
-function StudentSignUpForm(parentId){
+function StudentSignUpForm({showStudentForm, setShowStudentForm, parentId}){
     const {user, setUser} = useContext(UserContext)
     const [schools, setSchools] = useState ("")
     const [schoolSuggestions, setSchoolSuggestions] = useState([])
@@ -23,6 +22,8 @@ function StudentSignUpForm(parentId){
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState([])
     const [schoolSearch, setSchoolSearch] = useState("")
+    const navigate = useNavigate()
+    const students = user.students
 
     useEffect(()=> {
         fetch("/schools/name")
@@ -50,18 +51,17 @@ function StudentSignUpForm(parentId){
         }).then((r) => {
             setIsLoading(false);
                 if (r.ok) {
-                    r.json().then((user) => setUser(user));
-                    // cahnger setUser
+                    r.json().then((data) => setUser(user.students = [...students, data]));
                 } else {
                     r.json().then((err) => {console.log(err.errors)
                     setErrors(err.errors)}
                     )
                   }
+        setShowStudentForm(!showStudentForm)
               });
       }
 
-    // const handleShowAvatarForm = () =>{
-    // return(<Avatar user={user}/>)}
+
 
     return(
         <>

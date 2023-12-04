@@ -49,98 +49,97 @@ function ParentSignUpForm(){
     return(
         
         <>
-        
-        
-        <h1>Parent Sign Up Form</h1>
-        {/* {showParentForm?
-        ( */}
-        <form onSubmit={handleSubmit}>
-            <div className="form-wrapper">
-            <label><strong><u>Username:</u></strong><em style={{color:"red"}}>*</em>
-            <input
-              className="form-control"
-              type="text"
-              id="username"
-              autoComplete="off"
-              value={parentFormData.username}
-              onChange={(e) => setParentFormData({...parentFormData, username:e.target.value})}
-            />
-            </label>
+        <div className="wrapper">
+          <div className="inner-signUp">
+            
+            <div className="img-holder">
+              <h1 style={{textAlign:"center"}}>Parent Sign Up Form</h1>
+              <img id="quote" src="https://i.pinimg.com/736x/35/89/d7/3589d7e7e6e721e534d5faea64ef08c4.jpg" alt="Parent quote"/>
             </div>
 
-            <div className="form-wrapper">
-            <label><strong><u>Email address:</u></strong><em style={{color:"red"}}>*</em>
-            <input
-              className="form-control"
-              type="text"
-              id="email"
-              autoComplete="off"
-              value={parentFormData.email}
-              onChange={(e) => setParentFormData({...parentFormData, email:e.target.value})}
-            />
-            </label>
-            </div>
-
-            <div className="form-wrapper">
-            <label><strong><u>Password:</u></strong><em style={{color:"red"}}>*&nbsp;</em><em style={{fontSize:"9px"}}>Password must be 6-10 characters long, and include at least one number, one capital letter and one symbol.</em>
-            <input
-                className="form-control"
-                type="password"
-                id="password"
-                value={parentFormData.password}
-                onChange={(e) => setParentFormData({...parentFormData, password:e.target.value})}
-                autoComplete="current-password"
-            />
-            </label>
-          </div>
-
-          <div className="form-wrapper">
-            <label><strong><u>Password Confirmation:</u></strong><em style={{color:"red"}}>*</em>
-              <input
-                className="form-control"
-                type="password"
-                id="password_confirmation"
-                value={parentFormData.password_confirmation}
-                onChange={(e) => setParentFormData({...parentFormData, password_confirmation:e.target.value})}
-                autoComplete="current-password"
-              />
-            </label>
-          </div>
-
-          <div className="form-wrapper">
-            <label> <strong><u>Number of Children I Want to Register:</u></strong>
-              <input
+            
+       
+            <form onSubmit={handleSubmit}>
+              <div className="form-wrapper">
+                <label><strong><u>Username:</u></strong><em style={{color:"red"}}>*</em>
+                <input
                   className="form-control"
-                  type="number"
-                  pattern="[1-12]*"
-                  name="children_number"
-                  value={parentFormData.number_of_children}
-                  placeholder="Number of Children"
-                  onChange={(e)=>setParentFormData({...parentFormData, number_of_children:e.target.value})}
-              />
-            </label>
-          </div>
+                  type="text"
+                  id="username"
+                  autoComplete="off"
+                  value={parentFormData.username}
+                  onChange={(e) => setParentFormData({...parentFormData, username:e.target.value})}
+                />
+                </label>
+              </div>
 
-          <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>       
+              <div className="form-wrapper">
+                <label><strong><u>Email address:</u></strong><em style={{color:"red"}}>*</em>
+                <input
+                  className="form-control"
+                  type="text"
+                  id="email"
+                  autoComplete="off"
+                  value={parentFormData.email}
+                  onChange={(e) => setParentFormData({...parentFormData, email:e.target.value})}
+                />
+                </label>
+              </div>
+
+              <div className="form-wrapper">
+                <label><strong><u>Password:</u></strong><em style={{color:"red"}}>*&nbsp;</em><em style={{fontSize:"9px"}}>Password must be 6-10 characters long, and include at least one number, one capital letter and one symbol.</em>
+                <input
+                    className="form-control"
+                    type="password"
+                    id="password"
+                    value={parentFormData.password}
+                    onChange={(e) => setParentFormData({...parentFormData, password:e.target.value})}
+                    autoComplete="current-password"
+                />
+                </label>
+              </div>
+
+              <div className="form-wrapper">
+                <label><strong><u>Password Confirmation:</u></strong><em style={{color:"red"}}>*</em>
+                  <input
+                    className="form-control"
+                    type="password"
+                    id="password_confirmation"
+                    value={parentFormData.password_confirmation}
+                    onChange={(e) => setParentFormData({...parentFormData, password_confirmation:e.target.value})}
+                    autoComplete="current-password"
+                  />
+                </label>
+              </div>
+
+              <div className="form-wrapper">
+                <label> <strong><u>Number of Children I Want to Register:</u></strong>
+                  <input
+                      className="form-control"
+                      type="number"
+                      pattern="[1-12]*"
+                      name="children_number"
+                      value={parentFormData.number_of_children}
+                      placeholder="Number of Children"
+                      onChange={(e)=>setParentFormData({...parentFormData, number_of_children:e.target.value})}
+                  />
+                </label>
+              </div>
+
+              <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>       
              
-            <label style={{color:"red"}}>
-                {errors.map((err) => (
-                  <em key={err}>{err}</em>
-                  ))}
-                
+              <label style={{color:"red"}}>
+                  {errors.map((err) => (
+                    <em key={err}>{err}</em>
+                    ))} 
               </label>
 
-        </form>
-        {/* // ) :
-        // (<button onClick = {() => {handleChildRegistration}}> Register a Child </button>)
-        // (<button onClick = {() => setShowStudentForm(true)}> Register a Child </button>)
-        // }
-        // {showStudentForm? */}
-        {/* // (<StudentSignUpForm parent_id={user.id} setShowStudentForm={setShowStudentForm}/>):
-        // ("")
-        // (<button onClick = {() => setShowStudentForm(!showStudentForm)}> Get back to Parent Sign Up </button>)
-        // } */}
+            </form>
+          </div>
+        </div>
         </>
+      
+       
     )
 
 }

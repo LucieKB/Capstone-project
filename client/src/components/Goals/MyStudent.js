@@ -1,11 +1,13 @@
 import React, {useContext, useState, useEffect} from "react";
 import { useParams} from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
+import { GoalsContext } from "../../contexts/GoalsContext";
 import MyStudentGoalsList from "./MyStudentGoalsList";
 import dateFormat from "dateformat";
 
 function MyStudent(){
     const {user, setUser} = useContext(UserContext)
+    const {goals, setGoals} = useContext(GoalsContext)
     const {student_id}=useParams()
     const student = user.students.find(student => student.id === parseInt(student_id))
     const now = new Date()
@@ -25,6 +27,31 @@ function MyStudent(){
             setOtherAdult(" my student's parent")
         }
     })
+
+    const onUpdategoal = (updatedgoal) =>{
+        console.log(updatedgoal)
+        const modifiedgoals = goals.map((goal)=>{
+            if(goal.id === updatedgoal.id){
+                return updatedgoal
+            }else{
+                return goal
+            }
+            })
+            console.log(modifiedgoals)
+        setGoals(modifiedgoals)
+        
+        const updatedStudent = [...student.goals, modifiedgoals] 
+        console.log(updatedStudent)
+        const updatedStudents = user.students.map((student) =>{
+        if (updatedStudent.id === student_id){
+            return updatedStudent
+        } else {
+            return student
+        }
+        })
+        console.log(updatedStudents)
+        setUser({...user, students: updatedStudents}) 
+    }
 
 
 const goalsINeedToValidate = myStudentActiveGoals.filter((g) => {
@@ -67,7 +94,7 @@ const goalsInTheWorks = myStudentActiveGoals.filter((g) => {
             {goalsINeedToValidate.map((goal) => {
                 return(
                     <div key={goal.id}>
-                   <MyStudentGoalsList goal = {goal} student={student} messages={goal.messages}/> 
+                   <MyStudentGoalsList goal = {goal} student={student} onUpdategoal={onUpdategoal}/> 
                    </div> 
                 )
             })}
@@ -76,7 +103,7 @@ const goalsInTheWorks = myStudentActiveGoals.filter((g) => {
             {goalsIValidated.map((goal) => {
                 return(
                     <div key={goal.id}>
-                   <MyStudentGoalsList goal = {goal} student={student}/> 
+                   <MyStudentGoalsList goal = {goal} student={student} onUpdategoal={onUpdategoal}/> 
                    </div>  
                 )
             })}
@@ -85,7 +112,7 @@ const goalsInTheWorks = myStudentActiveGoals.filter((g) => {
             {goalsInTheWorks.map((goal) => {
                 return(
                     <div key={goal.id}>
-                   <MyStudentGoalsList goal = {goal} student={student}/> 
+                   <MyStudentGoalsList goal = {goal} student={student} onUpdategoal={onUpdategoal}/> 
                    </div>  
                 )
             })}
@@ -94,7 +121,7 @@ const goalsInTheWorks = myStudentActiveGoals.filter((g) => {
             {goalsINeedToPay.map((goal) => {
                 return(
                     <div key={goal.id}>
-                   <MyStudentGoalsList goal = {goal} student={student}/> 
+                   <MyStudentGoalsList goal = {goal} student={student} onUpdategoal={onUpdategoal}/> 
                    </div>  
                 )
             })}

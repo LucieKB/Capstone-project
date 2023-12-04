@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_01_201124) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_04_152333) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -80,6 +80,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_01_201124) do
     t.bigint "parent_id"
     t.bigint "educator_id"
     t.integer "number_of_children"
+    t.string "business"
     t.index ["educator_id"], name: "index_users_on_educator_id"
     t.index ["parent_id"], name: "index_users_on_parent_id"
   end

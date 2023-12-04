@@ -1,6 +1,7 @@
 import React, {useState, useContext, useEffect} from "react";
 import { UserContext } from "../contexts/UserContext";
 import { Link, useNavigate } from "react-router-dom";
+import "./NavBar.css"
 
 
 function NavBar(){

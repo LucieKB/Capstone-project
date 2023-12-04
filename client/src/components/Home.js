@@ -18,15 +18,19 @@ function Home(){
     const [showStudentHome, setShowStudentHome] = useState(false)
     const [showAvatarGenerator, setShowAvatarGenerator] = useState(false)
     const [showAdultDirections, setShowAdultDirections] = useState(true)
+    const [myStudents, setMyStudents] = useState([])
    const navigate = useNavigate()
     
 
 
     useEffect(() => {
     //    if (user.type === "Parent" && user.number_of_children > user.students.length){
-        if (user.type === "Parent"){
-        setShowButtonAddStudent(true) 
-    }
+        if (user.type === "Parent" && user.number_of_children > user.students.length){
+        setShowButtonAddStudent(true)
+        }
+        else if (user.type === "Parent") {
+        setMyStudents(user.students)
+        }
     },[])
 
     useEffect(() => {
@@ -41,24 +45,54 @@ function Home(){
         if (user.type === "Student"){
         user.avatar? (console.log("avatar is generated")) : (setShowAvatarGenerator(true))
         }
-    },[])
-
-     
+    },[])  
 
    const handleRegisterStudent = () =>{
     setShowStudentForm(true)
    }
 
-   const handleShowHome = () =>{
-    setShowStudentHome(!showStudentHome)
-   }
+//    const handleShowHome = () =>{
+//     setShowStudentHome(!showStudentHome)
+//    }
 
-   
-
+   const myKidsName = myStudents.map((student)=>{
     return(
-        <div>
-            <h1>Welcome to your XXX, {user.username}</h1>
-            <img src={user.avatar} height={"150px"}/>
+        <th key={student.id}>{student.username}</th>
+    )
+   } )
+   const myKidsAvatar = myStudents.map((student)=> {
+    return(
+        <td><img key= {student.id} src={student.avatar} height={"80px"}/></td>
+    )
+   })
+ 
+    return(
+        <div className="wrapper">
+        <div className="inner-wrapper">
+            <h1 style={{textAlign:"center"}}>Welcome to your XXX, {user.username}</h1>
+            {showStudentHome?(
+                <img src={user.avatar} height={"150px"}/>
+            ):(
+                <>
+                <div className= "description">
+                    <h2 style={{textAlign:"center"}}><u>My Kids:</u></h2>
+                    <table>
+                        <thead>
+                    
+                            {myKidsName}
+                    
+                        </thead>
+                        <tbody>
+                    
+                            {myKidsAvatar}
+                    
+                        </tbody>
+                    </table>
+                </div>
+                <br></br>
+                </>
+            )}
+            
             {showButtonAddStudent?
            (<button onClick = {handleRegisterStudent}>Register a Child</button>):(null)
             }        
@@ -117,7 +151,7 @@ function Home(){
 
 
            
-           
+        </div> 
         </div>  
     )
 }

@@ -16,7 +16,7 @@ function MyStudentGoalsList({goal}){
     // const [isDisabled, setIsDisabled] = useState(false)
     // const [showMessageForm, setShowMessageForm] = useState(false)
     // const [showMessages, setShowMessages] = useState(false)
-    // const student = user.students.find(student => student.id === student_id)
+    const student = user.students.find(student => student.id === student_id)
     const navigate = useNavigate();
     const goalDeadline = new Date(`${goal.deadline}`)
     const today = (new Date())

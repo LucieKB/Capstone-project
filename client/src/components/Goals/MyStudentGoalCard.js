@@ -2,7 +2,7 @@ import React, {useState, useContext, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import { GoalsContext } from "../../contexts/GoalsContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import StarConditional from "./StarConditional";
 import ParentMessageForm from "../Messages/ParentMessageForm";
 
@@ -24,6 +24,8 @@ function MyStudentGoalCard(){
     const [showPay, setShowPay] = useState(false)
     const [showMessages, setShowMessages] = useState(false)
     const [messagesArr, setMessagesArr] = useState([])
+    // const location = useLocation()
+    // const { from } = location.state
 
     if(!goals){
         setIsLoading(!isLoading)
@@ -96,6 +98,31 @@ function MyStudentGoalCard(){
         })
         setUser({...user, students: updatedStudents}) 
     }
+
+    // const onUpdategoal = (updatedgoal) =>{
+    //     console.log(updatedgoal)
+    //     const modifiedgoals = goals.map((goal)=>{
+    //         if(goal.id === updatedgoal.id){
+    //             return updatedgoal
+    //         }else{
+    //             return goal
+    //         }
+    //         })
+    //         console.log(modifiedgoals)
+    //     setGoals(modifiedgoals)
+        
+    //     const updatedStudent = [...student.goals, modifiedgoals] 
+    //     console.log(updatedStudent)
+    //     const updatedStudents = user.students.map((student) =>{
+    //     if (updatedStudent.id === student_id){
+    //         return updatedStudent
+    //     } else {
+    //         return student
+    //     }
+    //     })
+    //     console.log(updatedStudents)
+    //     setUser({...user, students: updatedStudents}) 
+    // }
 
 
     // const onUpdategoal = (updatedgoal) =>{
@@ -194,8 +221,6 @@ function MyStudentGoalCard(){
         }).then((r) => {
             if (r.ok) {
                 r.json().then((updatedgoal) => (onUpdategoal(updatedgoal)));
-                console.log(user)
-                console.log(goals)
                 navigate(`/parents/${user.id}/students/${student_id}`)
             } else {
                 r.json().then((err)=>setErrors(err.errors))  
