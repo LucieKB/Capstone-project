@@ -45,7 +45,8 @@ function NewMessageForm({goal, onAddNewMessage}){
             content:newContent,
             recipient:newRecipient,
             user_id:user.id,
-            goal_id:goal.id
+            goal_id:goal.id,
+            read: false
         }
         fetch (`/messages`, {
             method: "POST",
@@ -56,7 +57,7 @@ function NewMessageForm({goal, onAddNewMessage}){
     })
     .then((r) => {
         if (r.ok) {
-        r.json().then((newMessage) => console.log(newMessage));
+        r.json().then((newMessage) => onAddNewMessage(newMessage));
         } else {
         r.json().then((err)=>setErrors(err.errors))
         }
@@ -64,7 +65,7 @@ function NewMessageForm({goal, onAddNewMessage}){
     
     setNewContent("");
     setRecipients([]);
-    navigate(`/goals/${goal.id}`)
+   
     }
 
   

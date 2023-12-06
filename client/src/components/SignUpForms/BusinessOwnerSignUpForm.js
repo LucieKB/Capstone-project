@@ -7,7 +7,7 @@ function BusinessOwnerSignUpForm(){
         username:(""),
         password:(""),
         password_confirmation: (""),
-        type: ("Business_Owner"),
+        type: ("BusinessOwner"),
         email: (""),
         business: ("")
     })
@@ -53,7 +53,7 @@ function BusinessOwnerSignUpForm(){
 
           
      
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} autocomplete="off">
             <div className="form-wrapper">
               <label><strong><u>Username:</u></strong><em style={{color:"red"}}>*</em>
               <input

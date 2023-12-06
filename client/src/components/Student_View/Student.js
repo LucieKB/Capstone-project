@@ -5,13 +5,13 @@ import { useNavigate } from "react-router-dom"
 import ArchievedGoalCard from "./ArchievedGoalCard";
 import dateFormat from "dateformat";
 import ExpiredGoalCard from "./ExpiredGoalCard";
-import NewGoalForm from "../Goals/NewGoalForm";
+import NewGoalForm from "./NewGoalForm";
 import GoalList from "./GoalList"
 import UnpaidGoals from "./UnpaidGoals";
 
 
 
-function Student(){
+function Student({goals, setGoals}){
     const {user, setUser} = useContext(UserContext)
     // const {goals, setGoals} = useContext(GoalsContext)
     const [seeArchived, setSeeArchived] = useState(false)
@@ -20,7 +20,8 @@ function Student(){
     const [seeActiveGoals, setSeeActiveGoals] = useState(false) //doesn't work when set on true
     const [seeUnpaidGoals, setSeeUnpaidGoals] = useState(false)
     const navigate = useNavigate()
-    const goals=user.goals
+    // const goals=user.goals
+
     
     const now = new Date()
     const today = dateFormat(now, "isoDateTime")
@@ -40,13 +41,20 @@ function Student(){
     const myGoalsAwaitingPayment = myAchievedGoals.filter((goal)=>{
         return(goal.achieved_by_parent !== true || goal.achieved_by_educator !== true)
     })
-    console.log(goals)
-    console.log(myAchievedGoals)
-    console.log(myGoalsAwaitingPayment)
+    console.log("goals in Student=",goals)
+    console.log("myAchievedGoals in Student=",myAchievedGoals)
+    console.log("myGoalsAwaitingPayment in Student=",myGoalsAwaitingPayment)
 
     const handleNavigateToActiveGoals = () =>{
         navigate(`/students/${user.id}/goals`)
     }
+
+    const handleAddGoal = (newGoal) =>{
+        setGoals([...goals, newGoal])
+        setUser({...user, goals:[...goals, newGoal]})
+    }
+
+    console.log("myActiveGoals in Student=", myActiveGoals)
 
     return(
         <div>
@@ -92,7 +100,7 @@ function Student(){
             }}> {seeExpired? ("Hide My Goals Awaiting Payment"):("Show My Goals Awaiting Payment")} </button>
             </div>
             {seeGoalForm?
-            ( <NewGoalForm />
+            ( <NewGoalForm onAddGoal={handleAddGoal}/>
             ):(null)}
 
             {seeActiveGoals?

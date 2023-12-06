@@ -42,7 +42,8 @@ function ParentMessageForm({goal, onAddNewMessage}){
             content:newContent,
             recipient:newRecipient,
             user_id:user.id,
-            goal_id:goal.id
+            goal_id:goal.id,
+            read: false
         }
         fetch (`/messages`, {
             method: "POST",
@@ -53,14 +54,14 @@ function ParentMessageForm({goal, onAddNewMessage}){
     })
     .then((r) => {
         if (r.ok) {
-        r.json().then((newMessage) => console.log(newMessage));
+        r.json().then((newMessage) => onAddNewMessage(newMessage));
         } else {
         r.json().then((err)=>setErrors(err.errors))
         }
     })
     
     setNewContent("");
-    // setRecipients([]);
+    setRecipients([]);
     navigate(`/parents/${user.id}/students/${student_id}`)
     }
 

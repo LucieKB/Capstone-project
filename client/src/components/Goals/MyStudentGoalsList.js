@@ -16,6 +16,7 @@ function MyStudentGoalsList({goal}){
     // const [isDisabled, setIsDisabled] = useState(false)
     // const [showMessageForm, setShowMessageForm] = useState(false)
     // const [showMessages, setShowMessages] = useState(false)
+    const [showGoal, setShowGoal] = useState(false)
     const student = user.students.find(student => student.id === student_id)
     const navigate = useNavigate();
     const goalDeadline = new Date(`${goal.deadline}`)
@@ -217,6 +218,7 @@ function MyStudentGoalsList({goal}){
             <div>
                 <div>
                     <h4 style={{backgroundColor: `${wordColor}`}}><u>
+                        {/* <button onClick={()=>setShowGoal(!showGoal)}>{goal.title}</button> */}
                         <Link to={`/parents/${user.id}/students/${student_id}/goals/${goal.id}`}>{goal.title}</Link>
                                     </u><em> &nbsp;&nbsp;&nbsp; - &nbsp;&nbsp;&nbsp; Created on {goal.created_at.split('T')[0]}</em> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;||  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{(Math.abs(difference_in_days) >= 1) ? (Math.round(difference_in_days)+" days"):(difference_in_hours+" hours")} left to complete</h4>
                 </div>                

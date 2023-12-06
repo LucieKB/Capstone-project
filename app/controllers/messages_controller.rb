@@ -37,13 +37,20 @@ class MessagesController < ApplicationController
         head :no_content
     end
 
+    def set_read
+        goal = params[:goal_id]
+        messages = Message.all.filter{|m| m.goal_id == goal.to_i}
+        messages.last.update!(message_params)
+        render json: messages, status: :accepted
+    end
+
 
 
     private
 
 
     def message_params
-        params.permit(:id, :content, :recipient, :user_id, :goal_id)
+        params.permit(:id, :content, :recipient, :user_id, :goal_id, :read)
     end
 
     def render_not_found_response

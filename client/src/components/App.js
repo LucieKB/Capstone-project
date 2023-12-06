@@ -1,11 +1,11 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext";
 import {GoalsContext} from "../contexts/GoalsContext";
 import GeneralLogin from "./GeneralLogin";
 import NavBar from "./NavBar";
 import Home from "./Home"
-import NewGoalForm from "./Goals/NewGoalForm";
+import NewGoalForm from "./Student_View/NewGoalForm";
 import GoalList from "./Student_View/GoalList";
 import MyStudentsGoals from "./Goals/MyStudentsGoals";
 import GoalCard from "./Student_View/GoalCard";
@@ -25,13 +25,68 @@ import MyStudentGoalsList from "./Goals/MyStudentGoalsList";
 function App() {
   const {user, setUser} = useContext(UserContext)
   const {goals, setGoals} = useContext(GoalsContext)
+  const [messages, setMessages] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
   
+ useEffect(()=>{
+  fetch("/messages")
+  .then(r => r.json())
+  .then(messages => setMessages(messages))
+}, [])
 
   if (!user) return <GeneralLogin />
+
+  if(!goals){
+    setIsLoading(!isLoading)
+}
   
   console.log(user)
-  console.log(goals)
-  
+  console.log("goals=",goals)
+
+  const handleAddGoal = (myNewGoal) =>{
+    setGoals([...goals, myNewGoal])
+    setUser({...user, goals:[...goals, myNewGoal]})
+  }
+
+  const handleUpdateGoal = (updatedGoal) =>{
+    console.log("updatedGoal in App=",updatedGoal)
+    const modifiedGoals = goals.map((goal)=>{
+        if(goal.id === updatedGoal.id){
+            return updatedGoal
+        }else{
+            return goal
+        }
+        })
+        console.log("modifiedGoals in App=",modifiedGoals)
+    setGoals(modifiedGoals);
+    
+    const updatedUser = {...user, goals:modifiedGoals}
+    setUser(updatedUser) 
+}
+
+
+const handlePayGoal = (updatedGoal) =>{
+  const modifiedGoals = goals.map((goal)=>{
+      if(goal.id === updatedGoal.id){
+          return updatedGoal
+      }else{
+          return goal
+      }
+      })
+  setGoals(modifiedGoals);
+
+  const student=
+  user.students.find((s)=> s.id = updatedGoal.user_id)
+  const updatedStudent = [...student.goals, updatedGoal] 
+  const updatedStudents = user.students.map((student) =>{
+  if (updatedStudent.id === student.id){
+      return updatedStudent
+  } else {
+      return student
+  }
+  })
+  setUser({...user, students: updatedStudents})  
+}
   
 
   return(
@@ -40,14 +95,14 @@ function App() {
     <main>
       <Routes>
         <Route exact path="/" element = {<Home />}/>
-        <Route exact path="/parents/:id/students/:student_id" element = {<MyStudent />} />
-        <Route exact path="/students/:id/me" element = {<Student />} />
-        <Route exact path = "/students/:id/goals" element = {<GoalList />} />
+        <Route exact path="/parents/:id/students/:student_id" element = {<MyStudent goals={goals} setGoals = {setGoals}/>} />
+        <Route exact path="/students/:id/me" element = {<Student goals={goals} setGoals = {setGoals}/>} />
+        <Route exact path = "/students/:id/goals" element = {<GoalList goals={goals} setGoals = {setGoals}/>} />
         {/* <Route exact path = "/parents/:id/students/:student_id/goals" element = {<MyStudentGoalsList />} /> */}
-        <Route exact path = "/parents/:id/students/:student_id/goals/:goal_id" element = {<MyStudentGoalCard />} />
-        <Route path = "/goals/new" element = {<NewGoalForm />} />
+        <Route exact path = "/parents/:id/students/:student_id/goals/:goal_id" element = {<MyStudentGoalCard onUpdateGoal={handleUpdateGoal} onPayGoal={handlePayGoal} goals={goals} setGoals = {setGoals} messages={messages} setMessages={setMessages}/>} />
+        <Route path = "/goals/new" element = {<NewGoalForm onAddGoal={handleAddGoal}/>} />
         <Route path = "/users/mystudents" element = {<MyStudentsGoals />} />
-        <Route path = "/goals/:id" element = {<GoalCard />} />
+        <Route path = "/goals/:id" element = {<GoalCard onUpdateGoal={handleUpdateGoal} messages={messages} setMessages={setMessages}/>} />
         <Route path = "/students/avatar" element = {<Avatar />} />
         <Route path = "/rewards" element = {<RewardsList />} />
         <Route path = "/rewards/new" element = {<NewRewardForm />} />

@@ -6,23 +6,32 @@ import dateFormat from "dateformat";
 
 
 
-function GoalList(){
+function GoalList({goals, setGoals}){
     const [validatedGoals, setValidatedGoals] = useState([])
     const [halfValidatedGoals, setHalfValidatedGoals] = useState([])
     const [notValidatedGoals, setNotValidatedGoals] = useState([])
     const {user, setUser} = useContext(UserContext)
-    const {goals, setGoals} = useContext(GoalsContext)
+    const [isLoading, setIsLoading] = useState(false)
+    // const {goals, setGoals} = useContext(GoalsContext)
     const navigate = useNavigate()
-console.log(goals)
-    const myGoals = goals.filter((goal) => goal.user_id === user.id)
+
+    const myGoals = goals
     const now = new Date()
     const today = dateFormat(now, "isoDateTime")
-    console.log(myGoals)
+    console.log("goals in GoalList=",goals)
+    console.log("myGoals in GoalList=",myGoals)
     // const myActiveGoals = myGoals.filter((goal) => goal.achieved_by_parent === false || goal.achieved_by_educator === false)
-    const myActiveGoals = goals.filter((goal)=>{
+    const myActiveGoals = myGoals.filter((goal)=>{
         const deadline = dateFormat(goal.deadline, "isoDateTime")
         return(goal.achieved === false && deadline>today)
     })
+    const [showGoalsValidated, setShowGoalsValidated] = useState(true)
+    const [showGoalsOneValidation, setShowGoalsOneValidation] = useState(true)
+    const [showGoalsZeroValidation, setShowGoalsZeroValidation] = useState(true)
+
+    if(!goals){
+        setIsLoading(!isLoading)
+    }
     
     useEffect(() => {
             const zeroValidation = [];
@@ -45,9 +54,23 @@ console.log(goals)
         setValidatedGoals(twoValidations)
     }, [])
 
+    useEffect(()=>{
+        if (validatedGoals.length === 0){
+            setShowGoalsValidated(false)
+        }
+        if(halfValidatedGoals.length === 0){
+            setShowGoalsOneValidation(false)
+        }
+        if(notValidatedGoals.length === 0){
+            setShowGoalsZeroValidation(false)
+        }
+    })
+
     const handleBackHome = () => {
         navigate(`/students/${user.id}/me`)
        }
+    
+       console.log(myGoals)
 
 
     return(

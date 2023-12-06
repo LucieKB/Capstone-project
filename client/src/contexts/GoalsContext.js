@@ -15,6 +15,7 @@ const GoalsProvider = ({children}) =>{
           });
         }, []);
 
+        console.log(goals)
         
     return(
         <GoalsContext.Provider value={{goals, setGoals}}>

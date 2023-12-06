@@ -7,6 +7,7 @@ import UpdateStudentEdId from "./Associations/UpdateStudentEdId";
 import Student from "./Student_View/Student"
 import Avatar from "./Avatars/Avatar"
 import "./Home.css"
+import MyStudentsGoals from "./Goals/MyStudentsGoals";
 
 
 function Home(){
@@ -19,18 +20,26 @@ function Home(){
     const [showAvatarGenerator, setShowAvatarGenerator] = useState(false)
     const [showAdultDirections, setShowAdultDirections] = useState(true)
     const [myStudents, setMyStudents] = useState([])
+    const [showBusinessDirections, setShowBusinessDirections] = useState(false)
    const navigate = useNavigate()
     
 
 
     useEffect(() => {
-    //    if (user.type === "Parent" && user.number_of_children > user.students.length){
+    
         if (user.type === "Parent" && user.number_of_children > user.students.length){
         setShowButtonAddStudent(true)
         }
         else if (user.type === "Parent") {
         setMyStudents(user.students)
         }
+    },[])
+
+    useEffect(() => {
+        if (user.type === "BusinessOwner"){
+        setShowBusinessDirections(true) 
+        setShowAdultDirections(false) 
+    }
     },[])
 
     useEffect(() => {
@@ -62,7 +71,7 @@ function Home(){
    } )
    const myKidsAvatar = myStudents.map((student)=> {
     return(
-        <td><img key= {student.id} src={student.avatar} height={"80px"}/></td>
+        <td key= {student.id}><img src={student.avatar} height={"80px"}/></td>
     )
    })
  
@@ -72,26 +81,17 @@ function Home(){
             <h1 style={{textAlign:"center"}}>Welcome to your XXX, {user.username}</h1>
             {showStudentHome?(
                 <img src={user.avatar} height={"150px"}/>
-            ):(
+            ):( null)}
+            {showAdultDirections?(
                 <>
                 <div className= "description">
-                    <h2 style={{textAlign:"center"}}><u>My Kids:</u></h2>
-                    <table>
-                        <thead>
-                    
-                            {myKidsName}
-                    
-                        </thead>
-                        <tbody>
-                    
-                            {myKidsAvatar}
-                    
-                        </tbody>
-                    </table>
+                    < MyStudentsGoals />
                 </div>
                 <br></br>
                 </>
-            )}
+            ):(null)}
+               
+            
             
             {showButtonAddStudent?
            (<button onClick = {handleRegisterStudent}>Register a Child</button>):(null)
@@ -100,7 +100,6 @@ function Home(){
             (<StudentSignUpForm parentId={user.id} setShowStudentForm={setShowStudentForm} showStudentForm={showStudentForm}/>):
             (null)
             } 
-            {/* replace null with Student Info once StudentCard is created */}
             {showAddEducatorId?
            (<div>
             <UpdateStudentEdId student = {user} setShowAddEducatorId={setShowAddEducatorId}/>
@@ -123,8 +122,10 @@ function Home(){
                 </div>
                 
                 <h2> As a parent you will also be able to post items to <Link to={"/marketPlaceExplained"}>the market place</Link>.</h2>
-                </div>):
-        (<div>
+                </div>):(null)
+            }
+            {showStudentHome?
+            (<div>
             <h2> XXX will help you to:</h2>
                 <div className = "title">
                     <h2><li>Set <Link to={"/smartGoals"}> S.M.A.R.T goals</Link> for yourself,</li></h2> 
@@ -138,8 +139,12 @@ function Home(){
                 </div>
                 
                 <h2> You will also be able to buy items on <Link to={"/marketPlaceExplained"}>the market place</Link> !</h2>
-                </div>)
-                }
+                </div>):(null)
+            }
+            {showBusinessDirections?
+            (<div>
+                <h1>Directions for Business</h1>
+            </div>):(null)}
             
                 
 

@@ -5,15 +5,15 @@ import { GoalsContext } from "../../contexts/GoalsContext";
 import MyStudentGoalsList from "./MyStudentGoalsList";
 import dateFormat from "dateformat";
 
-function MyStudent(){
+function MyStudent({goals, setGoals}){
     const {user, setUser} = useContext(UserContext)
-    const {goals, setGoals} = useContext(GoalsContext)
+    
     const {student_id}=useParams()
     const student = user.students.find(student => student.id === parseInt(student_id))
     const now = new Date()
     const today = dateFormat(now, "isoDateTime")
     const [otherAdult, setOtherAdult] = useState("")
-    const myStudentGoals = student.goals
+    const myStudentGoals = goals.filter((g)=> g.user_id === student.id)
     const myStudentActiveGoals = myStudentGoals.filter((goal)=>{
         const deadline = dateFormat(goal.deadline, "isoDateTime")
         return(goal.achieved === false && deadline>today)
@@ -37,7 +37,6 @@ function MyStudent(){
                 return goal
             }
             })
-            console.log(modifiedgoals)
         setGoals(modifiedgoals)
         
         const updatedStudent = [...student.goals, modifiedgoals] 
@@ -49,7 +48,6 @@ function MyStudent(){
             return student
         }
         })
-        console.log(updatedStudents)
         setUser({...user, students: updatedStudents}) 
     }
 
@@ -61,7 +59,7 @@ const goalsINeedToValidate = myStudentActiveGoals.filter((g) => {
         return g
     }
 })
-console.log(goalsINeedToValidate)
+
 
 const goalsIValidated = myStudentActiveGoals.filter((g) => {
     if ((user.type === "Parent" && g.validated_by_parent === true) && (g.validated_by_educator === false)){
@@ -84,7 +82,7 @@ const goalsInTheWorks = myStudentActiveGoals.filter((g) => {
         return g
 }})
 
-
+console.log(myStudentGoals)
 
     return(
         <div>

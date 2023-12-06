@@ -49,6 +49,8 @@ Rails.application.routes.draw do
   # root "posts#index"
   # Rails.application.routes.draw do
   resources :messages
+  patch "messages/:goal_id/read", to: "messages#set_read"
+
   resources :rewards
   patch "rewards/:id/buy", to:"rewards#buy_reward"
 

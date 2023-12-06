@@ -2,10 +2,10 @@ import React, {useState, useContext} from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { GoalsContext } from "../../contexts/GoalsContext"
 import { useNavigate } from "react-router-dom";
-import Star from "./Star";
+import Star from "../Goals/Star";
 
 
-function NewGoalForm(){
+function NewGoalForm({onAddGoal}){
     const {user, setUser} = useContext(UserContext)
     const {goals, setGoals} = useContext(GoalsContext)
     const [formData, setFormData]=useState({
@@ -60,8 +60,10 @@ console.log(formData)
         })
             .then(r=>r.json())
             .then ((newGoal) => {
-                // setGoals({...goals, newGoal})
-                setUser({...user, goals:[...goals, newGoal]});
+                onAddGoal(newGoal)
+                // setGoals({...goals, newGoal}) OnAddNewGoal to update state !!
+                
+                // setUser({...user, goals:[...goals, newGoal]});
                 
                 setFormData({
                     goal_category : (""),

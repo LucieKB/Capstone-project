@@ -7,11 +7,11 @@ import StarConditional from "./StarConditional";
 import ParentMessageForm from "../Messages/ParentMessageForm";
 
 
-function MyStudentGoalCard(){
+function MyStudentGoalCard({onUpdateGoal, goals, setGoals, messages, setMessages, onPayGoal}){
     const {user, setUser} = useContext(UserContext)
     const {goal_id} = useParams()
     const {student_id} = useParams()
-    const {goals, setGoals} = useContext(GoalsContext)
+    // const {goals, setGoals} = useContext(GoalsContext)
     const [showAchieved, setShowAchieved] = useState(false)
     const [errors, setErrors] = useState([]);
     const [isDisabled, setIsDisabled] = useState(false)
@@ -23,7 +23,8 @@ function MyStudentGoalCard(){
     const [showValidate, setShowValidate] = useState(true)
     const [showPay, setShowPay] = useState(false)
     const [showMessages, setShowMessages] = useState(false)
-    const [messagesArr, setMessagesArr] = useState([])
+    const [goalMessages, setGoalMessages] = useState([])
+    const [messageStyle, setMessageStyle] = useState("")
     // const location = useLocation()
     // const { from } = location.state
 
@@ -38,9 +39,9 @@ function MyStudentGoalCard(){
     console.log(goal)
 
     useEffect(()=>{
-        const thisGoalMessages = goal.messages
-        setMessagesArr(thisGoalMessages)
-    }, [messagesArr])
+        const thisGoalMessages = messages.filter((m)=> m.goal_id === goal.id)
+        setGoalMessages(thisGoalMessages)
+    }, [messages])
     
    useEffect(()=>{
     const adultType = (user.type)
@@ -78,26 +79,36 @@ function MyStudentGoalCard(){
     // }, [goal.achieved_by_educator, goal.achieved_by_parent]) 
 }, []) 
 
-    const onUpdategoal = (updatedgoal) =>{
-        const modifiedgoal = student.goals.map((goal)=>{
-            if(goal.id === updatedgoal.id){
-                return updatedgoal
-            }else{
-                return goal
-            }
-            })
-        setGoals(modifiedgoal)
-        
-        const updatedStudent = [...student.goals, modifiedgoal] 
-        const updatedStudents = user.students.map((student) =>{
-        if (updatedStudent.id === student.id){
-            return updatedStudent
-        } else {
-            return student
+    useEffect(()=>{
+        const readStatus = goalMessages.map((g)=> g.read)
+        if(readStatus.includes(false)){
+            setMessageStyle("green")}
+        else{
+            setMessageStyle("")
         }
-        })
-        setUser({...user, students: updatedStudents}) 
-    }
+        
+    })
+
+    // const onUpdategoal = (newMessage) =>{
+    //     const modifiedgoal = student.goals.map((goal)=>{
+    //         if(goal.id === newMessage.id){
+    //             return newMessage
+    //         }else{
+    //             return goal
+    //         }
+    //         })
+    //     setGoals(modifiedgoal)
+        
+    //     const updatedStudent = [...student.goals, modifiedgoal] 
+    //     const updatedStudents = user.students.map((student) =>{
+    //     if (updatedStudent.id === student.id){
+    //         return updatedStudent
+    //     } else {
+    //         return student
+    //     }
+    //     })
+    //     setUser({...user, students: updatedStudents}) 
+    // }
 
     // const onUpdategoal = (updatedgoal) =>{
     //     console.log(updatedgoal)
@@ -137,27 +148,27 @@ function MyStudentGoalCard(){
     //     setUser({...user, goals: modifiedgoal})   
     // }
 
-    const onPayGoal = (updatedGoal) =>{
-        const modifiedgoal = student.goals.map((goal)=>{
-            if(goal.id === updatedGoal.id){
-                return updatedGoal
-            }else{
-                return goal
-            }
-            })
-        setGoals(modifiedgoal);
+    // const onPayGoal = (updatedGoal) =>{
+    //     const modifiedgoal = student.goals.map((goal)=>{
+    //         if(goal.id === updatedGoal.id){
+    //             return updatedGoal
+    //         }else{
+    //             return goal
+    //         }
+    //         })
+    //     setGoals(modifiedgoal);
 
-        const updatedStudent = [...student.goals, modifiedgoal] 
-        const updatedStudents = user.students.map((student) =>{
-        if (updatedStudent.id === student.id){
-            return updatedStudent
-        } else {
-            return student
-        }
-        })
-        setUser({...user, students: updatedStudents})  
+    //     const updatedStudent = [...student.goals, modifiedgoal] 
+    //     const updatedStudents = user.students.map((student) =>{
+    //     if (updatedStudent.id === student.id){
+    //         return updatedStudent
+    //     } else {
+    //         return student
+    //     }
+    //     })
+    //     setUser({...user, students: updatedStudents})  
         
-    }
+    // }
 
     function handlePay(){
         if (user.type === "Parent"){
@@ -195,6 +206,7 @@ function MyStudentGoalCard(){
                 }   
             });
         }
+        // navigate(`/parents/${user.id}/mystudents`) 
        navigate(`/parents/${user.id}/students/${student_id}`) 
     }
     
@@ -202,8 +214,9 @@ function MyStudentGoalCard(){
         setShowMessageForm(!showMessageForm)
      }  
      
-     const addMessageToGoal = (newMessage) =>{
-        setMessagesArr([...messagesArr, newMessage]) 
+     const handleAddMessage = (newMessage) =>{
+        setMessages([...messages, newMessage]) 
+        setGoalMessages([...goalMessages, newMessage])
         }
     
 
@@ -220,12 +233,12 @@ function MyStudentGoalCard(){
             }),
         }).then((r) => {
             if (r.ok) {
-                r.json().then((updatedgoal) => (onUpdategoal(updatedgoal)));
-                navigate(`/parents/${user.id}/students/${student_id}`)
+                r.json().then((updatedGoal) => (onUpdateGoal(updatedGoal)));
+                // navigate(`/parents/${user.id}/students/${student_id}`)
             } else {
                 r.json().then((err)=>setErrors(err.errors))  
             }
-            
+            console.log("goalvalidated =", goal)
         });
         }
         else if (user.type === "Educator"){
@@ -240,11 +253,12 @@ function MyStudentGoalCard(){
                 }),
             }).then((r) => {
                 if (r.ok) {
-                    r.json().then((updatedgoal) => (onUpdategoal(updatedgoal)));
-                    navigate(`/parents/${user.id}/students/${student.id}`)
+                    r.json().then((updatedgoal) => (onUpdateGoal(updatedgoal)));
+                    // navigate(`/parents/${user.id}/students/${student.id}`)
                 } else {
                     r.json().then((err)=>setErrors(err.errors))  
-                }   
+                }  
+                console.log("goalvalidated =", goal) 
             });
         }
     }
@@ -252,12 +266,56 @@ function MyStudentGoalCard(){
     const handleBackHome = () => {
         navigate(`/parents/${user.id}/students/${student_id}`)
        }
-        
-    const goalMessages = goal.messages.map((m)=> 
-       <div key={m.id}>
+
+    const handleUpdateMessage = (updatedMessage) =>{
+        const modifiedMessages = goalMessages.map((m)=>{
+            if(m.id === updatedMessage.id){
+                return updatedMessage;
+            } else {
+                return m
+            }
+        })
+        setGoalMessages(modifiedMessages)
+        setMessages([...messages, modifiedMessages])
+    }
+       
+    
+        const myGoalMessages = goalMessages.map((m)=> {
+            return(<div key={m.id}>
            ➢{m.content} from <em>{m.sender} </em>
-       </div>)  
-    console.log(goal.messages)
+       </div>)
+        }) 
+       
+    
+
+    
+
+    const handleReadMessages = () => {
+        fetch(`/messages/${goal.id}/read`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json", 
+            },
+            body: JSON.stringify({
+                read: true
+            }),
+        }).then((r) => {
+            if (r.ok) {
+                r.json().then((updatedMessage) =>
+                //  console.log(updatedMessage)
+                handleUpdateMessage(updatedMessage)
+                // (setMessages([...messages, updatedMessage]))
+                );
+                navigate(`/parents/${user.id}/students/${student.id}/goals/${goal.id}`)
+            } else {
+                r.json().then((err)=>setErrors(err.errors))  
+            }   
+        });
+        setShowMessages(!showMessages)
+        setMessageStyle("")
+    }
+
+    console.log("messageStyle=", messageStyle)
 
 
     return(
@@ -283,19 +341,19 @@ function MyStudentGoalCard(){
                                 </li> 
                                   
                                  {showMessages?
-                                    (<li> Messages : {goalMessages}</li> ):(null)}
+                                    (<li> Messages : {myGoalMessages}</li> ):(null)}
                                 
                                 {showValidate?
                                 (<button onClick={handleValidate}>Validate this goal</button>) : (null)}
                                 {showPay?
                                 (<button 
                                 onClick={handlePay}
-                                disabled = {isDisabled}> Pay {student_id} <strong style={{color:"orange"}}>{goal.value/2} ☆</strong></button>) : (null)}
+                                disabled = {isDisabled}> Pay {student.username} <strong style={{color:"orange"}}>{goal.value/2} ☆</strong></button>) : (null)}
                                 <button onClick={handleShowMessageForm}>Add Message</button>
                                 {showMessageForm?
                 (<div>
-                    <ParentMessageForm goal={goal} onAddNewMessage={addMessageToGoal}/>
-                </div>): (<button onClick = {() =>{setShowMessages(!showMessages)}}>{showMessages? ("Hide messages"):("Read Messages")}</button>)}
+                    <ParentMessageForm goal={goal} onAddNewMessage={handleAddMessage}/>
+                </div>): (<button style={{backgroundColor:messageStyle}} onClick = {handleReadMessages}>{showMessages? ("Hide messages"):("Read Messages")}</button>)}
                             </div>
         
     )

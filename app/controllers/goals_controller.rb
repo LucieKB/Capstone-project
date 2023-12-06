@@ -31,7 +31,7 @@ class GoalsController < ApplicationController
     end
     
     def create
-        goal = @current_user.goals.create(goal_params)
+        goal = @current_user.goals.create!(goal_params)
         render json: goal, status: :created
     end
 

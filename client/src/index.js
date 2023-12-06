@@ -12,15 +12,15 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Router>
   <React.StrictMode>
-    <GoalsProvider>
+   
     <UserProvider>
     <RewardsProvider>
-    
+     <GoalsProvider>
     <App />
-    
+    </GoalsProvider>
     </RewardsProvider>
     </UserProvider>
-    </GoalsProvider>
+    
   </React.StrictMode>
   </Router>
 );
