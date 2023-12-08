@@ -1,10 +1,10 @@
-import React, { useState, useEffect, createContext } from 'react';
-
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import {UserContext} from "./UserContext.js"
 const GoalsContext = createContext();
 
 const GoalsProvider = ({children}) =>{
     const [goals, setGoals] = useState([]);
-    
+    const {user} = useContext(UserContext)
     useEffect(()=>{
         fetch (`/goals`).then((r)=> {
             if (r.ok) {
@@ -13,7 +13,7 @@ const GoalsProvider = ({children}) =>{
                 setGoals(goals)})
             }
           });
-        }, []);
+        }, [user]);
 
         console.log(goals)
         

@@ -29,9 +29,6 @@ function GoalList({goals, setGoals}){
     const [showGoalsOneValidation, setShowGoalsOneValidation] = useState(true)
     const [showGoalsZeroValidation, setShowGoalsZeroValidation] = useState(true)
 
-    if(!goals){
-        setIsLoading(!isLoading)
-    }
     
     useEffect(() => {
             const zeroValidation = [];
@@ -69,8 +66,16 @@ function GoalList({goals, setGoals}){
     const handleBackHome = () => {
         navigate(`/students/${user.id}/me`)
        }
+
+       if(!goals){
+        return(
+            <div>
+                Loading...
+            </div>
+        )
+    }
     
-       console.log(myGoals)
+       
 
 
     return(

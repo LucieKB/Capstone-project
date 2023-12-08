@@ -10,4 +10,11 @@ class EducatorsController < UsersController
         render json: my_contacts, status: :ok
     end
 
+    def students_per_grade
+        students = @current_user.students
+        grade = params[:grade].to_i
+        my_students = students.filter{|s| s.grade === grade}
+        render json: my_students, status: :ok
+    end
+
 end

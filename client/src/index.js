@@ -15,7 +15,7 @@ root.render(
    
     <UserProvider>
     <RewardsProvider>
-     <GoalsProvider>
+    <GoalsProvider>
     <App />
     </GoalsProvider>
     </RewardsProvider>

@@ -142,12 +142,13 @@ input{
     font-size: 13px;
 }
 
-.wrapper button {
+/* .wrapper button {
     border: none;
     width: 164px;
-    height: 51px;
+    height: 41px;
     margin: auto;
-    margin-top: 100px;
+    margin-top: 30px;
+    margin-bottom: 10px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -155,15 +156,83 @@ input{
     padding: 0;
     background: #333;
     font-size: 15px;
+    font-weight:550;
     color: #fff;
     vertical-align: middle;
     -webkit-transform: perspective(1px) translateZ(0);
     transform: perspective(1px) translateZ(0);
     -webkit-transition-duration: .3s;
     transition-duration: .3s;
-}
+} */
 
-.inner-signUp button{
+.submitBtn {
+    padding: 10px 10px;
+    font-size: 14px;
+    background-color: #333;
+    color: #fff;
+    text-shadow: 0 2px 0 rgb(0 0 0 / 25%);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border: 0;
+    z-index: 1;
+    user-select: none;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    white-space: unset;
+    padding: .8rem 1.5rem;
+    text-decoration: none;
+    font-weight: 900;
+    transition: all 0.7s cubic-bezier(0,.8,.26,.99);
+   }
+   
+  .submitBtn:before {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    content: '';
+    transition: .7s cubic-bezier(0,.8,.26,.99);
+    z-index: -1;
+    background-color: #333!important;
+    box-shadow: 0 -4px #000f89 inset, 0 4px #15f4ee inset, -4px 0 #3F00FF inset, 4px 0 #011F5B inset;
+   }
+   
+  .submitBtn:after {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    content: '';
+    box-shadow: 0 4px 0 0 rgb(0 0 0 / 15%);
+    transition: .7s cubic-bezier(0,.8,.26,.99);
+   }
+   
+  .submitBtn:hover:before {
+    box-shadow: 0 -4px rgb(0 0 0 / 50%) inset, 0 4px rgb(255 255 255 / 20%) inset, -4px 0 rgb(255 255 255 / 20%) inset, 4px 0 rgb(0 0 0 / 50%) inset;
+   }
+   
+   .submitBtn:hover:after {
+    box-shadow: 0 4px 0 0 rgb(0 0 0 / 15%);
+   }
+   
+   .submitBtn:active {
+    transform: translateY(4px);
+   }
+   
+  .submitBtn:active:after {
+    box-shadow: 0 0px 0 0 rgb(0 0 0 / 15%);
+   }
+
+.submitBtn{
     border: none;
     width: 164px;
     height: 41px;

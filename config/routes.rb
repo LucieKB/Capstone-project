@@ -26,6 +26,7 @@ Rails.application.routes.draw do
   
 
   resources :educators
+  get "educators/mystudents/:grade", to: "educators#students_per_grade"
 
   resources :students do
     resources :goals, only: [:index, :show, :create, :update]

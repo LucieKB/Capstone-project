@@ -12,11 +12,16 @@ function NavBar(){
     const [showParentNav, setShowParentNav] = useState(false)
     const [showEducatorNav, setShowEducatorNav] = useState(false)
     const [showBusinessNav, setShowBusinessNav] = useState(false)
-    const [myKids, setMyKids] = useState([])
-    const [actionNeeded, setActionNeeded] = useState([])
+    
     const now = new Date()
     const today = dateFormat(now, "isoDateTime")
+    const elementaryGrades = [1,2,3,4,5]
+    const secondaryGrades = [6,7,8,9,10,11,12]
+    const [showSecondary, setShowSecondary] = useState(false)
     const navigate=useNavigate()
+
+  console.log (user.type)
+  let myKidsLink = []
 
     useEffect(()=>{
         if (user.type === "Student"){
@@ -27,7 +32,7 @@ function NavBar(){
     useEffect(()=>{
         if (user.type === "Parent"){
             setShowParentNav(true)
-            setMyKids(user.students)
+            
         }
     }, [])
 
@@ -43,35 +48,43 @@ function NavBar(){
         }
     }, [])
 
-  
-
-            const myKidsLink = myKids.map((kid)=>{
-            const myKidGoals = kid.goals
-            const myKidActiveGoals = myKidGoals.filter((goal)=>{
-                const deadline = dateFormat(goal.deadline, "isoDateTime")
-                return(goal.achieved === false && deadline>today)
-            })
-            console.log(myKidActiveGoals)
-            const validationNeeded = myKidActiveGoals.filter((g)=>g.validated_by_parent === false)
-            console.log(validationNeeded.length)
-            const paymentNeeded = myKidActiveGoals.filter((g)=>g.achieved_by_parent === false && g.achieved === true)
-            console.log(paymentNeeded.length)
-            
-            // if (validationNeeded.length>0 && paymentNeeded.length === 0){
-            //     setActionNeeded("✅")
-            // }
-            // else if (paymentNeeded.length>0 && validationNeeded.length === 0){
-            //     setActionNeeded("💰")
-            // }
-            // else if (validationNeeded.length>0 && paymentNeeded.length>0){
-            //     setActionNeeded(["✅", "💰"])
-            // }
-            // else{setActionNeeded("")}
-
-            return(        
-                <Link to = {`/parents/${user.id}/students/${kid.id}`}>{kid.username} {actionNeeded}</Link>)})
+    if(!user){
+        return(
+            <div>
+                Loading...
+            </div>
+        )
+    }
     
-   
+            if (user.type === "Parent"){
+                const myKidsLink = user.students.map((kid)=>{
+                const myKidGoals = kid.goals
+                const myKidActiveGoals = myKidGoals.filter((goal)=>{
+                    const deadline = dateFormat(goal.deadline, "isoDateTime")
+                    return(goal.achieved === false && deadline>today)
+                })
+                console.log(myKidActiveGoals)
+                const validationNeeded = myKidActiveGoals.filter((g)=>g.validated_by_parent === false)
+                console.log(validationNeeded.length)
+                const paymentNeeded = myKidGoals.filter((g)=>g.achieved_by_parent === false && g.achieved === true)
+                console.log(paymentNeeded.length)
+                
+                function actionNeeded(){
+                if (validationNeeded.length>0 && paymentNeeded.length === 0){
+                    return("✅")
+                }
+                else if (paymentNeeded.length>0 && validationNeeded.length === 0){
+                    return("💰")
+                }
+                else if (validationNeeded.length>0 && paymentNeeded.length>0){
+                    return(["✅", "💰"])
+                }
+                else{return("")}
+                }
+                return(        
+                    <Link to = {`/parents/${user.id}/students/${kid.id}`}>{kid.username} {actionNeeded()}</Link>)})
+            } 
+           
 
     function handleLogoutClick() {
         fetch("/logout", { method: "DELETE" }).then((r) => {
@@ -81,6 +94,16 @@ function NavBar(){
             navigate("/")
         });
     }
+
+            const myElementaryGradesLink = elementaryGrades.map((grade)=>{
+                return(
+                    <Link to = {`/educators/mystudents/${grade}`}>{grade} Grade</Link>)})
+
+                    const mySecondaryGradesLink = secondaryGrades.map((grade)=>{
+                        return(
+                            <a><Link to = {`/educators/mystudents/${grade}`}>{grade} Grade</Link></a>)})
+                
+            
 
     
 
@@ -99,15 +122,15 @@ function NavBar(){
     //     console.log(paymentNeeded.length)
         
     //     if (validationNeeded.length>0 && paymentNeeded.length === 0){
-    //         setActionNeeded("✅")
+    //         return("✅")
     //     }
     //     else if (paymentNeeded.length>0 && validationNeeded.length === 0){
-    //         setActionNeeded("💰")
+    //         return("💰")
     //     }
     //     else if (validationNeeded.length>0 && paymentNeeded.length>0){
-    //         setActionNeeded(["✅", "💰"])
+    //         return(["✅", "💰"])
     //     }
-    //     else{setActionNeeded("")}
+    //     else{return("")}
 
         
             
@@ -124,7 +147,10 @@ function NavBar(){
                     <Link to = {`/students/${user.id}/me`}> My Goals Page </Link>
                     <Link to = "/rewards"> MarketPlace </Link>
                     <Link to = "/students/:id/myItems"> My Items </Link>
-                    <p> My Wallet : {user.wallet} 🌟 </p>
+                     <span>My Wallet : {user.wallet} 🌟</span> 
+                    
+            <button id="Btn-Logout" onClick={handleLogoutClick}>Logout</button>
+        
 
                 </nav>
            
@@ -137,6 +163,9 @@ function NavBar(){
                     <Link to ="/">Home</Link>
                     {myKidsLink}
                     <Link to = "/rewards"> MarketPlace </Link>
+                    
+                    <button id="Btn-Logout" onClick={handleLogoutClick}>Logout</button>
+        
                 </nav>  
         ):(null)} 
 
@@ -144,8 +173,17 @@ function NavBar(){
         (
                 <nav>
                     <Link to ="/">Home</Link>
-                    <Link to ="/users/mystudents"> My Students Page </Link>
-                    <p style={{color:"red"}}> Id # {user.id} </p>
+                    
+                    {showSecondary?
+                    (mySecondaryGradesLink):
+                    (myElementaryGradesLink)}
+                    <button onClick={()=>setShowSecondary(!showSecondary)}>{showSecondary?("Show Primary Grades"):("Show Secondary Grades")}</button>
+                    
+                    {/* <Link to ="/users/mystudents"> My Students Page </Link> */}
+                    Id for students : <span style={{color:"red", fontSize:"20px", fontWeight:"bolder"}}> Id # {user.id} </span>
+                    
+            <button id="Btn-Logout" onClick={handleLogoutClick}>Logout</button>
+        
                 </nav>  
         ):(null)} 
 
@@ -183,9 +221,7 @@ function NavBar(){
              }
         </div> */}
 
-        <div> 
-            <button id="Btn-Logout" onClick={handleLogoutClick}>Logout</button>
-        </div>
+        
         </>
     )
 }

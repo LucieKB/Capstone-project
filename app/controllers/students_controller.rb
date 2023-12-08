@@ -12,7 +12,6 @@ class StudentsController < UsersController
 
     def create
         student = Student.create!(student_params)
-        session[:user_id] = student.id
         render json:student, status: :created
     end
 
@@ -42,7 +41,7 @@ class StudentsController < UsersController
     private
 
     def student_params
-        params.permit(:id, :username, :password, :password_confirmation, :email, :type, :avatar, :grade, :school, :wallet, :parent_id, :educator_id, :student_id)
+        params.permit(:id, :username, :password, :password_confirmation, :email, :type, :avatar, :grade, :school, :wallet, :parent_id, :educator_id)
     end
 
     def payment_params

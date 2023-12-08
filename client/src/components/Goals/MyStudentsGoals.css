@@ -1,0 +1,83 @@
+.containerGoals{
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px
+}
+
+.kidsName{
+    height: 7.5rem;
+    cursor: pointer;
+    width: 100%;
+    padding: 0px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+}
+
+.imgContainer{
+    height: 7.5rem;
+    cursor: pointer;
+    width: 100%;
+    padding: 0px;
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    background: transparent;
+    border: none;
+}
+
+.textContainer{
+    display: flex;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+
+.textInner{
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    -webkit-box-align: center;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: rgb(44, 42, 80);
+}
+
+#txt{
+    color: rgb(44, 42, 80);
+    font-style: inherit;
+    font-variant: inherit;
+    margin: 0px;
+    padding: 0px;
+    text-decoration-line: none;
+    display: block;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    text-transform: none;
+    text-align: inherit;
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 700;
+}
+
+.tableBtn{
+    width:fit-content;
+    height: fit-content;
+    /* height: 30px; */
+    color: #090909;
+ padding: 0.7em 1.7em;
+ font-size: 12px;
+ border-radius: 0.5em;
+ background: #e8e8e8;
+ border: 1px solid #e8e8e8;
+ transition: all .3s;
+ box-shadow: 6px 6px 12px #c5c5c5,
+             -6px -6px 12px #ffffff;
+}
+
+.tableBtn:active{
+    color: #666;
+ box-shadow: inset 4px 4px 12px #c5c5c5,
+             inset -4px -4px 12px #ffffff;
+}

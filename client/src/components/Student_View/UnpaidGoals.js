@@ -1,11 +1,13 @@
 import React from "react"
+import { Link } from "react-router-dom"
 
 function UnpaidGoals({goals}){
 
     const goalsToDisplay = goals.map((goal)=>{
         return(
             <ul key={goal.id}>
-                <li>Title : {goal.title}</li>
+            <Link to={`/goals/${goal.id}`}>
+            <p>Title: {goal.title}</p></Link>
                 <li>Description : {goal.description}</li>
                 <li>Value : {goal.value} ⭐️</li> 
             </ul>
@@ -17,6 +19,7 @@ function UnpaidGoals({goals}){
             <h2>My Goals Awaiting Payment</h2>
             {goalsToDisplay}
         </div>
+        
     )
 }
 

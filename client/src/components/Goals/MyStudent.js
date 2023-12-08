@@ -19,6 +19,8 @@ function MyStudent({goals, setGoals}){
         return(goal.achieved === false && deadline>today)
     })
 
+    console.log("goals=",goals)
+
     useEffect(()=>{
         if (user.type === "Parent"){
             setOtherAdult(" my child's teacher")
@@ -27,6 +29,16 @@ function MyStudent({goals, setGoals}){
             setOtherAdult(" my student's parent")
         }
     })
+
+    if(!goals){
+        console.log("loading", goals)
+        return(
+            
+            <div>
+                ...Loading
+            </div>
+        )
+    }
 
     const onUpdategoal = (updatedgoal) =>{
         console.log(updatedgoal)
@@ -82,7 +94,7 @@ const goalsInTheWorks = myStudentActiveGoals.filter((g) => {
         return g
 }})
 
-console.log(myStudentGoals)
+console.log("myStudentGoal in MyStudent=",myStudentGoals)
 
     return(
         <div>

@@ -3,7 +3,7 @@ import { UserContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 import "./custom.css"
 
-function StudentSignUpForm({showStudentForm, setShowStudentForm, parentId}){
+function StudentSignUpForm({showStudentForm, setShowStudentForm, onStudentSignUp}){
     const {user, setUser} = useContext(UserContext)
     const [schools, setSchools] = useState ("")
     const [schoolSuggestions, setSchoolSuggestions] = useState([])
@@ -17,7 +17,8 @@ function StudentSignUpForm({showStudentForm, setShowStudentForm, parentId}){
         grade: (""),
         school: (""),
         wallet: (0),
-        parent_id: (Object.values(parentId)[0])
+        parent_id: (user.id),
+        educator_id:("")
     })
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState([])
@@ -51,7 +52,7 @@ function StudentSignUpForm({showStudentForm, setShowStudentForm, parentId}){
         }).then((r) => {
             setIsLoading(false);
                 if (r.ok) {
-                    r.json().then((data) => setUser(user.students = [...students, data]));
+                    r.json().then((data) => onStudentSignUp(data));
                 } else {
                     r.json().then((err) => {console.log(err.errors)
                     setErrors(err.errors)}

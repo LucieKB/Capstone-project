@@ -55,14 +55,18 @@ function UpdateStudentEdId({student, setShowAddEducatorId}){
             value = {EdId}
             onChange = {(e) => setEdId(e.target.value)}
             />
+            <div>
+                <br></br>
             <button type="submit">{isLoading ? "Loading..." : "Submit"}</button>
-              
+            
+            </div>  
               <label style={{color:"red"}}>
                 {errors.map((err) => (
                   <em key={err}>{err}</em>
                   ))}
                 </label>
         </form>
+        <br></br>
         </div>
     )
 }

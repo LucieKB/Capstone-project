@@ -1,17 +1,42 @@
+.navbar{
+  display: flex;
+    background-color: #88cbf3;
+    height: 6em;
+  border-bottom: #488cfb dotted 1px;
+  }
+
+nav span{
+  display: inline;
+  padding-top: 0%;
+  margin-top: 0%;
+  margin: 3rem;
+  text-decoration: none;
+  font-size: 1.2em;
+  font-weight: 600;
+  text-align: center;
+  color: rgb(130, 85, 1);
+  transition: 0.1s;
+  vertical-align: middle;
+  line-height: 5rem;
+  font-family: Arial;
+  height: 6em
+}
+
 nav a {
     display: inline;
     padding-top: 0%;
     margin-top: 0%;
     margin: 3rem;
     text-decoration: none;
-    font-size: 1.2em;
+    font-size: 1.5em;
     font-weight: 600;
     text-align: center;
     color: #020202;
     transition: 0.1s;
     vertical-align: middle;
     line-height: 5rem;
-    font-family: Arial
+    font-family: Arial;
+    height: 6em
   }
   
    #avatar{
@@ -24,32 +49,71 @@ nav a {
   }
   
   .navbar #Btn-Logout {
-    
-      border: 1px solid #003452;
-      width: 64px;
-      height: 30px;
-      margin-right: 10px;
-      cursor: pointer;
-      align-items: center;
-      margin-top:5px;
-      justify-content: center;
-      background: #0281ca;
-      font-size: 15px;
-      color: #fff;
-      vertical-align: middle;
-      -webkit-transform: perspective(1px) translateZ(0);
-      transform: perspective(1px) translateZ(0);
-      -webkit-transition-duration: .3s;
-      transition-duration: .3s;
-  
+    cursor: pointer;
+    --border-radius: 15px;
+    --border-width: 4px;
+    appearance: none;
+    position: relative;
+    padding: 0.5em 1em;
+    border: 0;
+    background-color: #88cbf3;
+    font-family: "Roboto", Arial, "Segoe UI", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: black;
+    z-index: 2;
   }
-  
-  
-    
-  .navbar{
-      background-color: #88cbf3;
-      height: 6em;
+
+  .navbar #Btn-Logout::after {
+    --m-i: linear-gradient(#000, #000);
+    --m-o: content-box, padding-box;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: var(--border-width);
+    border-radius: var(--border-radius);
+    background-image: conic-gradient(
+       #488cfb,
+       #29dbbc,
+       #ddf505,
+       #ff9f0e,
+       #e440bb,
+       #655adc,
+       #488cfb
+     );
+    -webkit-mask-image: var(--m-i), var(--m-i);
+    mask-image: var(--m-i), var(--m-i);
+    -webkit-mask-origin: var(--m-o);
+    mask-origin: var(--m-o);
+    -webkit-mask-clip: var(--m-o);
+    mask-composite: exclude;
+    -webkit-mask-composite: destination-out;
+    filter: hue-rotate(0);
+    animation: rotate-hue linear 500ms infinite;
+    animation-play-state: paused;
+   }
+   
+   .navbar #Btn-Logout:hover::after {
+    animation-play-state: running;
+   }
+   
+   @keyframes rotate-hue {
+    to {
+     filter: hue-rotate(1turn);
     }
+   }
+   
+   .navbar #Btn-Logout,
+   .navbar #Btn-Logout::after {
+    box-sizing: border-box;
+   }
+   
+   .navbar #Btn-Logout:active {
+    --border-width: 5px;
+   }
   
     .navbar div#id-box{
       vertical-align: middle;
@@ -66,7 +130,7 @@ nav a {
       justify-content: space-around;
     }
     
-    nav a {
+    /* nav a {
       display: inline;
       padding-top: 0%;
       margin-top: 0%;
@@ -78,11 +142,11 @@ nav a {
       color: #020202;
       transition: 0.1s;
       vertical-align: middle;
-      line-height: 5rem;
+      line-height: 100%;
       font-family: Arial
-    }
+    } */
     nav a:hover{
-      color: #008200;
+      color: white;
       font-size: 1.4em;
       font-weight: 700;
       border-bottom: 2px solid ;

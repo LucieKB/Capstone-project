@@ -1,19 +1,21 @@
 table {
     border-spacing: 0;
-    border: 1px solid black;
+    border: 3px solid blue;
+    margin: 10px
 }
 
  
     
 td {
       padding: 0.5rem;
-      border-bottom: 1px solid black;
-      border-right: 1px solid black;
+      
+      border-right: 2px solid black;
  
 }
    
 th {
-      background: green;
+      background: radial-gradient(circle, #5379f8 0%, #aabcf8 100%);
+      border-right: 2px solid black;
       border-bottom: 3px solid blue;
       color: white;  
 }

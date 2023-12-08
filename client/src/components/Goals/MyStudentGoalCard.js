@@ -28,9 +28,13 @@ function MyStudentGoalCard({onUpdateGoal, goals, setGoals, messages, setMessages
     // const location = useLocation()
     // const { from } = location.state
 
-    if(!goals){
-        setIsLoading(!isLoading)
-    }
+    // if(!goals){
+    //    return(
+    //     <div>
+    //         ...Loading
+    //     </div>
+    //    )
+    // }
 
    console.log(goals)
     const goal = goals.find(goal => goal.id === parseInt(goal_id))

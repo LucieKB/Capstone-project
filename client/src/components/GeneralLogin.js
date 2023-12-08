@@ -24,7 +24,7 @@ return(
                 <LoginForm />
                 <div className= "bottom-wrap">
                     <h3>Don't have an account?</h3>
-                    <button className="SignUp-Btn" onClick={() => setShowLogin(false)}>Sign Up</button>
+                    <button className="submitBtn" onClick={() => setShowLogin(false)}>Sign Up</button>
                 </div>
             </div>)
             : 
@@ -32,7 +32,7 @@ return(
                 <SignUpHomePage />
                 <div className= "bottom-wrap">
                     <h3>Already have an account?</h3>
-                    <button className="SignUp-Btn" onClick={() => setShowLogin(true)}>Log In</button>
+                    <button className="submitBtn" onClick={() => setShowLogin(true)}>Log In</button>
                 </div>
             </div>)
         }

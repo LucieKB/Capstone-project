@@ -11,7 +11,7 @@ import UnpaidGoals from "./UnpaidGoals";
 
 
 
-function Student({goals, setGoals}){
+function Student({goals, setGoals, messages, setMessages}){
     const {user, setUser} = useContext(UserContext)
     // const {goals, setGoals} = useContext(GoalsContext)
     const [seeArchived, setSeeArchived] = useState(false)
@@ -97,10 +97,10 @@ function Student({goals, setGoals}){
                 setSeeArchived(false) 
                 setSeeGoalForm(false)
                 setSeeUnpaidGoals(!seeUnpaidGoals)
-            }}> {seeExpired? ("Hide My Goals Awaiting Payment"):("Show My Goals Awaiting Payment")} </button>
+            }}> {seeUnpaidGoals? ("Hide My Goals Awaiting Payment"):("Show My Goals Awaiting Payment")} </button>
             </div>
             {seeGoalForm?
-            ( <NewGoalForm onAddGoal={handleAddGoal}/>
+            ( <NewGoalForm onAddGoal={handleAddGoal} setSeeGoalForm={setSeeGoalForm} setMessages={setMessages}/>
             ):(null)}
 
             {seeActiveGoals?
@@ -116,7 +116,7 @@ function Student({goals, setGoals}){
             ):(null)}
 
             {seeUnpaidGoals?
-            ( <UnpaidGoals goals={myGoalsAwaitingPayment}/>
+            ( <UnpaidGoals goals={myGoalsAwaitingPayment} messages={messages}/>
             ):(null)}
         </div>
     )

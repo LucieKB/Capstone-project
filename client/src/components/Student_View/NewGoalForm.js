@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Star from "../Goals/Star";
 
 
-function NewGoalForm({onAddGoal}){
+function NewGoalForm({onAddGoal, setSeeGoalForm}){
     const {user, setUser} = useContext(UserContext)
     const {goals, setGoals} = useContext(GoalsContext)
     const [formData, setFormData]=useState({
@@ -78,7 +78,8 @@ console.log(formData)
                     achieved_by_parent: (false)
                 });
             });
-            // setShowGoalForm((showGoalForm) => !showGoalForm)
+            
+            setSeeGoalForm(false)
             navigate(`/students/${user.id}/me`);
     }
 

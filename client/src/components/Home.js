@@ -33,7 +33,11 @@ function Home(){
         else if (user.type === "Parent") {
         setMyStudents(user.students)
         }
-    },[])
+    },[ ,myStudents])
+
+    // console.log(user)
+    // console.log(user.number_of_children)
+    // console.log(user.students.length)
 
     useEffect(() => {
         if (user.type === "BusinessOwner"){
@@ -60,9 +64,9 @@ function Home(){
     setShowStudentForm(true)
    }
 
-//    const handleShowHome = () =>{
-//     setShowStudentHome(!showStudentHome)
-//    }
+   const handleStudentSignUp = (data) => {
+    // const myStudents = user.students
+    setUser({...user, students : [...user.students, data]})}
 
    const myKidsName = myStudents.map((student)=>{
     return(
@@ -74,18 +78,38 @@ function Home(){
         <td key= {student.id}><img src={student.avatar} height={"80px"}/></td>
     )
    })
+
+   console.log("myStudents=", user.students)
+
+   const handleCreateAvatar = () =>{
+    navigate("/students/avatar")
+   }
  
     return(
         <div className="wrapper">
         <div className="inner-wrapper">
+            <div className = "upper-section" style={{display:"block", width:"35 rem"}}>
             <h1 style={{textAlign:"center"}}>Welcome to your XXX, {user.username}</h1>
+            </div>
             {showStudentHome?(
-                <img src={user.avatar} height={"150px"}/>
+                <div className="avatar-ctn">
+                <img className="avatar-img" src={user.avatar} height={"150px"}/>
+                </div>
             ):( null)}
             {showAdultDirections?(
                 <>
+                <div className = "leftside-section" style={{display:"block", width:"35 rem"}}>
+                    <div className = "leftside-container">
                 <div className= "description">
+                    <div style={{marginBottom: "24px"}}>
+                        <div>
+                            <ul className="Goal-container">
                     < MyStudentsGoals />
+                    </ul>
+                    </div>
+                </div>
+                </div>
+                </div>
                 </div>
                 <br></br>
                 </>
@@ -97,7 +121,7 @@ function Home(){
            (<button onClick = {handleRegisterStudent}>Register a Child</button>):(null)
             }        
             {showStudentForm?
-            (<StudentSignUpForm parentId={user.id} setShowStudentForm={setShowStudentForm} showStudentForm={showStudentForm}/>):
+            (<StudentSignUpForm onStudentSignUp = {handleStudentSignUp} setShowStudentForm={setShowStudentForm} showStudentForm={showStudentForm}/>):
             (null)
             } 
             {showAddEducatorId?
@@ -108,7 +132,12 @@ function Home(){
 
 
             {showAdultDirections?
-            (<div>
+            (<div className = "bottom-section" style={{display:"block", width:"35 rem"}}>
+            <div className = "bottom-container">
+        <div className= "description">
+            <div style={{marginBottom: "24px"}}>
+                <div>
+                    <ul className="Bottom-container">
             <h2> XXX will help you and your child/student to:</h2>
                 <div className = "title">
                     <h2><li>Set <Link to={"/smartGoals"}>S.M.A.R.T goals</Link>,</li></h2> 
@@ -122,10 +151,20 @@ function Home(){
                 </div>
                 
                 <h2> As a parent you will also be able to post items to <Link to={"/marketPlaceExplained"}>the market place</Link>.</h2>
+                </ul>
+                    </div>
+                </div>
+                </div>
+                </div>
                 </div>):(null)
             }
             {showStudentHome?
-            (<div>
+            (<div className = "bottom-section" style={{display:"block", width:"35 rem"}}>
+            <div className = "bottom-container">
+        <div className= "description">
+            <div style={{marginBottom: "24px"}}>
+                <div>
+                    <ul className="Bottom-container">
             <h2> XXX will help you to:</h2>
                 <div className = "title">
                     <h2><li>Set <Link to={"/smartGoals"}> S.M.A.R.T goals</Link> for yourself,</li></h2> 
@@ -139,6 +178,11 @@ function Home(){
                 </div>
                 
                 <h2> You will also be able to buy items on <Link to={"/marketPlaceExplained"}>the market place</Link> !</h2>
+                </ul>
+                    </div>
+                </div>
+                </div>
+                </div>
                 </div>):(null)
             }
             {showBusinessDirections?
@@ -152,7 +196,7 @@ function Home(){
             (<button onClick={()=>navigate(`/students/${user.id}/me`)}> Go To My Goals Page </button>) : (null)}
 
             {showAvatarGenerator?
-            (<Avatar />):(null)}
+            (<button onClick={handleCreateAvatar}>Create My Avatar</button>):(null)}
 
 
            

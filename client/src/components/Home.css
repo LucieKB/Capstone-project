@@ -11,33 +11,43 @@
     background-size: cover;
     background-repeat: no-repeat;
     display: flex;
+    
     background-position: right center;
     align-items: center
 }
 
 .inner-wrapper{
     background-color: rgb(255, 255, 255);
+    border: 2px solid rgb(226, 228, 240);
+    border-radius: 18px;
     align-items: center;
     width: 90%;
     margin: auto;
     margin-top: 10px;
     margin-bottom: 10px;
     padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    box-shadow: rgba(45, 64, 150, 0.06) 0px 2px 0px;
 }
 
 .inner-wrapper .description{
     width: 100%;
     height: auto;
+    padding-bottom: 10px
 }
 
 .inner-wrapper .description table{ 
+        table-layout: fixed;
         border-spacing: 10;
         border: 1px solid black;
-        width: 80%;
+        width: 90%;
         margin-left: auto;
-        margin-right: auto;
-        
+        margin-right: auto;       
 }
+
+
     
      
         
@@ -49,11 +59,11 @@
 }
        
 .inner-wrapper .description th {
-    background: radial-gradient(circle, #568203 0%, #ACE1AF 100%);
+    background: radial-gradient(circle, #5379f8 0%, #aabcf8 100%);
           border-bottom: 3px solid black;
           border-right: 1px solid black;
           color: white; 
-          font-family: "Rock Salt", cursive;
+          
           font-size: 16px 
 }
       
@@ -93,5 +103,49 @@
     font-size: medium;
     text-indent: 50px;
     line-height: 1.4
+}
+
+.leftside-container{
+    display: flex;
+    flex-direction: column;
+    width: 35rem
+}
+
+.Goal-container{
+    border: 2px solid rgb(211, 215, 236);
+    overflow-y: auto;
+    border-radius: 18px;
+    background-color: rgb(255, 255, 255);
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+}
+
+.bottom-container{
+    display: flex;
+    flex-direction: column;
+    width: 60rem;
+    padding-left: auto;
+    padding-right: auto
+}
+
+.Bottom-container{
+    border: 2px solid rgb(178, 181, 208);
+    overflow-y: auto;
+    border-radius: 18px;
+    background-color: rgb(255, 255, 255);
+    list-style: none;
+    padding: 10px;
+    margin: 0px;
+}
+
+.avatar-ctn{
+    
+align-content: center;
+}
+
+.avatar-img{
+    align-content: center;
+   
 }
 

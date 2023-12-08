@@ -38,7 +38,7 @@ import Acc4 from "./images/Acc4.png";
 import Acc5 from "./images/Acc5.png";
 import Acc6 from "./images/Acc6.png";
 import html2canvas from 'html2canvas';
-import ReactDOM from "react-dom";
+import {useNavigate} from "react-router-dom"
 import "./Avatar.css"
 import AvatarScreenShot from "./AvatarScreenShot";
 
@@ -63,6 +63,7 @@ function Avatar(){
     const [showAccessories, setShowAccessories] = useState(false)
     const [showSubmitBtn, setShowSubmitBtn] = useState(false)
     const myRef = useRef(null)
+    const navigate = useNavigate()
 
 
     const allHeads = [Head1, Head2, Head3, Head4];
@@ -146,6 +147,8 @@ function Avatar(){
             } else {
                 r.json().then((err)=>setErrors(err.errors))
             }
+
+            navigate("/")
          });    
 }
 
@@ -399,9 +402,9 @@ function Avatar(){
                 </form>
 
                 {showSubmitBtn?(<div>
-        <button onClick={()=> saveAvatarURL()}> Submit my Avatar </button>
+        <button onClick={()=>{saveAvatarURL()}}> Submit my Avatar </button>
         </div> ):(null)}  
-                <div ref={myRef} className = "Avatar-container"> 
+                <div ref={myRef}> 
                 <AvatarScreenShot head={head} ears={ears} eyes={eyes} eyeBrows={eyeBrows} nose={nose} mouth={mouth} hair={hair} accessories={accessories} />
                 </div> 
                 {/* <div ref={myRef} className = "Avatar-container">

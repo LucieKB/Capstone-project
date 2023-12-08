@@ -21,6 +21,7 @@ import RewardsExplained from "./Home/RewardsExplained";
 import MarketPlaceExplained from "./Home/MarketPlaceExplained";
 import MyStudentGoalCard from "./Goals/MyStudentGoalCard";
 import MyStudentGoalsList from "./Goals/MyStudentGoalsList";
+import MyStudentsEducator from "./Goals/MyStudentsEducator";
 
 function App() {
   const {user, setUser} = useContext(UserContext)
@@ -40,7 +41,7 @@ function App() {
     setIsLoading(!isLoading)
 }
   
-  console.log(user)
+  console.log("user=",user)
   console.log("goals=",goals)
 
   const handleAddGoal = (myNewGoal) =>{
@@ -96,7 +97,8 @@ const handlePayGoal = (updatedGoal) =>{
       <Routes>
         <Route exact path="/" element = {<Home />}/>
         <Route exact path="/parents/:id/students/:student_id" element = {<MyStudent goals={goals} setGoals = {setGoals}/>} />
-        <Route exact path="/students/:id/me" element = {<Student goals={goals} setGoals = {setGoals}/>} />
+        <Route exact path="/students/:id/me" element = {<Student goals={goals} setGoals = {setGoals} messages={messages} setMessages={setMessages}/>} />
+        <Route exact path= "/educators/mystudents/:grade" element = {<MyStudentsEducator />} />
         <Route exact path = "/students/:id/goals" element = {<GoalList goals={goals} setGoals = {setGoals}/>} />
         {/* <Route exact path = "/parents/:id/students/:student_id/goals" element = {<MyStudentGoalsList />} /> */}
         <Route exact path = "/parents/:id/students/:student_id/goals/:goal_id" element = {<MyStudentGoalCard onUpdateGoal={handleUpdateGoal} onPayGoal={handlePayGoal} goals={goals} setGoals = {setGoals} messages={messages} setMessages={setMessages}/>} />

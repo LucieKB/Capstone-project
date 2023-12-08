@@ -1,10 +1,12 @@
-import React, {useRef} from "react";
+import React from "react";
 
 function AvatarScreenShot({head, ears, eyes, hair, nose, eyeBrows, mouth, accessories}){
-    const myRef = useRef(null)
+    
+   
+    
 
     return(
-        <div>
+        <div className = "Avatar-container">
             <img src={head}  className="Avatar-image" />
             <img src={ears}  className="Avatar-overlay" />  
             <img src={eyes}  className="Avatar-overlay" />  
