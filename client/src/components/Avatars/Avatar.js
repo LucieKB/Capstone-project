@@ -196,18 +196,14 @@ function Avatar(){
         <div>
             <form >
                 {showHeads?
-                (<div
-               
-                >
-                    <p>Choose a head: </p>
-                    <div  style = {{
-                    width: "fit-content",
-                    heigth: "fit-content",
-                    display: "flex",
-                    flexDirection: "row"
-                }}>
+                (<div className="Avatar-form" >
+                    <div style = {{textAlign:"center"}}>
+                    <label><h2>Choose a head: </h2></label>
+                    <br></br>
+                    </div>
+                    <div  className="Avatar-container">
                     {allHeads.map((h)=>
-                    <div key={h}>
+                    <div className="Avatar-img" key={h}>
                         <input
                             type="radio"
                             name="heads"
@@ -224,14 +220,12 @@ function Avatar(){
                 }
 
                 {showEars?
-                (<div>
-                    <p>Choose ears: </p>
-                    <div  style = {{
-                    width: "fit-content",
-                    heigth: "fit-content",
-                    display: "flex",
-                    flexDirection: "row"
-                }}>
+                (<div className="Avatar-form" >
+                <div style = {{textAlign:"center"}}>
+                <label><h2>Choose your ears: </h2></label>
+                <br></br>
+                </div>
+                    <div className="Avatar-container">
                     {allEars.map((e)=>
                     <div key={e} >
                         <input

@@ -5,8 +5,9 @@ import { GoalsContext } from "../../contexts/GoalsContext";
 import { useNavigate } from "react-router-dom";
 import StarConditional from "../Goals/StarConditional";
 import NewMessageForm from "../Messages/NewMessageForm";
+import "./GoalCard.css"
 
-function GoalCard({onUpdateGoal, messages, setMessages}){
+function GoalCard({onUpdateGoal}){
     const {user, setUser} = useContext(UserContext)
     const {id} = useParams()
     const {goals, setGoals} = useContext(GoalsContext)
@@ -14,30 +15,18 @@ function GoalCard({onUpdateGoal, messages, setMessages}){
     const [errors, setErrors] = useState([]);
     const [buttonColor, setButtonColor] = useState("")
     const [showMessageForm, setShowMessageForm] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const goal = goals.find(goal => goal.id === parseInt(id))
-    console.log(goal)
     const [achieved, setAchieved] = useState (false)
-    const [goalMessages, setGoalMessages] = useState(goal.messages)
+    const [showMessages, setShowMessages] = useState(false)
+    // const [goalMessages, setGoalMessages] = useState(goal.messages)
     const navigate = useNavigate()
-
-    if(!goals){
-        setIsLoading(!isLoading)
-    }
-
-    
-   
-    useEffect(()=>{
-        const thisGoalMessages = messages.filter((m)=> m.goal_id === goal.id)
-        console.log("thisGoalMessages=",thisGoalMessages)
-        setGoalMessages(thisGoalMessages)
-    }, [messages])
+    const goal = goals.find(goal => goal.id === parseInt(id))
+    console.log("goal=",goal)
 
     useEffect(()=>{
         if (goal.validated_by_educator === true && goal.validated_by_parent == true){
             setShowAchieved(true)
         }
-    }, [])
+    }, [goal])
 
     useEffect(()=>{
         if (achieved === true){
@@ -45,17 +34,29 @@ function GoalCard({onUpdateGoal, messages, setMessages}){
         }
     }, [achieved])
 
-    // const onUpdategoal = (updatedgoal) =>{
-    //     const modifiedgoal = user.goals.map((goal)=>{
-    //         if(goal.id === updatedgoal.id){
-    //             return updatedgoal
-    //         }else{
-    //             return goal
-    //         }
-    //         })
-    //     setGoals(modifiedgoal)
-    //     setUser({...user, goals: modifiedgoal})   
-    // }
+
+    if(!goals){
+        console.log("!goals")
+        return(
+            <div>
+                ...Loading
+            </div>
+        )
+    }
+    console.log("goals=",goals)
+
+    
+
+    if(!goal){
+        console.log("!goal")
+        return(
+            <div>
+                ...Loading
+            </div>
+        )
+    }
+
+    
 
     
 
@@ -95,7 +96,7 @@ function GoalCard({onUpdateGoal, messages, setMessages}){
     // }, [])
 
    
-        const myGoalMessages = goalMessages.map((m)=> {
+        const myGoalMessages = goal.messages.map((m)=> {
             return(<div key={m.id}>
            ➢{m.content} from <em>{m.sender} </em>
        </div>)
@@ -103,9 +104,21 @@ function GoalCard({onUpdateGoal, messages, setMessages}){
        
      
      const handleAddMessage = (newMessage) =>{
-        setMessages([...messages, newMessage]) 
-        setGoalMessages([...goalMessages, newMessage])
+        console.log("newMessage in handleAddMessages", newMessage)
+         let goalMessages=goal.messages
+         console.log(goalMessages)
+        const modifiedGoals = goals.map((goal)=>{
+            if(newMessage.goal_id === goal.id){
+                console.log(newMessage)
+                goalMessages.push(newMessage)
+                console.log(goalMessages)
+            return ({...goal, messages: goalMessages}) 
+        } else {
+            return goal
         }
+        })
+        setGoals(modifiedGoals)
+        } 
 
         const handleBackHome = () => {
             navigate(`/students/${user.id}/goals`)
@@ -121,20 +134,45 @@ function GoalCard({onUpdateGoal, messages, setMessages}){
         //     ➢{m.content} from <em>{m.sender} </em>
         // </div>)
         
-
-        
+        const handleReadMessages = () => {
+            // fetch(`/messages/${goal.id}/read`, {
+            //     method: "PATCH",
+            //     headers: {
+            //         "Content-Type": "application/json", 
+            //     },
+            //     body: JSON.stringify({
+            //         read: true
+            //     }),
+            // }).then((r) => {
+            //     if (r.ok) {
+            //         r.json().then((updatedMessage) =>
+            //         //  console.log(updatedMessage)
+            //         handleUpdateMessage(updatedMessage)
+            //         // (setMessages([...messages, updatedMessage]))
+            //         );
+            //         navigate(`/parents/${user.id}/students/${student.id}/goals/${goal.id}`)
+            //     } else {
+            //         r.json().then((err)=>setErrors(err.errors))  
+            //     }   
+            // });
+            setShowMessages(!showMessages)
+            // setMessageStyle("")
+        }
        
 
     return(
         <div>
-        <h2> {user.username}'s Goal #{goal.id}</h2>
-        <button onClick={handleBackHome}> 🔙 </button>
+        <button className="backBtn" onClick={handleBackHome}> 🔙 to {user.username}'s goals </button>
+        <div className = "inner-wrapper">
+            <div className = "upper-container">
+                <div className = "text">
+        <h2> {user.username}'s "{goal.title}" Goal</h2>
         <em> Created on {goal.created_at.split('T')[0]}</em>
-        <li>Title : {goal.title}</li>
-        <li>Description : {goal.description}</li>
-        <li>Deadline : {goal.deadline}</li>
-        <li>Category : {goal.goal_category}</li>
-        <li>Value : 
+        <li><span id="titles">Title :</span> {goal.title}</li>
+        <li><span id="titles">Description :</span> {goal.description}</li>
+        <li><span id="titles">Deadline :</span> {goal.deadline}</li>
+        <li><span id="titles">Category :</span> {goal.goal_category}</li>
+        <li><span id="titles">Value :</span> 
         <span>
                 {Array(5)
                 .fill()
@@ -146,21 +184,34 @@ function GoalCard({onUpdateGoal, messages, setMessages}){
                 ))}
             </span>
         </li>
-        <li>Messages : {myGoalMessages}</li>
-        
+        </div>
+        <div className = "messages-container">
+        {showMessages?
+         (<ul> <h3>📬 Messages :</h3> {myGoalMessages}</ul> ):(null)}
+         </div>
+        </div>
             {showAchieved?
                 (<button 
                 onClick={handleGoalAchieved}
                 style = {{backgroundColor:buttonColor}}> Goal Achieved </button>) : (null)}
 
-                <button onClick={handleShowMessageForm}>Add Message</button>
+                <button  className="submitBtn" onClick = {handleReadMessages}>{showMessages? ("Hide messages"):("Read Messages")}</button>
+                <button className="submitBtn" onClick={handleShowMessageForm}>{showMessageForm?("Hide form"):("Add Message")}</button>
+                
                 {showMessageForm?
-                (<div>
+                (<div className = "inner-inner-wrapper">
                     <NewMessageForm goal={goal} onAddNewMessage={handleAddMessage}/>
                 </div>): (null)}
         </div>
-
+        </div>
     )
 }
 
 export default GoalCard;
+
+{/* <button onClick={handleShowMessageForm}>Add Message</button>
+                                {showMessageForm?
+                (<div>
+                    <ParentMessageForm goal={goal} onAddNewMessage={handleAddMessage}/>
+                </div>): (<button style={{backgroundColor:messageStyle}} onClick = {handleReadMessages}>{showMessages? ("Hide messages"):("Read Messages")}</button>)}
+                            </div> */}

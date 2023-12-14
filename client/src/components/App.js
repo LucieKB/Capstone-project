@@ -37,12 +37,18 @@ function App() {
 
   if (!user) return <GeneralLogin />
 
+
+
   if(!goals){
-    setIsLoading(!isLoading)
+    console.log("no goals in App line 43")
+    return(
+        <div>
+            Loading...
+        </div>
+    )
 }
   
-  console.log("user=",user)
-  console.log("goals=",goals)
+ 
 
   const handleAddGoal = (myNewGoal) =>{
     setGoals([...goals, myNewGoal])

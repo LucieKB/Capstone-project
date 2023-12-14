@@ -59,7 +59,7 @@ function RewardCard({reward}){
             <li><u>Price:</u>{reward.price} ⭐️</li>
             <div>
                 {showBuyBtn?
-            (<button onClick={handleBuyReward}>I Want To Buy This Item !</button>):(null)}
+            (<button className="buy-Btn" onClick={handleBuyReward}>I Want To Buy This Item !</button>):(null)}
             </div>
             
         </div>

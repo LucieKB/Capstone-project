@@ -64,7 +64,7 @@ function NewMessageForm({goal, onAddNewMessage}){
     })
     
     setNewContent("");
-    setRecipients([]);
+    
    
     }
 
@@ -73,9 +73,11 @@ function NewMessageForm({goal, onAddNewMessage}){
     return(
         <div>
             <form onSubmit={handleSubmitMessage}>
+            <div className="form-wrapper">
                 <ul>
                 <strong><u> Message : </u>&nbsp;</strong>
                 <input
+                className="form-control"
                     type="text"
                     name="text"
                     value= {newContent}
@@ -97,6 +99,7 @@ function NewMessageForm({goal, onAddNewMessage}){
             <br /> 
                 </ul>
                 <button>Submit my message</button>
+                </div>
             </form>
         </div>
     )

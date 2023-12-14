@@ -26,18 +26,7 @@ function SignUpHomePage(){
     
     return(
         <>
-        
-        <div className= "bottom-wrap">
-            {showButtonParent?
-            (<button className="SignUp-Btn" onClick={() => handleSignUpParent()}> I'm a Parent </button>):(null)}
-            {showButtonEducator?
-            ( <button className="SignUp-Btn" onClick={() => handleSignUpEducator()}> I'm an Educator </button>):(null)}
-            {showButtonBO?
-            ( <button className="SignUp-Btn" onClick={() => handleSignUpBusinessOwner()}> I'm a Business Owner </button>):(null)}
-        </div>
-        
-
-        <div >
+         <div >
             {(() => {
                 switch (userType){
                     case 'parent' :
@@ -47,9 +36,18 @@ function SignUpHomePage(){
                     case 'business_owner' :
                         return <BusinessOwnerSignUpForm />
                         default :
-                        return <h3>Please select a user type.</h3>
+                        return <h2 style={{textAlign:"center"}}>Please select a user type to sign-up : </h2>
                 }
             })()}
+        </div>
+
+        <div className= "bottom-wrap">
+            {showButtonParent?
+            (<button className="submitBtn" onClick={() => handleSignUpParent()}> I'm a Parent </button>):(null)}
+            {showButtonEducator?
+            ( <button className="submitBtn" onClick={() => handleSignUpEducator()}> I'm an Educator </button>):(null)}
+            {showButtonBO?
+            ( <button className="submitBtn" onClick={() => handleSignUpBusinessOwner()}> I'm a Business Owner </button>):(null)}
         </div>
         </>
     )

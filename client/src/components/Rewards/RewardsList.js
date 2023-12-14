@@ -67,7 +67,7 @@ function RewardsList(){
 
     return(
         <div>
-            Available Items:
+            <h1 style={{textAlign:"center"}}>Available Items:</h1>
             <table>
                 <thead>
                     <tr>
@@ -94,7 +94,7 @@ function RewardsList(){
             
             </table>
             {showAddRBtn?
-            (<button onClick={handleNewRewardForm}>Add an Item</button>):(null)}
+            (<button className="submitBtn" onClick={handleNewRewardForm}>Add an Item</button>):(null)}
         </div>
     )
 }

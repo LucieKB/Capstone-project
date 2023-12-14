@@ -9,13 +9,12 @@ const GoalsProvider = ({children}) =>{
         fetch (`/goals`).then((r)=> {
             if (r.ok) {
               r.json().then((goals)=>{
-                console.log(goals)
                 setGoals(goals)})
             }
           });
-        }, [user]);
+        }, []);
 
-        console.log(goals)
+ console.log(goals)
         
     return(
         <GoalsContext.Provider value={{goals, setGoals}}>

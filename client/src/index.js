@@ -14,11 +14,11 @@ root.render(
   <React.StrictMode>
    
     <UserProvider>
-    <RewardsProvider>
     <GoalsProvider>
+    <RewardsProvider>
     <App />
-    </GoalsProvider>
     </RewardsProvider>
+    </GoalsProvider>
     </UserProvider>
     
   </React.StrictMode>
