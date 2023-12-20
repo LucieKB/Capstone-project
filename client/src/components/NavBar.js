@@ -1,5 +1,6 @@
 import React, {useState, useContext, useEffect} from "react";
 import { UserContext } from "../contexts/UserContext";
+import { GoalsContext } from "../contexts/GoalsContext";
 import { Link, useNavigate } from "react-router-dom";
 import dateFormat from "dateformat";
 import "./NavBar.css"
@@ -7,7 +8,7 @@ import "./NavBar.css"
 
 function NavBar(){
     const {user, setUser} = useContext(UserContext)
-    const [showId, setShowId] = useState(false)
+    const {goals, setGoals} = useContext(GoalsContext)
     const [showStudentNav, setShowStudentNav] = useState(false)
     const [showParentNav, setShowParentNav] = useState(false)
     const [showEducatorNav, setShowEducatorNav] = useState(false)
@@ -15,13 +16,13 @@ function NavBar(){
     
     const now = new Date()
     const today = dateFormat(now, "isoDateTime")
-    const elementaryGrades = [1,2,3,4,5]
-    const secondaryGrades = [6,7,8,9,10,11,12]
+    const elementaryGrades = ["1st","2nd","3rd","4th","5th"]
+    const secondaryGrades = ["6th","7th","8th","9th","10th","11th","12th"]
     const [showSecondary, setShowSecondary] = useState(false)
     const navigate=useNavigate()
 
   console.log (user.type)
-  let myKidsLink = []
+  
 
     useEffect(()=>{
         if (user.type === "Student"){
@@ -55,8 +56,17 @@ function NavBar(){
             </div>
         )
     }
+
+    const myStudents = user.students
+    console.log("user.students=", myStudents)
+    if (!myStudents){
+        console.log("noStudents")
+        const myKidsLink = []
+        console.log(myKidsLink)
+    } 
+    else{
     
-            if (user.type === "Parent"){
+            
                 const myKidsLink = user.students.map((kid)=>{
                 const myKidGoals = kid.goals
                 const myKidActiveGoals = myKidGoals.filter((goal)=>{
@@ -83,15 +93,15 @@ function NavBar(){
                 }
                 return(        
                     <Link to = {`/parents/${user.id}/students/${kid.id}`}>{kid.username} {actionNeeded()}</Link>)})
-            } 
-           
+            }        
+      
 
     function handleLogoutClick() {
         fetch("/logout", { method: "DELETE" }).then((r) => {
             if (r.ok) {
                 setUser(null);
+                setGoals(null);
             }
-            navigate("/")
         });
     }
 
@@ -107,32 +117,7 @@ function NavBar(){
 
     
 
-    
 
-    // const myKidsLink = myKids.map((kid)=>{
-    //     const myKidGoals = kid.goals
-    //     const myKidActiveGoals = myKidGoals.filter((goal)=>{
-    //         const deadline = dateFormat(goal.deadline, "isoDateTime")
-    //         return(goal.achieved === false && deadline>today)
-    //     })
-    //     console.log(myKidActiveGoals)
-    //     const validationNeeded = myKidActiveGoals.filter((g)=>g.validated_by_parent === false)
-    //     console.log(validationNeeded.length)
-    //     const paymentNeeded = myKidActiveGoals.filter((g)=>g.achieved_by_parent === false && g.achieved === true)
-    //     console.log(paymentNeeded.length)
-        
-    //     if (validationNeeded.length>0 && paymentNeeded.length === 0){
-    //         return("✅")
-    //     }
-    //     else if (paymentNeeded.length>0 && validationNeeded.length === 0){
-    //         return("💰")
-    //     }
-    //     else if (validationNeeded.length>0 && paymentNeeded.length>0){
-    //         return(["✅", "💰"])
-    //     }
-    //     else{return("")}
-
-        
             
 
     return(
@@ -143,13 +128,13 @@ function NavBar(){
             
             
                 <nav>
-                    <Link to ="/">Home</Link>
+                    <Link to ="/" style={{fontWeight:"600", marginLeft:"1%", fontSize:"20px"}}>Home</Link>
                     <Link to = {`/students/${user.id}/me`}> My Goals Page </Link>
-                    <Link to = "/rewards"> MarketPlace </Link>
-                    <Link to = "/students/:id/myItems"> My Items </Link>
+                    <Link to = "/rewards" style={{fontWeight:"600", marginLeft:"1%", fontSize:"20px"}}> MarketPlace </Link>
+                    <Link to = "/students/:id/myItems" style={{fontWeight:"600", marginLeft:"1%", fontSize:"20px"}}> My Items </Link>
                      <span>My Wallet : {user.wallet} 🌟</span> 
                     
-            <button id="Btn-Logout" onClick={handleLogoutClick}>Logout</button>
+            <span><button id="Btn-Logout" onClick={handleLogoutClick}>Logout</button></span>
         
 
                 </nav>
@@ -160,9 +145,9 @@ function NavBar(){
         {showParentNav?
         (
                 <nav>
-                    <Link to ="/">Home</Link>
+                    <Link to ="/" style={{fontWeight:"600", marginLeft:"1%", fontSize:"20px"}}>Home</Link>
                     {myKidsLink}
-                    <Link to = "/rewards"> MarketPlace </Link>
+                    <Link to = "/rewards" style={{fontWeight:"600", marginLeft:"1%", fontSize:"20px"}}> MarketPlace </Link>
                     
                     <button id="Btn-Logout" onClick={handleLogoutClick}>Logout</button>
         
@@ -172,15 +157,15 @@ function NavBar(){
         {showEducatorNav?
         (
                 <nav>
-                    <Link to ="/">Home</Link>
+                    <Link to ="/" style={{fontWeight:"600", marginLeft:"1%", fontSize:"20px"}}>Home</Link>
                     
                     {showSecondary?
                     (mySecondaryGradesLink):
                     (myElementaryGradesLink)}
-                    <button onClick={()=>setShowSecondary(!showSecondary)}>{showSecondary?("Show Primary Grades"):("Show Secondary Grades")}</button>
+                    <button  id="Btn-Grades" onClick={()=>setShowSecondary(!showSecondary)}>{showSecondary?("Show Primary Grades"):("Show Secondary Grades")}</button>
                     
                     {/* <Link to ="/users/mystudents"> My Students Page </Link> */}
-                    Id for students : <span style={{color:"red", fontSize:"20px", fontWeight:"bolder"}}> Id # {user.id} </span>
+                    <span style={{ color:"red", fontSize:"20px", fontWeight:"bolder"}}> Id # {user.id} </span>
                     
             <button id="Btn-Logout" onClick={handleLogoutClick}>Logout</button>
         
@@ -190,7 +175,7 @@ function NavBar(){
         {showBusinessNav?
         (
                 <nav>
-                    <Link to ="/">Home</Link>
+                    <Link to ="/" style={{fontWeight:"600", marginLeft:"1%", fontSize:"20px"}}>Home</Link>
                     <Link to = "/rewards"> MarketPlace </Link>
                 </nav>  
         ):(null)} 

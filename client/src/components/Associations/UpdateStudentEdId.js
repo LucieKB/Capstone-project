@@ -44,11 +44,11 @@ function UpdateStudentEdId({student, setShowAddEducatorId}){
     }
 
     return(
-        <div>
+        <div className="title">
         <h2>Link my profile to my Teacher/Coach.</h2>
         <p>Enter your Educator's Id# underneath:</p>
 
-        <form onSubmit = {handleAddEdId}>
+        <form className="form-control" onSubmit = {handleAddEdId}>
             <input
             type = "number"
             name = "My_Ed_Id"
@@ -57,7 +57,7 @@ function UpdateStudentEdId({student, setShowAddEducatorId}){
             />
             <div>
                 <br></br>
-            <button type="submit">{isLoading ? "Loading..." : "Submit"}</button>
+            <button className="inner-btn" type="submit">{isLoading ? "Loading..." : "Submit"}</button>
             
             </div>  
               <label style={{color:"red"}}>

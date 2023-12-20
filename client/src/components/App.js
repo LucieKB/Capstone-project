@@ -37,7 +37,7 @@ function App() {
 
   if (!user) return <GeneralLogin />
 
-
+console.log("Goals in app=",goals)
 
   if(!goals){
     console.log("no goals in App line 43")
@@ -107,7 +107,7 @@ const handlePayGoal = (updatedGoal) =>{
         <Route exact path= "/educators/mystudents/:grade" element = {<MyStudentsEducator />} />
         <Route exact path = "/students/:id/goals" element = {<GoalList goals={goals} setGoals = {setGoals}/>} />
         {/* <Route exact path = "/parents/:id/students/:student_id/goals" element = {<MyStudentGoalsList />} /> */}
-        <Route exact path = "/parents/:id/students/:student_id/goals/:goal_id" element = {<MyStudentGoalCard onUpdateGoal={handleUpdateGoal} onPayGoal={handlePayGoal} goals={goals} setGoals = {setGoals} messages={messages} setMessages={setMessages}/>} />
+        <Route exact path = "/parents/:id/students/:student_id/goals/:goal_id" element = {<MyStudentGoalCard onUpdateGoal={handleUpdateGoal} onPayGoal={handlePayGoal}  setGoals = {setGoals} messages={messages} setMessages={setMessages}/>} />
         <Route path = "/goals/new" element = {<NewGoalForm onAddGoal={handleAddGoal}/>} />
         <Route path = "/users/mystudents" element = {<MyStudentsGoals />} />
         <Route path = "/goals/:id" element = {<GoalCard onUpdateGoal={handleUpdateGoal} messages={messages} setMessages={setMessages}/>} />

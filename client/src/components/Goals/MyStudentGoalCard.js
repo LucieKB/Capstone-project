@@ -7,11 +7,11 @@ import StarConditional from "./StarConditional";
 import ParentMessageForm from "../Messages/ParentMessageForm";
 
 
-function MyStudentGoalCard({onUpdateGoal, goals, setGoals, messages, setMessages, onPayGoal}){
+function MyStudentGoalCard({onUpdateGoal, messages, setMessages, onPayGoal}){
     const {user, setUser} = useContext(UserContext)
     const {goal_id} = useParams()
     const {student_id} = useParams()
-    // const {goals, setGoals} = useContext(GoalsContext)
+    const {goals, setGoals} = useContext(GoalsContext)
     const [showAchieved, setShowAchieved] = useState(false)
     const [errors, setErrors] = useState([]);
     const [isDisabled, setIsDisabled] = useState(false)
@@ -37,10 +37,12 @@ function MyStudentGoalCard({onUpdateGoal, goals, setGoals, messages, setMessages
     // }
 
    console.log(goals)
+    console.log(student)
+    
+
     const goal = goals.find(goal => goal.id === parseInt(goal_id))
   
-    console.log(student)
-    console.log(goal)
+    console.log("goal=",goal)
 
     useEffect(()=>{
         const thisGoalMessages = messages.filter((m)=> m.goal_id === goal.id)
@@ -92,6 +94,15 @@ function MyStudentGoalCard({onUpdateGoal, goals, setGoals, messages, setMessages
         }
         
     })
+
+    if(!goal){
+        console.log("no goal GoalCard")
+        return(
+            <div>
+                Loading...
+            </div>
+        )
+    }
 
     // const onUpdategoal = (newMessage) =>{
     //     const modifiedgoal = student.goals.map((goal)=>{
@@ -324,25 +335,33 @@ function MyStudentGoalCard({onUpdateGoal, goals, setGoals, messages, setMessages
 
     return(
         
-        <div>
-        <h2> {user.username}'s Goal #{goal_id}</h2>
-        <button onClick={handleBackHome}> 🔙 </button>
+        <div className="goal-wrapper">
+        <div style={{width:"100%", marginTop:"5%"}}>
+            <div style={{backgroundColor:"white"}}>
+        <button className="backBtn" onClick={handleBackHome}> 🔙 to {student.username}'s goals </button>
+        </div>
+        </div>
+        <div className = "inner-wrapper">
+            <div className = "upper-container">
+                <div className = "text">
+        <h2> {student.username}'s "{goal.title}" Goal</h2>
         <em> Created on {goal.created_at.split('T')[0]}</em>
-        <li>Description : {goal.description}</li>
-                                <li>Deadline : {goal.deadline}</li>
-                                <li>Category : {goal.goal_category}</li>
-                                <li>Value : 
-                                    <span>
-                                        {Array(5)
-                                        .fill()
-                                        .map((_, index) => (
-                                        <StarConditional 
-                                        key={index} 
-                                        filled={index < goal.value}
-                                        goal = {goal} />
-                                        ))}
-                                    </span>
-                                </li> 
+        <li><span id="titles">Title :</span> {goal.title}</li>
+        <li><span id="titles">Description :</span> {goal.description}</li>
+        <li><span id="titles">Deadline :</span> {goal.deadline}</li>
+        <li><span id="titles">Category :</span> {goal.goal_category}</li>
+        <li><span id="titles">Value :</span> 
+        <span>
+                {Array(5)
+                .fill()
+                .map((_, index) => (
+                <StarConditional 
+                key={index} 
+                filled={index < goal.value}
+                goal = {goal} />
+                ))}
+            </span>
+        </li>
                                   
                                  {showMessages?
                                     (<li> Messages : {myGoalMessages}</li> ):(null)}
@@ -353,13 +372,15 @@ function MyStudentGoalCard({onUpdateGoal, goals, setGoals, messages, setMessages
                                 (<button 
                                 onClick={handlePay}
                                 disabled = {isDisabled}> Pay {student.username} <strong style={{color:"orange"}}>{goal.value/2} ☆</strong></button>) : (null)}
-                                <button onClick={handleShowMessageForm}>Add Message</button>
+                                <button className="submitBtn" onClick={handleShowMessageForm}>Add Message</button>
                                 {showMessageForm?
                 (<div>
                     <ParentMessageForm goal={goal} onAddNewMessage={handleAddMessage}/>
-                </div>): (<button style={{backgroundColor:messageStyle}} onClick = {handleReadMessages}>{showMessages? ("Hide messages"):("Read Messages")}</button>)}
+                </div>): (<button className="submitBtn" style={{backgroundColor:messageStyle}} onClick = {handleReadMessages}>{showMessages? ("Hide messages"):("Read Messages")}</button>)}
                             </div>
-        
+        </div>
+        </div>
+        </div>
     )
 }
 

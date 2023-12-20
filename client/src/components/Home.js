@@ -84,6 +84,8 @@ function Home(){
    const handleCreateAvatar = () =>{
     navigate("/students/avatar")
    }
+   console.log(showAddEducatorId)
+   console.log(user.educator_id)
  
     return(
         <div className="wrapper">
@@ -93,7 +95,7 @@ function Home(){
             </div>
             {showStudentHome?(
                 <div className="avatar-ctn">
-                <img className="avatar-img" src={user.avatar} height={"150px"}/>
+                <img className="avatar-img" src={user.avatar} height={"150px"} maxWidth={"200px"}/>
                 </div>
             ):( null)}
             {showAdultDirections?(
@@ -124,19 +126,15 @@ function Home(){
             (<StudentSignUpForm onStudentSignUp = {handleStudentSignUp} setShowStudentForm={setShowStudentForm} showStudentForm={showStudentForm}/>):
             (null)
             } 
-            {showAddEducatorId?
-           (<div>
-            <UpdateStudentEdId student = {user} setShowAddEducatorId={setShowAddEducatorId}/>
-            </div>):(null)
-            }
+            
 
 
             {showAdultDirections?
-            (<div className = "bottom-section" style={{display:"block", width:"35 rem"}}>
+            (<div className = "bottom-section" style={{display:"flex",alignItems:"center", justifyContent:"center"}}>
             <div className = "bottom-container">
         <div className= "description">
             <div style={{marginBottom: "24px"}}>
-                <div>
+                
                     <ul className="Bottom-container">
             <h2> XXX will help you and your child/student to:</h2>
                 <div className = "title">
@@ -155,12 +153,12 @@ function Home(){
                     </div>
                 </div>
                 </div>
-                </div>
+                
                 </div>):(null)
             }
             {showStudentHome?
-            (<div className = "bottom-section" style={{display:"block", width:"35 rem"}}>
-            <div className = "bottom-container">
+            (
+            <div className = "bottom-container" style={{maxWidth:"80%"}}>
         <div className= "description">
             <div style={{marginBottom: "24px"}}>
                 <div>
@@ -182,7 +180,7 @@ function Home(){
                     </div>
                 </div>
                 </div>
-                </div>
+                
                 </div>):(null)
             }
             {showBusinessDirections?
@@ -193,11 +191,16 @@ function Home(){
                 
 
             {showStudentHome?
-            (<button onClick={()=>navigate(`/students/${user.id}/me`)}> Go To My Goals Page </button>) : (null)}
+            (<button className="submitBtn" onClick={()=>navigate(`/students/${user.id}/me`)}> Go To My Goals Page </button>) : (null)}
 
             {showAvatarGenerator?
-            (<button onClick={handleCreateAvatar}>Create My Avatar</button>):(null)}
+            (<button className="submitBtn" onClick={handleCreateAvatar}>Create My Avatar</button>):(null)}
 
+            {showAddEducatorId?
+           (<div className="Bottom-container" >
+            <UpdateStudentEdId student = {user} setShowAddEducatorId={setShowAddEducatorId}/>
+            </div>):(null)
+            }
 
            
         </div> 

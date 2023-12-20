@@ -9,12 +9,14 @@ class GoalsController < ApplicationController
                  students = user.students
                  goalsArr = students.map {|s| s.goals}
                  goals = goalsArr.flatten
+                 
              when "Educator"
                  students = user.students
                  goalsArr = students.map {|s| s.goals}
                  goals = goalsArr.flatten
              when "Student"
-                 goals = user.goals
+                 all_goals = Goal.all
+                 goals = all_goals.filter{|g| g.user_id == user.id}
              else
                  "Error : there are no goals to display"
              end

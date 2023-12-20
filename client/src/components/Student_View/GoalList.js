@@ -21,7 +21,7 @@ function GoalList({goals, setGoals}){
     console.log("goals in GoalList=",goals)
     console.log("myGoals in GoalList=",myGoals)
     // const myActiveGoals = myGoals.filter((goal) => goal.achieved_by_parent === false || goal.achieved_by_educator === false)
-    const myActiveGoals = myGoals.filter((goal)=>{
+    const myActiveGoals = goals.filter((goal)=>{
         const deadline = dateFormat(goal.deadline, "isoDateTime")
         return(goal.achieved === false && deadline>today)
     })
@@ -79,31 +79,40 @@ function GoalList({goals, setGoals}){
 
 
     return(
-        <div>
-            <button onClick={handleBackHome}> 🔙 </button>
-            <h2>List of My Goals</h2>
-            {/* <button onClick={handleBackHome}> 🔙 </button> */}
-            <div>
-                
-                    <div>
-                            <h3><u>My Validated Goals</u></h3>
+<div style={{height:"100%"}}>
+      
+        <div className="goal-wrapper">
+           
+            <div className="activeGoal-inner">
+                <div>
+            <h1>List of My Goals</h1>
+            <br></br>
+            
+            </div>
+           
+            
+                <div style={{width:"90%"}}>
+                    <div className="GoalListinner-left">
+                            <h2 style={{ textAlign:"center", top:"0", fontSize:"24px"}}><u>* My Validated Goals *</u></h2>
+                            <br/>
                             {validatedGoals.map((g)=> 
                             <div key={g.id}>
                             <Link to={`/goals/${g.id}`}>
-                                    <p>Title: {g.title}</p></Link>
+                                    <p> -  {g.title}</p></Link>
                                     <span>Value: {g.value} ⭐️ / </span>
                                     <span>Deadline : {g.deadline}</span>
                             </div>)}
                         
                     </div>
 
-                    <div>
-                        <h3><u>Goals Awaiting Validation</u></h3>
+                    <div className="GoalListinner-right">
+                        <h2 style={{textAlign:"center", top:"0", fontSize:"24px"}}><u>* Goals Awaiting Validation *</u></h2>
+                        <br />
                         <ul><h4> ☝️ <u>From one adult :</u></h4>
                         {halfValidatedGoals.map((g)=> 
                         <div key={g.id}>
                             <Link to={`/goals/${g.id}`}>
-                                <p>Title: {g.title}</p></Link>
+                                <p>-  {g.title}</p></Link>
                                 <span>Value: {g.value} ⭐️ / </span>
                                 <span>Deadline : {g.deadline}</span>
                             
@@ -120,10 +129,11 @@ function GoalList({goals, setGoals}){
                     </div>)}
                         </ul>
                     </div>
-
-                
+                </div>
+              </div>  
             </div>
-        </div>
+            </div>
+        
     )
 }
 

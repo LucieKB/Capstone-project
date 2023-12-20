@@ -217,10 +217,10 @@ function MyStudentGoalsList({goal}){
            
             <div>
                 <div>
-                    <h4 style={{backgroundColor: `${wordColor}`}}><u>
+                    <p style={{fontSize:"16px"}}><u>
                         {/* <button onClick={()=>setShowGoal(!showGoal)}>{goal.title}</button> */}
-                        <Link to={`/parents/${user.id}/students/${student_id}/goals/${goal.id}`}>{goal.title}</Link>
-                                    </u><em> &nbsp;&nbsp;&nbsp; - &nbsp;&nbsp;&nbsp; Created on {goal.created_at.split('T')[0]}</em> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;||  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{(Math.abs(difference_in_days) >= 1) ? (Math.round(difference_in_days)+" days"):(difference_in_hours+" hours")} left to complete</h4>
+                        <Link to={`/parents/${user.id}/students/${student_id}/goals/${goal.id}`}><h4>{goal.title}</h4></Link>
+                                    </u><em> &nbsp; - &nbsp; Created on {goal.created_at.split('T')[0]}</em> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style={{backgroundColor: `${wordColor}`}}>{(Math.abs(difference_in_days) >= 1) ? (Math.round(difference_in_days)+" days"):(difference_in_hours+" hours")} left to complete</span></p>
                 </div>                
                            
                                 

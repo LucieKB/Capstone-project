@@ -17,7 +17,7 @@ function Student({goals, setGoals, messages, setMessages}){
     const [seeArchived, setSeeArchived] = useState(false)
     const [seeExpired, setSeeExpired] = useState(false)
     const [seeGoalForm, setSeeGoalForm] = useState(false)
-    const [seeActiveGoals, setSeeActiveGoals] = useState(false) //doesn't work when set on true
+    const [seeActiveGoals, setSeeActiveGoals] = useState(true) //doesn't work when set on true
     const [seeUnpaidGoals, setSeeUnpaidGoals] = useState(false)
     const navigate = useNavigate()
     // const goals=user.goals
@@ -45,9 +45,9 @@ function Student({goals, setGoals, messages, setMessages}){
     console.log("myAchievedGoals in Student=",myAchievedGoals)
     console.log("myGoalsAwaitingPayment in Student=",myGoalsAwaitingPayment)
 
-    const handleNavigateToActiveGoals = () =>{
-        navigate(`/students/${user.id}/goals`)
-    }
+    // const handleNavigateToActiveGoals = () =>{
+    //     navigate(`/students/${user.id}/goals`)
+    // }
 
     const handleAddGoal = (newGoal) =>{
         setGoals([...goals, newGoal])
@@ -58,8 +58,12 @@ function Student({goals, setGoals, messages, setMessages}){
 
     return(
         <div>
-            <div>
-            <button onClick={() =>{
+            <div style={{
+                display:"flex",
+                backgroundColor: "white",
+                borderBottom: "inset"
+            }}>
+            <button className="submitBtn" style={{height:"55px", marginTop:"auto", marginBottom:"auto"}} onClick={() =>{
              setSeeGoalForm(!seeGoalForm) 
              setSeeActiveGoals(false) 
              setSeeArchived(false) 
@@ -67,7 +71,7 @@ function Student({goals, setGoals, messages, setMessages}){
              setSeeUnpaidGoals(false)
             } }> {seeGoalForm?("Hide the Form"):("Create a New Goal")} </button>
             
-            <button onClick={() =>{
+            <button className="submitBtn" style={{height:"55px", marginTop:"auto", marginBottom:"auto"}} onClick={() =>{
               setSeeActiveGoals(!seeActiveGoals) 
               setSeeGoalForm(false) 
               setSeeArchived(false) 
@@ -75,7 +79,7 @@ function Student({goals, setGoals, messages, setMessages}){
               setSeeUnpaidGoals(false)
             } }>{seeActiveGoals? ("Hide my Active Goal's List"):("Show Me the Goals I'm Working On!")} </button>
 
-            <button onClick={() => {
+            <button className="submitBtn" style={{height:"55px", marginTop:"auto", marginBottom:"auto"}} onClick={() => {
                 setSeeArchived(!seeArchived)
                 setSeeActiveGoals(false) 
                 setSeeGoalForm(false) 
@@ -83,7 +87,7 @@ function Student({goals, setGoals, messages, setMessages}){
                 setSeeUnpaidGoals(false)
             }}> {seeArchived? ("Hide My Archieved Goals"):("Show My Archieved Goals")} </button>
             
-            <button onClick={() => {
+            <button className="submitBtn" style={{height:"55px", marginTop:"auto", marginBottom:"auto"}} onClick={() => {
                 setSeeExpired(!seeExpired)
                 setSeeActiveGoals(false) 
                 setSeeArchived(false) 
@@ -91,7 +95,7 @@ function Student({goals, setGoals, messages, setMessages}){
                 setSeeUnpaidGoals(false)
             }}> {seeExpired? ("Hide My Expired Goals"):("Show My Expired Goals")} </button>
 
-            <button onClick={() => {
+            <button className="submitBtn" style={{height:"55px", marginTop:"15px", marginBottom:"15px"}} onClick={() => {
                 setSeeExpired(false)
                 setSeeActiveGoals(false) 
                 setSeeArchived(false) 
@@ -104,7 +108,7 @@ function Student({goals, setGoals, messages, setMessages}){
             ):(null)}
 
             {seeActiveGoals?
-            (handleNavigateToActiveGoals()
+            (<GoalList goals={goals}/>
             ):(null)}
 
             {seeArchived?

@@ -13,7 +13,7 @@ function RewardCard({reward}){
     const [isUpdating, setIsUpdating] = useState(false)
 
     useEffect(()=>{
-        if(user.type === "Student"){
+        if(user.type === "Student" && user.wallet >= reward.price){
             setShowBuyBtn(!showBuyBtn)
         }
     }, [])

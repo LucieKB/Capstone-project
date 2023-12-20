@@ -8,16 +8,22 @@ function UnpaidGoals({goals}){
             <ul key={goal.id}>
             <Link to={`/goals/${goal.id}`}>
             <p>Title: {goal.title}</p></Link>
-                <li>Description : {goal.description}</li>
-                <li>Value : {goal.value} ⭐️</li> 
+                <p>Description : {goal.description}</p>
+                <p>Value : {goal.value} ⭐️</p> 
+                <hr />
             </ul>
            
         )})
     
     return(
-        <div>
-            <h2>My Goals Awaiting Payment</h2>
+        <div style={{height:"100%"}}>
+      
+        <div className="goal-wrapper">
+        <div className="archievedGoal-inner">
+            <h2 style={{textAlign:"center", top:"0", fontSize:"24px"}}><u>* My Goals Awaiting Payment *</u></h2>
             {goalsToDisplay}
+        </div>
+        </div>
         </div>
         
     )

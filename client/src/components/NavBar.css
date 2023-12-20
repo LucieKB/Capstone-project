@@ -2,41 +2,51 @@
   display: flex;
     background-color: #88cbf3;
     height: 6em;
-  border-bottom: #488cfb dotted 1px;
+  border-bottom:  inset ;
+  align-items: center;
+  
   }
 
-nav span{
-  display: inline;
+.navbar nav{
+  width:100%;
+  display: inline-flex;
+  justify-content: space-between;
+}
+
+.navbar span{
+  display: inline-flex;
+  align-items: center;
+ 
+  /* margin-right: 3rem; */
   padding-top: 0%;
   margin-top: 0%;
-  margin: 3rem;
+  
   text-decoration: none;
-  font-size: 1.2em;
+  font-size: 20px;
   font-weight: 600;
   text-align: center;
   color: rgb(130, 85, 1);
-  transition: 0.1s;
-  vertical-align: middle;
-  line-height: 5rem;
+  transition: 0.1s; 
   font-family: Arial;
-  height: 6em
+  
 }
 
-nav a {
-    display: inline;
+.navbar a {
+    /* display: inline-flex; */
+    /* align-items: center;
+    justify-content: flex-start; */
     padding-top: 0%;
-    margin-top: 0%;
-    margin: 3rem;
+    margin-top: auto;
+    margin-bottom: auto;
+    /* margin: 1rem; */
     text-decoration: none;
-    font-size: 1.5em;
-    font-weight: 600;
+    font-size: 16px;
+    font-weight: 400;
     text-align: center;
     color: #020202;
-    transition: 0.1s;
-    vertical-align: middle;
-    line-height: 5rem;
+    transition: 0.1s; 
     font-family: Arial;
-    height: 6em
+    align-items: center;
   }
   
    #avatar{
@@ -47,14 +57,73 @@ nav a {
     transform: scale(0.95);
     z-index: 100;
   }
-  
-  .navbar #Btn-Logout {
+
+  .navbar #Btn-Grades {
+    display: inline-flex;
+    
     cursor: pointer;
     --border-radius: 15px;
     --border-width: 4px;
     appearance: none;
     position: relative;
     padding: 0.5em 1em;
+    border: black solid 3px;
+    border-radius: var(--border-radius);
+    background: linear-gradient(
+      #88cbf3,
+      #33D1FF,
+      #3389FF,
+      #00008B
+      );
+    font-family: "Roboto", Arial, "Segoe UI", sans-serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: black;
+    z-index: 2;
+  }
+
+  /* .navbar #Btn-Grades::after {
+    --m-i: linear-gradient(#000, #000);
+    --m-o: content-box, padding-box;
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    padding: var(--border-width);
+    border-radius: var(--border-radius);
+    background-image: conic-gradient(
+       #488cfb,
+       #29dbbc,
+       #ddf505,
+       #ff9f0e,
+       #e440bb,
+       #655adc,
+       #488cfb
+     );
+    -webkit-mask-image: var(--m-i), var(--m-i);
+    mask-image: var(--m-i), var(--m-i);
+    -webkit-mask-origin: var(--m-o);
+    mask-origin: var(--m-o);
+    -webkit-mask-clip: var(--m-o);
+    mask-composite: exclude;
+    -webkit-mask-composite: destination-out;
+    filter: hue-rotate(0);
+    animation: rotate-hue linear 500ms infinite;
+    animation-play-state: paused;
+   } */
+  
+  .navbar #Btn-Logout {
+    display: inline-flex;
+    margin-left: 0%;
+    margin-right: 1%;
+    cursor: pointer;
+    --border-radius: 15px;
+    --border-width: 4px;
+    appearance: none;
+    position: relative;
+    padding: 0.7em 1em;
     border: 0;
     background-color: #88cbf3;
     font-family: "Roboto", Arial, "Segoe UI", sans-serif;

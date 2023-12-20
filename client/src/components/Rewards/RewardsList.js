@@ -67,7 +67,8 @@ function RewardsList(){
 
     return(
         <div>
-            <h1 style={{textAlign:"center"}}>Available Items:</h1>
+            <br></br>
+            <h1 style={{textAlign:"center"}}><u>Available Items:</u></h1>
             <table>
                 <thead>
                     <tr>

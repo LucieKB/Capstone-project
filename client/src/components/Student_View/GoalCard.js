@@ -121,7 +121,7 @@ function GoalCard({onUpdateGoal}){
         } 
 
         const handleBackHome = () => {
-            navigate(`/students/${user.id}/goals`)
+            navigate(`/students/${user.id}/me`)
            }
 
         // const receivedMessages = goal.messages.filter((m)=> m.recipient === user.username)
