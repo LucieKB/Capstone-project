@@ -57,17 +57,10 @@ function NavBar(){
         )
     }
 
-    const myStudents = user.students
-    console.log("user.students=", myStudents)
-    if (!myStudents){
-        console.log("noStudents")
-        const myKidsLink = []
-        console.log(myKidsLink)
-    } 
-    else{
+   
     
             
-                const myKidsLink = user.students.map((kid)=>{
+                const myKidsLink = user.students?.map((kid)=>{
                 const myKidGoals = kid.goals
                 const myKidActiveGoals = myKidGoals.filter((goal)=>{
                     const deadline = dateFormat(goal.deadline, "isoDateTime")
@@ -93,14 +86,14 @@ function NavBar(){
                 }
                 return(        
                     <Link to = {`/parents/${user.id}/students/${kid.id}`}>{kid.username} {actionNeeded()}</Link>)})
-            }        
+                
       
 
     function handleLogoutClick() {
         fetch("/logout", { method: "DELETE" }).then((r) => {
             if (r.ok) {
                 setUser(null);
-                setGoals(null);
+                setGoals([]);
             }
         });
     }
@@ -177,9 +170,12 @@ function NavBar(){
                 <nav>
                     <Link to ="/" style={{fontWeight:"600", marginLeft:"1%", fontSize:"20px"}}>Home</Link>
                     <Link to = "/rewards"> MarketPlace </Link>
+                    <span><button id="Btn-Logout" onClick={handleLogoutClick}>Logout</button></span>
                 </nav>  
         ):(null)} 
         </div>
+
+        
         
 
         {/* <div className="navbar">

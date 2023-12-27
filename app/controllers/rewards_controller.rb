@@ -1,6 +1,7 @@
 class RewardsController < ApplicationController
     wrap_parameters format:[]
     skip_before_action :authorized, only: [:index, :show]
+    
 
     def index
         rewards = Reward.all
@@ -9,19 +10,19 @@ class RewardsController < ApplicationController
 
     def show
         reward = find_reward
-        rednder json: reward, status: :ok
+        render json: reward, status: :ok
     end
 
     def create
         rewards = Reward.all
-        reward = rewards.create(reward_params)
+        reward = rewards.create!(reward_params)
         render json: reward, status: :created
     end
 
     def update
         reward = find_reward
         reward.update!(reward_params)
-        render json: :reward, status: :accepted
+        render json: reward, status: :accepted
     end
 
     def destroy
@@ -31,17 +32,18 @@ class RewardsController < ApplicationController
     end
 
     def buy_reward
-        reward = find_reward
+        reward = Reward.find_by(id: params[:id])
         student = @current_user
         reward.update!(reward_params)
         price = reward.price
-        if student.wallet >= price
+        # if student.wallet >= price
             student.wallet -= price
-            student.update(transaction_params)
-        else
-            render json: "You don't have enough stars in your wallet to buy this item"
-        end
-        render json: :reward, status: :accepted
+            student.update!(transaction_params)
+            
+        # else
+        #     flash[:alert] =  "You don't have enough stars in your wallet to buy this item"
+        # end
+        render json: reward, status: :accepted
     end
    
     private

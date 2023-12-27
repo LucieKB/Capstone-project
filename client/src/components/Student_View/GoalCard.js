@@ -6,25 +6,34 @@ import { useNavigate } from "react-router-dom";
 import StarConditional from "../Goals/StarConditional";
 import NewMessageForm from "../Messages/NewMessageForm";
 import "./GoalCard.css"
+import UpdateGoalForm from "./UpdateGoalForm";
 
-function GoalCard({onUpdateGoal}){
+function GoalCard({onUpdateGoal, goals, setGoals}){
     const {user, setUser} = useContext(UserContext)
     const {id} = useParams()
-    const {goals, setGoals} = useContext(GoalsContext)
+    // const {goals, setGoals} = useContext(GoalsContext)
     const [showAchieved, setShowAchieved] = useState(false)
     const [errors, setErrors] = useState([]);
     const [buttonColor, setButtonColor] = useState("")
     const [showMessageForm, setShowMessageForm] = useState(false)
     const [achieved, setAchieved] = useState (false)
     const [showMessages, setShowMessages] = useState(false)
-    // const [goalMessages, setGoalMessages] = useState(goal.messages)
+    const [showUpdate, setShowUpdate] = useState(false)
     const navigate = useNavigate()
+    console.log("goals in GoalCard=", goals)
     const goal = goals.find(goal => goal.id === parseInt(id))
     console.log("goal=",goal)
-
+    
+    console.log("messages=", goal.messages)
     useEffect(()=>{
         if (goal.validated_by_educator === true && goal.validated_by_parent == true){
             setShowAchieved(true)
+        }
+    }, [goal])
+
+    useEffect(()=>{
+        if (goal.validated_by_educator === false && goal.validated_by_parent == false){
+            setShowUpdate(true)
         }
     }, [goal])
 
@@ -43,10 +52,7 @@ function GoalCard({onUpdateGoal}){
             </div>
         )
     }
-    console.log("goals=",goals)
-
-    
-
+   
     if(!goal){
         console.log("!goal")
         return(
@@ -56,9 +62,9 @@ function GoalCard({onUpdateGoal}){
         )
     }
 
-    
-
-    
+    // if(!goal.messages){
+    //     goal.messages = []
+    // }
 
     function handleGoalAchieved(){
         fetch(`/goals/${goal.id}`, {
@@ -84,16 +90,7 @@ function GoalCard({onUpdateGoal}){
         setShowMessageForm(!showMessageForm)
      } 
      
-    //  useEffect(()=>{
-    //     const myGoalMessages = goalMessages.map((m)=> {
-    //         console.log("message.content=",m.content)
-    //             return(<div key={m.id}>
-    //                          ➢{m.content} from <em>{m.sender} </em>
-    //                     </div>)  
-    //     }) 
-    //     console.log("myGoalMessages=",myGoalMessages)
-    //     setGoalMessages(myGoalMessages)   
-    // }, [])
+   
 
    
         const myGoalMessages = goal.messages.map((m)=> {
@@ -123,46 +120,24 @@ function GoalCard({onUpdateGoal}){
         const handleBackHome = () => {
             navigate(`/students/${user.id}/me`)
            }
-
-        // const receivedMessages = goal.messages.filter((m)=> m.recipient === user.username)
-        // const sentMessages = goal.messages.filter((m)=> m.user_id === user.id)
-
-       
-
-        // const goalMessages = goal.messages.map((m)=> 
-        // <div key={m.id}>
-        //     ➢{m.content} from <em>{m.sender} </em>
-        // </div>)
         
         const handleReadMessages = () => {
-            // fetch(`/messages/${goal.id}/read`, {
-            //     method: "PATCH",
-            //     headers: {
-            //         "Content-Type": "application/json", 
-            //     },
-            //     body: JSON.stringify({
-            //         read: true
-            //     }),
-            // }).then((r) => {
-            //     if (r.ok) {
-            //         r.json().then((updatedMessage) =>
-            //         //  console.log(updatedMessage)
-            //         handleUpdateMessage(updatedMessage)
-            //         // (setMessages([...messages, updatedMessage]))
-            //         );
-            //         navigate(`/parents/${user.id}/students/${student.id}/goals/${goal.id}`)
-            //     } else {
-            //         r.json().then((err)=>setErrors(err.errors))  
-            //     }   
-            // });
+          
             setShowMessages(!showMessages)
-            // setMessageStyle("")
+           
+        }
+
+        const handleUpdateGoal = () =>{
+            navigate(`/goals/${goal.id}/update`)
         }
        
 
     return(
-        <div>
+        <div className="goal-wrapper">
+             
+            <div style={{backgroundColor:"white", border: "2px solid lightblue", borderRadius: "18px"}}>
         <button className="backBtn" onClick={handleBackHome}> 🔙 to {user.username}'s goals </button>
+        </div>
         <div className = "inner-wrapper">
             <div className = "upper-container">
                 <div className = "text">
@@ -184,34 +159,38 @@ function GoalCard({onUpdateGoal}){
                 ))}
             </span>
         </li>
-        </div>
-        <div className = "messages-container">
+        
+        
         {showMessages?
-         (<ul> <h3>📬 Messages :</h3> {myGoalMessages}</ul> ):(null)}
+         (<li><span id="titles">📬 Messages :</span>  <div className="messages-container">{myGoalMessages}</div></li> ):(null)}
          </div>
         </div>
+        <div className = "btn-container">
             {showAchieved?
                 (<button 
+                    className="greenSubmitBtn"
                 onClick={handleGoalAchieved}
                 style = {{backgroundColor:buttonColor}}> Goal Achieved </button>) : (null)}
 
-                <button  className="submitBtn" onClick = {handleReadMessages}>{showMessages? ("Hide messages"):("Read Messages")}</button>
+                {/* <button  className="submitBtn" onClick = {handleReadMessages}>{showMessages? ("Hide messages"):("Read Messages")}</button> */}
                 <button className="submitBtn" onClick={handleShowMessageForm}>{showMessageForm?("Hide form"):("Add Message")}</button>
-                
+        {showUpdate?
+        (<button className= "yellowSubmitBtn"
+        style={{marginTop:"10px", marginLeft:"30px"}}
+            onClick={handleUpdateGoal}
+            > Update my Goal </button>
+            ):(null)}
+            </div>        
                 {showMessageForm?
                 (<div className = "inner-inner-wrapper">
-                    <NewMessageForm goal={goal} onAddNewMessage={handleAddMessage}/>
-                </div>): (null)}
+                    <NewMessageForm goal={goal} onAddNewMessage={handleAddMessage} setShowMessageForm={setShowMessageForm} showMessageForm={showMessageForm}/>
+                </div>): (<button className="submitBtn" onClick = {handleReadMessages}>{showMessages? ("Hide messages"):("Read Messages")}</button>)}
         </div>
+
+        
         </div>
     )
 }
 
 export default GoalCard;
 
-{/* <button onClick={handleShowMessageForm}>Add Message</button>
-                                {showMessageForm?
-                (<div>
-                    <ParentMessageForm goal={goal} onAddNewMessage={handleAddMessage}/>
-                </div>): (<button style={{backgroundColor:messageStyle}} onClick = {handleReadMessages}>{showMessages? ("Hide messages"):("Read Messages")}</button>)}
-                            </div> */}

@@ -41,7 +41,6 @@ function StudentSignUpForm({showStudentForm, setShowStudentForm, onStudentSignUp
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setErrors([]);
         setIsLoading(true);
         fetch("/students", {
             method: "POST", 
@@ -53,13 +52,16 @@ function StudentSignUpForm({showStudentForm, setShowStudentForm, onStudentSignUp
             setIsLoading(false);
                 if (r.ok) {
                     r.json().then((data) => onStudentSignUp(data));
+                    setShowStudentForm(!showStudentForm);
                 } else {
                     r.json().then((err) => {console.log(err.errors)
                     setErrors(err.errors)}
                     )
                   }
-        setShowStudentForm(!showStudentForm)
+            
+        
               });
+             
       }
 
 
@@ -163,13 +165,16 @@ function StudentSignUpForm({showStudentForm, setShowStudentForm, onStudentSignUp
             </Link> 
           </div> */}
 
-          <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>   
-          <label style={{color:"red"}}>
-            {errors.map((err) => (
-              <em key={err}>{err}</em>
-              ))}
-            
-          </label>
+          <button className="submitBtn" type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>  
+
+          <div className="errors">
+              <label id="errors" style={{color:"red"}}>
+                {errors.map((err) => (
+                  <ul><em key={err}>{err}</em></ul>
+                  ))}
+                
+              </label>
+              </div>
 
         </form>
         </>

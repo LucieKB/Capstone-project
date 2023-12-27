@@ -17,7 +17,6 @@ function EducatorSignUpForm(){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setErrors([]);
         setIsLoading(true);
         fetch("/signup", {
             method: "POST", 
@@ -35,9 +34,10 @@ function EducatorSignUpForm(){
                     )
                   }
               });
+              
       }
 
-      console.log(educatorFormData)
+      console.log("errors=",errors)
 
     return(
         <>
@@ -101,14 +101,16 @@ function EducatorSignUpForm(){
             </label>
           </div>
 
-          <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
+          <button className="submitBtn" type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
               
-              <label style={{color:"red"}}>
+              <div className="errors">
+              <label id="errors" style={{color:"red"}}>
                 {errors.map((err) => (
-                  <em key={err}>{err}</em>
+                  <ul><em key={err}>{err}</em></ul>
                   ))}
                 
               </label>
+              </div>
 
         </form>
         </div>

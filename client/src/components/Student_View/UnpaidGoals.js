@@ -7,9 +7,9 @@ function UnpaidGoals({goals}){
         return(
             <ul key={goal.id}>
             <Link to={`/goals/${goal.id}`}>
-            <p>Title: {goal.title}</p></Link>
-                <p>Description : {goal.description}</p>
-                <p>Value : {goal.value} ⭐️</p> 
+            <p><u>Title:</u> {goal.title}</p></Link>
+                <p><u>Description :</u> {goal.description}</p>
+                <p><u>Value :</u> {goal.value} ⭐️</p> 
                 <hr />
             </ul>
            

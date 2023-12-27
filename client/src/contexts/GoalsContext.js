@@ -1,10 +1,11 @@
-import React, { useState, useEffect, createContext } from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
+import { UserContext } from "./UserContext.js";
 
 const GoalsContext = createContext();
 
 const GoalsProvider = ({children}) =>{
     const [goals, setGoals] = useState([]);
-   
+ const {user} = useContext(UserContext)  
 
     useEffect(()=>{
         fetch ("/goals").then((r)=> {
@@ -12,7 +13,7 @@ const GoalsProvider = ({children}) =>{
               r.json().then((goals)=>setGoals(goals));
             }
           });
-        }, []);
+        }, [user]);
 
  console.log(goals)
         

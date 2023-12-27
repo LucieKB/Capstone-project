@@ -34,7 +34,7 @@ function NewRewardForm(){
     }, [])
 
     const onSuggest = (sugg) =>
-    {console.log(sugg)
+    {
         setNewRForm({...newRForm, pickup_place:sugg})
         setSchoolSearch(sugg);
         setSchoolSuggestions([]);
@@ -50,7 +50,6 @@ function NewRewardForm(){
     }
 
     function handleAddNewReward(newReward){
-        console.log(newReward)
         setRewards([...rewards, newReward])
     }
 
@@ -65,35 +64,36 @@ function NewRewardForm(){
             },
             body: JSON.stringify(newRForm)
         }).then((r)=>{
-             console.log(r)   
+               
              setIsLoading(false);
                 if (r.ok) {
                     r.json().then ((newReward) => {
                         handleAddNewReward(newReward);
-                    setErrors([]);   
+                        setNewRForm({
+                            title:(""),
+                            description:(""),
+                            image: (""),
+                            pickup_place: (""),
+                            price: (""),
+                            reward_category: (""),
+                            reward_condition: (""),
+                            buyer: (""),
+                            available: true,
+                            user_id: user.id,
+                            collected: false 
+                        });
+                        navigate("/rewards");
                 })
                 } else {
-                    console.log(errors)
+                    console.log("errors=",errors)
                      r.json().then((err) => setErrors(err.errors));
                 }
-    
+     
             });
-
-        setNewRForm({
-            title:(""),
-            description:(""),
-            image: (""),
-            pickup_place: (""),
-            price: (""),
-            reward_category: (""),
-            reward_condition: (""),
-            buyer: (""),
-            available: true,
-            user_id: user.id,
-            collected: false 
-        });
         
-        navigate("/rewards");
+        setErrors([]);
+       
+        
     }
 
     return(
@@ -194,13 +194,15 @@ function NewRewardForm(){
             </label>
         </div>
         <button type="submit">{isLoading ? "Loading..." : "Submit My Item"}</button>
-              
-              <label style={{color:"red"}}>
+
+              <div className="errors">
+              <label id="errors" style={{color:"red"}}>
                 {errors.map((err) => (
-                  <em key={err}>{err}</em>
+                  <ul><em key={err}>{err}</em></ul>
                   ))}
                 
               </label>
+              </div>
         </form>
         
     )

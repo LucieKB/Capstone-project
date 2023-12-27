@@ -70,9 +70,11 @@ function ParentMessageForm({goal, onAddNewMessage}){
     return(
         <div>
             <form onSubmit={handleSubmitMessage}>
+            <div className="form-wrapper">
                 <ul>
                 <strong><u> Message :</u></strong>&nbsp;
                 <input
+                className="form-control"
                     type="text"
                     name="text"
                     value= {newContent}
@@ -93,7 +95,8 @@ function ParentMessageForm({goal, onAddNewMessage}){
             </label>
             <br /> 
                 </ul>
-                <button>Submit my message</button>
+                <button className="inner-btn">Send &nbsp;&nbsp; ✉️ </button>
+                </div>
             </form>
         </div>
     )

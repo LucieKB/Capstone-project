@@ -11,18 +11,14 @@ function RewardsList(){
     const {user} = useContext(UserContext)
     const {rewards, setRewards} = useContext(RewardsContext)
     const [showAddRBtn, setShowAddRBtn] = useState(true)
-    const [mySchoolRewards, setMySchoolReward] = useState([])
     const navigate = useNavigate()
 
     console.log(rewards)
 
     useEffect(()=>{
         if(user.type === "Student"){
-            setShowAddRBtn(!showAddRBtn)
-            const filteredRewards = rewards.filter((r) => r.pickup_place === user.school)
-            setRewards(filteredRewards)
+            setShowAddRBtn(false)
         }
-        else {setRewards(rewards)}
     }, [])
 
 
@@ -31,39 +27,57 @@ function RewardsList(){
        navigate("/rewards/new")
     }
 
-    
+    const handleUpdateReward = (updatedReward) =>{
+        console.log(updatedReward)
+        const modifiedRewards = rewards.map((r)=>{
+            if (r.id === updatedReward.id){
+                return updatedReward
+            } else {
+                return r
+            }
+        })
+        console.log(modifiedRewards)
+       setRewards(modifiedRewards)
+       navigate(`/students/${user.id}/myItems`)
+    } 
+   
 
     const availableRewards = rewards.filter((r)=>{
-        if(r.available === true){
+        if(user.type === "Student"){
+        if(r.available === true && r.pickup_place === user.school){
             return r
-        } 
+        } }
+        else if (user.type === "Parent" || user.type === "Educator" || user.type === "BusinessOwner"){
+            if(r.available === true ){
+                return r
+            } 
+        }
     })
 
-
-    const rewardsToDisplay = availableRewards.map((reward)=> <RewardCard key={reward.id} reward={reward} />)
+    console.log("availableRewards=",availableRewards)
 
     const techRewards = availableRewards.filter((r)=>r.reward_category === "Tech")
-    const techRewardsToDisplay = techRewards.map((reward)=> <RewardCard key={reward.id} reward={reward} />)
+    const techRewardsToDisplay = techRewards.map((reward)=> <RewardCard key={reward.id} reward={reward} onUpdateReward={handleUpdateReward}/>)
 
     const gameRewards = availableRewards.filter((r)=>r.reward_category === "Games")
-    const gameRewardsToDisplay = gameRewards.map((reward)=> <RewardCard key={reward.id} reward={reward} />)
+    const gameRewardsToDisplay = gameRewards.map((reward)=> <RewardCard key={reward.id} reward={reward} onUpdateReward={handleUpdateReward}/>)
 
     const bookRewards = availableRewards.filter((r)=>r.reward_category === "Books")
-    const bookRewardsToDisplay = bookRewards.map((reward)=> <RewardCard key={reward.id} reward={reward} />)
+    const bookRewardsToDisplay = bookRewards.map((reward)=> <RewardCard key={reward.id} reward={reward} onUpdateReward={handleUpdateReward}/>)
 
     const clothingRewards = availableRewards.filter((r)=>r.reward_category === "Clothing")
-    const clothingRewardsToDisplay = clothingRewards.map((reward)=> <RewardCard key={reward.id} reward={reward} />)
+    const clothingRewardsToDisplay = clothingRewards.map((reward)=> <RewardCard key={reward.id} reward={reward} onUpdateReward={handleUpdateReward}/>)
 
     const outdoorsRewards = availableRewards.filter((r)=>r.reward_category === "Outdoors")
-    const outdoorsRewardsToDisplay = outdoorsRewards.map((reward)=> <RewardCard key={reward.id} reward={reward} />)
+    const outdoorsRewardsToDisplay = outdoorsRewards.map((reward)=> <RewardCard key={reward.id} reward={reward} onUpdateReward={handleUpdateReward}/>)
 
     const giftCardRewards = availableRewards.filter((r)=>r.reward_category === "Gift-Card")
-    const giftCardRewardsToDisplay = giftCardRewards.map((reward)=> <RewardCard key={reward.id} reward={reward} />)
+    const giftCardRewardsToDisplay = giftCardRewards.map((reward)=> <RewardCard key={reward.id} reward={reward} onUpdateReward={handleUpdateReward}/>)
 
     const otherRewards = availableRewards.filter((r)=>r.reward_category === "Other")
-    const otherRewardsToDisplay = otherRewards.map((reward)=> <RewardCard key={reward.id} reward={reward} />)
+    const otherRewardsToDisplay = otherRewards.map((reward)=> <RewardCard key={reward.id} reward={reward} onUpdateReward={handleUpdateReward}/>)
 
-    console.log(gameRewardsToDisplay)
+    
 
     return(
         <div>

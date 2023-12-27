@@ -22,6 +22,7 @@ import MarketPlaceExplained from "./Home/MarketPlaceExplained";
 import MyStudentGoalCard from "./Goals/MyStudentGoalCard";
 import MyStudentGoalsList from "./Goals/MyStudentGoalsList";
 import MyStudentsEducator from "./Goals/MyStudentsEducator";
+import UpdateGoalForm from "./Student_View/UpdateGoalForm";
 
 function App() {
   const {user, setUser} = useContext(UserContext)
@@ -37,9 +38,9 @@ function App() {
 
   if (!user) return <GeneralLogin />
 
-console.log("Goals in app=",goals)
 
-  if(!goals){
+
+  if(goals.length === 0){
     console.log("no goals in App line 43")
     return(
         <div>
@@ -48,7 +49,7 @@ console.log("Goals in app=",goals)
     )
 }
   
- 
+console.log("Goals in app=",goals) 
 
   const handleAddGoal = (myNewGoal) =>{
     setGoals([...goals, myNewGoal])
@@ -110,7 +111,8 @@ const handlePayGoal = (updatedGoal) =>{
         <Route exact path = "/parents/:id/students/:student_id/goals/:goal_id" element = {<MyStudentGoalCard onUpdateGoal={handleUpdateGoal} onPayGoal={handlePayGoal}  setGoals = {setGoals} messages={messages} setMessages={setMessages}/>} />
         <Route path = "/goals/new" element = {<NewGoalForm onAddGoal={handleAddGoal}/>} />
         <Route path = "/users/mystudents" element = {<MyStudentsGoals />} />
-        <Route path = "/goals/:id" element = {<GoalCard onUpdateGoal={handleUpdateGoal} messages={messages} setMessages={setMessages}/>} />
+        <Route path = "/goals/:id" element = {<GoalCard onUpdateGoal={handleUpdateGoal} messages={messages} setMessages={setMessages} goals={goals} setGoals={setGoals}/>} />
+        <Route path = "/goals/:id/update" element = {<UpdateGoalForm onUpdateGoal={handleUpdateGoal} />} />
         <Route path = "/students/avatar" element = {<Avatar />} />
         <Route path = "/rewards" element = {<RewardsList />} />
         <Route path = "/rewards/new" element = {<NewRewardForm />} />

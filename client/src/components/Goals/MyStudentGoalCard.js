@@ -336,8 +336,8 @@ function MyStudentGoalCard({onUpdateGoal, messages, setMessages, onPayGoal}){
     return(
         
         <div className="goal-wrapper">
-        <div style={{width:"100%", marginTop:"5%"}}>
-            <div style={{backgroundColor:"white"}}>
+        <div style={{width:"fit-content", alignSelf:"left", marginTop:"10px" }}>
+            <div style={{backgroundColor:"white", border: "2px solid lightblue", borderRadius: "18px"}}>
         <button className="backBtn" onClick={handleBackHome}> 🔙 to {student.username}'s goals </button>
         </div>
         </div>
@@ -361,20 +361,25 @@ function MyStudentGoalCard({onUpdateGoal, messages, setMessages, onPayGoal}){
                 goal = {goal} />
                 ))}
             </span>
+            {showMessages?
+                   (<li><span id="titles">📬 Messages :</span> {myGoalMessages}</li> ):(null)}
         </li>
-                                  
-                                 {showMessages?
-                                    (<li> Messages : {myGoalMessages}</li> ):(null)}
+       
+           <div className="btn-container">                       
+                                 
                                 
                                 {showValidate?
-                                (<button onClick={handleValidate}>Validate this goal</button>) : (null)}
+                                (<button className="greenSubmitBtn" onClick={handleValidate}> ✅ Validate this goal</button>) : (null)}
                                 {showPay?
                                 (<button 
+                                className="yellowSubmitBtn"
                                 onClick={handlePay}
-                                disabled = {isDisabled}> Pay {student.username} <strong style={{color:"orange"}}>{goal.value/2} ☆</strong></button>) : (null)}
-                                <button className="submitBtn" onClick={handleShowMessageForm}>Add Message</button>
-                                {showMessageForm?
-                (<div>
+                                disabled = {isDisabled}> Pay {student.username} &nbsp;<strong style={{color:"orange"}}>{goal.value/2} ⭐️</strong></button>) : (null)}
+                                <button className="submitBtn" onClick={handleShowMessageForm}>{showMessageForm? ("Hide Form"):("Add Message")}</button>
+                                
+                            </div>
+                            {showMessageForm?
+                (<div className = "inner-inner-wrapper">
                     <ParentMessageForm goal={goal} onAddNewMessage={handleAddMessage}/>
                 </div>): (<button className="submitBtn" style={{backgroundColor:messageStyle}} onClick = {handleReadMessages}>{showMessages? ("Hide messages"):("Read Messages")}</button>)}
                             </div>

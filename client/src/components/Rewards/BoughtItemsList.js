@@ -13,7 +13,22 @@ function BoughtItemsList(){
         setMyRewards(filteredRewards)
     },[])
 
-    const itemsToDisplay = myRewards.map((r)=>  <BoughtItemCard key={r.id} reward={r} />)
+    const handlePickUpReward = (updatedReward) =>{
+        console.log(updatedReward)
+        const modifiedRewards = rewards.map((r)=>{
+                    if (r.id === updatedReward.id){
+                        return updatedReward
+                    } else {
+                        return r
+                    }
+                })
+                console.log(modifiedRewards)
+               setRewards(modifiedRewards)
+    }
+
+    console.log("myRwards=",myRewards)
+
+    const itemsToDisplay = myRewards.map((r)=>  <BoughtItemCard key={r.id} reward={r} onPickUpReward={handlePickUpReward}/>)
 
     return(
         <div>

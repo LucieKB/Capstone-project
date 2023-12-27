@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
     skip_before_action :authorized, only: :create
+    wrap_parameters format:[]
 
     def index
         users = User.all
@@ -16,7 +17,7 @@ class UsersController < ApplicationController
     end
 
     def create
-        user = User.create(user_params)
+        user = User.create!(user_params)
         session[:user_id] = user.id
         render json: user, status: :created
 

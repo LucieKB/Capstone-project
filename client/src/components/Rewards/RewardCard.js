@@ -5,10 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 import "./RewardCard.css"
 
-function RewardCard({reward}){
+function RewardCard({reward, onUpdateReward}){
     const [showBuyBtn, setShowBuyBtn] = useState(false)
     const {user, setUser}= useContext(UserContext)
-    const {rewards, setRewards} = useContext(RewardsContext)
     const [errors, setErrors] = useState([]);
     const [isUpdating, setIsUpdating] = useState(false)
 
@@ -18,12 +17,8 @@ function RewardCard({reward}){
         }
     }, [])
 
-    const onUpdateReward = (updatedReward) =>{
-        const modifiedReward = 
-        reward.id === updatedReward.id?
-        (updatedReward):(reward)
-        setRewards({...rewards, modifiedReward})
-    }
+  
+
 
     const handleBuyReward =() =>{
         alert(`Are you sure you want to buy the ${reward.title}?`)
@@ -55,11 +50,11 @@ function RewardCard({reward}){
             <ul><h4>{reward.title}</h4></ul>
             <img src={reward.image} />
             <ul><em> {reward.description} </em></ul>
-            <li><u>Item's Condition:</u>{reward.reward_condition}</li>
-            <li><u>Price:</u>{reward.price} ⭐️</li>
+            <li><u>Item's Condition:</u> {reward.reward_condition}</li>
+            <li><u>Price:</u> {reward.price} ⭐️</li>
             <div>
                 {showBuyBtn?
-            (<button className="buy-Btn" onClick={handleBuyReward}>I Want To Buy This Item !</button>):(null)}
+            (<button className="buy-Btn" onClick={handleBuyReward}>I Want To Buy This Item !</button>):(<button disabled={true} style={{width:"10em", hieght: "3em", fontSize:"12px",marginTop:"10px", border: "3px ridge ", fontWeight:"bold" }}> I Want To Buy This Item ! </button>)}
             </div>
             
         </div>

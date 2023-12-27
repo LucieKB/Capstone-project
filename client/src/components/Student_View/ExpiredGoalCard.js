@@ -5,9 +5,9 @@ function ExpiredGoalCard({goals}){
     const goalsToDisplay = goals.map((goal)=>{
         return(
             <ul key={goal.id}>
-                <li>Title : {goal.title}</li>
-                <p>Description : {goal.description}</p>
-                <p>Expired on : {goal.deadline}</p> 
+                <li><u>Title :</u> {goal.title}</li>
+                <p><u>Description :</u> {goal.description}</p>
+                <p><u>Expired on :</u> {goal.deadline}</p> 
                 <hr />
             </ul>
            

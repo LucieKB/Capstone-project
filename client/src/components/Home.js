@@ -35,12 +35,10 @@ function Home(){
         }
     },[ ,myStudents])
 
-    // console.log(user)
-    // console.log(user.number_of_children)
-    // console.log(user.students.length)
 
     useEffect(() => {
         if (user.type === "BusinessOwner"){
+        setGoals([])
         setShowBusinessDirections(true) 
         setShowAdultDirections(false) 
     }
@@ -65,7 +63,6 @@ function Home(){
    }
 
    const handleStudentSignUp = (data) => {
-    // const myStudents = user.students
     setUser({...user, students : [...user.students, data]})}
 
    const myKidsName = myStudents.map((student)=>{
@@ -79,10 +76,10 @@ function Home(){
     )
    })
 
-   console.log("myStudents=", user.students)
 
    const handleCreateAvatar = () =>{
     navigate("/students/avatar")
+    setShowAvatarGenerator(!showAvatarGenerator)
    }
    console.log(showAddEducatorId)
    console.log(user.educator_id)
@@ -91,8 +88,10 @@ function Home(){
         <div className="wrapper">
         <div className="inner-wrapper">
             <div className = "upper-section" style={{display:"block", width:"35 rem"}}>
-            <h1 style={{textAlign:"center"}}>Welcome to your XXX, {user.username}</h1>
-            </div>
+            <h1 style={{textAlign:"center"}}>Welcome, {user.username}</h1>
+            </div> 
+            {showAvatarGenerator?
+            (<button className="submitBtn" onClick={handleCreateAvatar}>Create My Avatar</button>):(null)}
             {showStudentHome?(
                 <div className="avatar-ctn">
                 <img className="avatar-img" src={user.avatar} height={"150px"} maxWidth={"200px"}/>
@@ -103,7 +102,7 @@ function Home(){
                 <div className = "leftside-section" style={{display:"block", width:"35 rem"}}>
                     <div className = "leftside-container">
                 <div className= "description">
-                    <div style={{marginBottom: "24px"}}>
+                    <div>
                         <div>
                             <ul className="Goal-container">
                     < MyStudentsGoals />
@@ -120,7 +119,7 @@ function Home(){
             
             
             {showButtonAddStudent?
-           (<button onClick = {handleRegisterStudent}>Register a Child</button>):(null)
+           (<button className="submitBtn" onClick = {handleRegisterStudent}>Register a Child</button>):(null)
             }        
             {showStudentForm?
             (<StudentSignUpForm onStudentSignUp = {handleStudentSignUp} setShowStudentForm={setShowStudentForm} showStudentForm={showStudentForm}/>):
@@ -193,11 +192,10 @@ function Home(){
             {showStudentHome?
             (<button className="submitBtn" onClick={()=>navigate(`/students/${user.id}/me`)}> Go To My Goals Page </button>) : (null)}
 
-            {showAvatarGenerator?
-            (<button className="submitBtn" onClick={handleCreateAvatar}>Create My Avatar</button>):(null)}
+           
 
             {showAddEducatorId?
-           (<div className="Bottom-container" >
+           (<div className="Bottom-container" style={{textAlign:"center"}}>
             <UpdateStudentEdId student = {user} setShowAddEducatorId={setShowAddEducatorId}/>
             </div>):(null)
             }

@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext} from "react";
 import { UserContext } from "../../contexts/UserContext";
+import { GoalsContext } from "../../contexts/GoalsContext";
 
 function BusinessOwnerSignUpForm(){
 
@@ -9,18 +10,18 @@ function BusinessOwnerSignUpForm(){
         password_confirmation: (""),
         type: ("BusinessOwner"),
         email: (""),
-        business: ("")
+        business: (""),
     })
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState([])
     const {user, setUser} = useContext(UserContext)
+    const { setGoals } = useContext(GoalsContext)
     
    
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setErrors([]);
         setIsLoading(true);
         fetch("/signup", {
             method: "POST", 
@@ -32,12 +33,14 @@ function BusinessOwnerSignUpForm(){
             setIsLoading(false);
                 if (r.ok) {
                     r.json().then((user) => setUser(user));
+                    setGoals([]);
                 } else {
                     r.json().then((err) => {console.log(err.errors)
                     setErrors(err.errors)}
                     )
                   }
               });  
+              setErrors([]);
       }
 
     return(
@@ -120,13 +123,16 @@ function BusinessOwnerSignUpForm(){
               </label>
             </div>
 
-            <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>       
+            <button className="submitBtn" type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>       
            
-            <label style={{color:"red"}}>
+            <div className="errors">
+              <label id="errors" style={{color:"red"}}>
                 {errors.map((err) => (
-                  <em key={err}>{err}</em>
-                  ))} 
-            </label>
+                  <ul><em key={err}>{err}</em></ul>
+                  ))}
+                
+              </label>
+              </div>
 
           </form>
         </div>

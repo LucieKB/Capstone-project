@@ -2,8 +2,6 @@ import React from "react";
 
 function AvatarScreenShot({head, ears, eyes, hair, nose, eyeBrows, mouth, accessories}){
     
-   
-    
 
     return(
         <div className = "Avatar-container">

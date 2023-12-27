@@ -4,6 +4,7 @@ class GoalsController < ApplicationController
     def index
         user = User.find_by(id: session[:user_id])
         if user
+            
             case user.type
                 when "Parent"
                  students = user.students
@@ -17,8 +18,6 @@ class GoalsController < ApplicationController
              when "Student"
                  all_goals = Goal.all
                  goals = all_goals.filter{|g| g.user_id == user.id}
-             else
-                 "Error : there are no goals to display"
              end
         else
             goals = Goal.all

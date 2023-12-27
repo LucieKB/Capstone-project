@@ -1,6 +1,17 @@
 .reward-card img{
     height: 80px;
-    width: 80px
+    width: 80px;
+    margin-left:50px;
+    margin-bottom: 20px;
+}
+
+.reward-card{
+  display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 30px;
+    
+
 }
 
 .buy-Btn {
@@ -18,9 +29,12 @@
     cursor: pointer;
     margin-left: auto;
     margin-right: auto;
-    padding:auto
+    padding:auto;
+    margin-top: 10px;
   }
   
+
+
   .buy-Btn::after {
     /* content: ""; */
     position: absolute;

@@ -1,6 +1,6 @@
 import React, {useState, useContext} from "react";
 import { UserContext } from "../../contexts/UserContext";
-// import StudentSignUpForm from "./StudentSignUpForm";
+
 
 function ParentSignUpForm(){
     const {user, setUser} = useContext(UserContext)
@@ -14,13 +14,10 @@ function ParentSignUpForm(){
     })
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState([])
-    // const [showParentForm, setShowParentForm] = useState(true);
-    // const [showStudentForm, setShowStudentForm] = useState(false);
 
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setErrors([]);
         setIsLoading(true);
         fetch("/signup", {
             method: "POST", 
@@ -38,12 +35,9 @@ function ParentSignUpForm(){
                     )
                   }
               });
-            //   setShowParentForm(false)   
+              setErrors([]);    
       }
 
-    // const handleChildRegistration = () =>{
-    //     setShowStudentForm(true)
-    // }
       console.log(parentFormData)
 
     return(
@@ -126,13 +120,16 @@ function ParentSignUpForm(){
                 </label>
               </div>
 
-              <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>       
+              <button className="submitBtn" type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>       
              
-              <label style={{color:"red"}}>
-                  {errors.map((err) => (
-                    <em key={err}>{err}</em>
-                    ))} 
+              <div className="errors">
+              <label id="errors" style={{color:"red"}}>
+                {errors.map((err) => (
+                  <ul><em key={err}>{err}</em></ul>
+                  ))}
+                
               </label>
+              </div>
 
             </form>
           </div>

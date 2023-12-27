@@ -21,6 +21,13 @@ class StudentsController < UsersController
         render json: student, status: :accepted
     end
 
+    def update_avatar
+        student = Student.find_by(id: params[:id])
+        student.update(avatar_params)
+        byebug
+        render json: student, status: :accepted
+    end
+
     def update_payment
         student = Student.find_by(id: params[:student_id])
         goal = student.goals.find_by(id: params[:id])
@@ -33,15 +40,20 @@ class StudentsController < UsersController
 
     def my_adults
         my_parent = @current_user.parent.username
-        my_educator = @current_user.educator.username
-        my_adults = ["", my_parent, my_educator]
+        if @current_user.educator_id
+            my_educator = @current_user.educator.username
+            my_adults = ["", my_parent, my_educator] 
+        else
+            my_adults = ["", my_parent]
+        end
+        
         render json: my_adults, status: :ok
     end
 
     private
 
     def student_params
-        params.permit(:id, :username, :password, :password_confirmation, :email, :type, :avatar, :grade, :school, :wallet, :parent_id, :educator_id)
+        params.permit(:id, :username, :password, :password_confirmation, :email, :type, :grade, :school, :wallet, :parent_id, :educator_id)
     end
 
     def payment_params
@@ -50,6 +62,10 @@ class StudentsController < UsersController
 
     def goal_params
         params.permit(:id, :achieved_by_educator, :achieved_by_parent)
+    end
+
+    def avatar_params
+        params.permit(:id, :avatar)
     end
 
     def render_not_found_response

@@ -165,7 +165,7 @@ input{
     transition-duration: .3s;
 } */
 
-.submitBtn {
+/* .submitBtn {
     padding: 10px 10px;
     font-size: 14px;
     background-color: #333;
@@ -186,7 +186,7 @@ input{
     text-decoration: none;
     font-weight: 900;
     transition: all 0.7s cubic-bezier(0,.8,.26,.99);
-   }
+   } */
    
   .submitBtn:before {
     position: absolute;
@@ -237,7 +237,7 @@ input{
     width: 164px;
     height: 41px;
     margin: auto;
-    margin-top: 30px;
+    margin-top: 10px;
     margin-bottom: 10px;
     cursor: pointer;
     display: flex;

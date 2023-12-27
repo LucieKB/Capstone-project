@@ -22,6 +22,7 @@ function Student({goals, setGoals, messages, setMessages}){
     const navigate = useNavigate()
     // const goals=user.goals
 
+    console.log("goals in student=", goals)
     
     const now = new Date()
     const today = dateFormat(now, "isoDateTime")
@@ -41,13 +42,6 @@ function Student({goals, setGoals, messages, setMessages}){
     const myGoalsAwaitingPayment = myAchievedGoals.filter((goal)=>{
         return(goal.achieved_by_parent !== true || goal.achieved_by_educator !== true)
     })
-    console.log("goals in Student=",goals)
-    console.log("myAchievedGoals in Student=",myAchievedGoals)
-    console.log("myGoalsAwaitingPayment in Student=",myGoalsAwaitingPayment)
-
-    // const handleNavigateToActiveGoals = () =>{
-    //     navigate(`/students/${user.id}/goals`)
-    // }
 
     const handleAddGoal = (newGoal) =>{
         setGoals([...goals, newGoal])

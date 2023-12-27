@@ -4,7 +4,7 @@
     margin-right: 20px;
     display: flex;
     align-items: center;
-    max-width: 15%;
+    max-width: fit-content;
 }
 
 .newGoal-wrapper{
@@ -28,9 +28,9 @@
     padding: 20px;
     background: #fff;
     border-radius: 18px;
-    border: solid 2px red;
+    border: inset 10px darkgrey;
     max-width: 850px;
-    margin-top: 15%;
+    margin-top: 20%;
     margin-bottom: 5%;
     margin-left: auto;
     margin-right: auto;
@@ -45,7 +45,7 @@
     border: inset 10px darkgrey;
     width: 75%;
     /* max-width: 850px; */
-    /* margin-top: 150px; */
+    margin-top: 5%;
     margin-bottom: 5%;
     margin-left: auto;
     margin-right: auto;
@@ -78,6 +78,7 @@
 
 .form-wrapper{
     position: relative;
+    text-align: center
 
 }
 

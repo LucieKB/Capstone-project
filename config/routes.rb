@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   resources :messages
   resources :rewards
-  resources :avatars
-   
   resources :goals
  
   
@@ -20,6 +18,7 @@ Rails.application.routes.draw do
 
   # resources :users do
     patch "/payment/:student_id/goals/:id", to: "students#update_payment"
+    patch "students/avatar/:id", to: "students#update_avatar"
   # end
 
   patch "parents/students/:student_id/goals/:id", to: "goals#update"
@@ -55,7 +54,7 @@ Rails.application.routes.draw do
   resources :rewards
   patch "rewards/:id/buy", to:"rewards#buy_reward"
 
-  resources :avatars
+ 
   # resources :schools
   # resources :users
   # resources :parents

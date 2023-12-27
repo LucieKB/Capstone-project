@@ -6,7 +6,7 @@ import dateFormat from "dateformat";
 
 
 
-function GoalList({goals, setGoals}){
+function GoalList({goals}){
     const [validatedGoals, setValidatedGoals] = useState([])
     const [halfValidatedGoals, setHalfValidatedGoals] = useState([])
     const [notValidatedGoals, setNotValidatedGoals] = useState([])
@@ -25,12 +25,12 @@ function GoalList({goals, setGoals}){
         const deadline = dateFormat(goal.deadline, "isoDateTime")
         return(goal.achieved === false && deadline>today)
     })
-    const [showGoalsValidated, setShowGoalsValidated] = useState(true)
-    const [showGoalsOneValidation, setShowGoalsOneValidation] = useState(true)
-    const [showGoalsZeroValidation, setShowGoalsZeroValidation] = useState(true)
+    // const [showGoalsValidated, setShowGoalsValidated] = useState(true)
+    // const [showGoalsOneValidation, setShowGoalsOneValidation] = useState(true)
+    // const [showGoalsZeroValidation, setShowGoalsZeroValidation] = useState(true)
 
     
-    useEffect(() => {
+    
             const zeroValidation = [];
             const oneValidation = [];
             const twoValidations = [];
@@ -38,6 +38,7 @@ function GoalList({goals, setGoals}){
             
             if (g.validated_by_parent === false && g.validated_by_educator === false){
                 zeroValidation.push(g)
+                console.log("zeroValidations=", zeroValidation)
             }
             else if ((g.validated_by_parent === false && g.validated_by_educator === true) || (g.validated_by_parent === true && g.validated_by_educator === false)){
                 oneValidation.push(g)
@@ -46,22 +47,19 @@ function GoalList({goals, setGoals}){
                twoValidations.push(g)
             }   
         })  
-        setNotValidatedGoals(zeroValidation) 
-        setHalfValidatedGoals(oneValidation) 
-        setValidatedGoals(twoValidations)
-    }, [])
+   
 
-    useEffect(()=>{
-        if (validatedGoals.length === 0){
-            setShowGoalsValidated(false)
-        }
-        if(halfValidatedGoals.length === 0){
-            setShowGoalsOneValidation(false)
-        }
-        if(notValidatedGoals.length === 0){
-            setShowGoalsZeroValidation(false)
-        }
-    })
+    // useEffect(()=>{
+    //     if (validatedGoals.length === 0){
+    //         setShowGoalsValidated(false)
+    //     }
+    //     if(halfValidatedGoals.length === 0){
+    //         setShowGoalsOneValidation(false)
+    //     }
+    //     if(notValidatedGoals.length === 0){
+    //         setShowGoalsZeroValidation(false)
+    //     }
+    // }, [])
 
     const handleBackHome = () => {
         navigate(`/students/${user.id}/me`)
@@ -74,8 +72,8 @@ function GoalList({goals, setGoals}){
             </div>
         )
     }
-    
-       
+console.log("myActiveGoals in GoalList=", myActiveGoals)
+   console.log("notValidatedGoals in GoalList=", notValidatedGoals)    
 
 
     return(
@@ -95,7 +93,7 @@ function GoalList({goals, setGoals}){
                     <div className="GoalListinner-left">
                             <h2 style={{ textAlign:"center", top:"0", fontSize:"24px"}}><u>* My Validated Goals *</u></h2>
                             <br/>
-                            {validatedGoals.map((g)=> 
+                            {twoValidations.map((g)=> 
                             <div key={g.id}>
                             <Link to={`/goals/${g.id}`}>
                                     <p> -  {g.title}</p></Link>
@@ -109,7 +107,7 @@ function GoalList({goals, setGoals}){
                         <h2 style={{textAlign:"center", top:"0", fontSize:"24px"}}><u>* Goals Awaiting Validation *</u></h2>
                         <br />
                         <ul><h4> ☝️ <u>From one adult :</u></h4>
-                        {halfValidatedGoals.map((g)=> 
+                        {oneValidation.map((g)=> 
                         <div key={g.id}>
                             <Link to={`/goals/${g.id}`}>
                                 <p>-  {g.title}</p></Link>
@@ -119,7 +117,7 @@ function GoalList({goals, setGoals}){
                         </div>)}
                         </ul>
                         <ul><h4> ✌️ <u>From both adults :</u></h4>
-                        {notValidatedGoals.map((g)=> 
+                        {zeroValidation.map((g)=> 
                         <div key={g.id}>
                         <Link to={`/goals/${g.id}`}>
                             <p>Title: {g.title}</p></Link>

@@ -2,7 +2,7 @@ import React, {useState, useContext, useEffect} from "react";
 import { UserContext } from "../../contexts/UserContext";
 import { useNavigate } from "react-router-dom";
 
-function NewMessageForm({goal, onAddNewMessage}){
+function NewMessageForm({goal, onAddNewMessage, setShowMessageForm, showMessageForm}){
     const {user, setUser} = useContext(UserContext)
     const [newContent, setNewContent]=useState("")
     const [newRecipient, setNewRecipient] = useState("")
@@ -28,7 +28,6 @@ function NewMessageForm({goal, onAddNewMessage}){
            fetch (`/students/${user.id}/myadults`).then((r)=> {
             if (r.ok) {
               r.json().then((names)=>{
-                console.log(names)
                 setRecipients(names)})
             }
         })};
@@ -64,7 +63,7 @@ function NewMessageForm({goal, onAddNewMessage}){
     })
     
     setNewContent("");
-    
+    setShowMessageForm(!showMessageForm)
    
     }
 
@@ -98,7 +97,7 @@ function NewMessageForm({goal, onAddNewMessage}){
             </label>
             <br /> 
                 </ul>
-                <button>Submit my message</button>
+                <button className="inner-btn">Send &nbsp;&nbsp; ✉️ </button>
                 </div>
             </form>
         </div>

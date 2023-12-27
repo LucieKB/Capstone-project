@@ -126,7 +126,7 @@ console.log("myStudentGoal in MyStudent=",myStudentGoals)
             })}
             </div>
             <div className="inner-left">
-<h3> ⚙️ <u>Goals that I validated but awaiting validation from {otherAdult} : </u></h3>
+<h3> ⚙️ <u>Goals awaiting validation from {otherAdult} : </u></h3>
             {goalsIValidated.map((goal) => {
                 return(
                     <div key={goal.id}>
