@@ -40,13 +40,14 @@ function NewGoalForm({onAddGoal, setSeeGoalForm}){
     const handleChangeRealistic = (e) => {
         if(e.target.checked)
             {  
+                console.log("checked")
                 setGoalDescription([goalDescription[0],goalDescription[1],goalDescription[2], e.target.value])
                 setFormData({...formData, description: goalDescription})
             }
     }
 
     
-console.log(formData)
+console.log("formData=",formData)
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -70,13 +71,10 @@ console.log(formData)
                  achieved_by_parent: (false)
             }),
         })
-            .then(r=>r.json())
-            .then ((newGoal) => {
-                onAddGoal(newGoal)
-                // setGoals({...goals, newGoal}) OnAddNewGoal to update state !!
-                
-                // setUser({...user, goals:[...goals, newGoal]});
-                
+            .then(r=>{
+                if (r.ok){
+                    r.json().then ((newGoal) => {
+                onAddGoal(newGoal);
                 setFormData({
                     goal_category : (""),
                     title: (""),
@@ -87,13 +85,39 @@ console.log(formData)
                     validated_by_educator:(false),
                     validated_by_parent:(false),
                     achieved_by_educator:(false),
-                    achieved_by_parent: (false)
+                    achieved_by_parent: (false),
+                    user_id: user.id
                 });
+                    });
+            setSeeGoalForm(false);
+            navigate(`/students/${user.id}/me`);
+            }else{
+                r.json().then((err) => {console.log(err.errors)
+                setErrors(err.errors)
+                setGoalDescription([goalDescription[0],goalDescription[1],goalDescription[2],""])}
+            )}
+                
+            
             });
             
-            setSeeGoalForm(false)
-            navigate(`/students/${user.id}/me`);
+            
     }
+
+// }).then((r) => {
+//     setIsLoading(false);
+//         if (r.ok) {
+//             r.json().then((data) => onStudentSignUp(data));
+//             setShowStudentForm(!showStudentForm);
+//         } else {
+//             r.json().then((err) => {console.log(err.errors)
+//             setErrors(err.errors)}
+//             )
+//           }
+    
+
+//       });
+     
+// }
 
     console.log(goalDescription)
 
@@ -176,7 +200,7 @@ console.log(formData)
                             <label>
                                 <input 
                                 type="radio"
-                                name="categories-name"
+                                name="R"
                                 value={answer}
                                 checked={goalDescription[3] === answer}
                                 onChange={handleChangeRealistic}
@@ -187,6 +211,8 @@ console.log(formData)
                 })}
             </ul>
             <br />
+
+          
             
             
             

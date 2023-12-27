@@ -16,13 +16,32 @@ function NavBar(){
     
     const now = new Date()
     const today = dateFormat(now, "isoDateTime")
-    const elementaryGrades = ["1st","2nd","3rd","4th","5th"]
-    const secondaryGrades = ["6th","7th","8th","9th","10th","11th","12th"]
+    const elementaryGrades = ["1","2","3","4","5"]
+    const secondaryGrades = ["6","7","8","9","10","11","12"]
+    const allGrades = secondaryGrades.concat(elementaryGrades)
     const [showSecondary, setShowSecondary] = useState(false)
     const navigate=useNavigate()
 
-  console.log (user.type)
+    console.log("allGrades=",allGrades)
+   
+    
+    //  let suffix;  
+    //    allGrades.map((grade)=>{ 
+    //     console.log("grade=",grade)
+    //     if (grade === "2"){
+    //         suffix = "nd"}
+    //         else if(grade === "3"){
+    //         suffix = "rd"}
+    //     else if(grade === "1"){
+    //         suffix = "st"}
+    //         else{
+    //         suffix = "th"}
+    //     console.log("suffix=",suffix)
+    //         })
+           
+            
   
+            
 
     useEffect(()=>{
         if (user.type === "Student"){
@@ -100,11 +119,11 @@ function NavBar(){
 
             const myElementaryGradesLink = elementaryGrades.map((grade)=>{
                 return(
-                    <Link to = {`/educators/mystudents/${grade}`}>{grade} Grade</Link>)})
+                    <Link to = {`/educators/mystudents/${grade}`}>Grade {grade}</Link>)})
 
                     const mySecondaryGradesLink = secondaryGrades.map((grade)=>{
                         return(
-                            <a><Link to = {`/educators/mystudents/${grade}`}>{grade} Grade</Link></a>)})
+                            <a><Link to = {`/educators/mystudents/${grade}`}>Grade {grade}</Link></a>)})
                 
             
 

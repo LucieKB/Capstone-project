@@ -85,7 +85,7 @@ function UpdateGoalForm({ onUpdateGoal }){
         <div className="newGoal-wrapper">
             <div className="inner-inner-wrapper"
             style={{maxWidth:"20%", marginLeft:"3%", marginRight:"3%"}}>
-        <ul><span className="text">📬 Messages :</span>  <div className="messages-container" style={{fontSize:"14px"}}>{myGoalMessages}</div></ul>
+        <ul><span className="text">📬 Messages :</span>  <div className="messages-container" style={{fontFamily:"caveat", fontSize:"24px"}}>{myGoalMessages}</div></ul>
         </div>
         <div className="newGoal-inner" 
         style={{marginTop:"10%", marginLeft:"5%", marginRight:"5%"}}

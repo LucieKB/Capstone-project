@@ -97,11 +97,18 @@ function NewRewardForm(){
     }
 
     return(
+
+        <>
+        
+        <div className="newGoal-inner" 
+        style={{flexDirection:"row", justifyContent:"center", marginTop:"10%", maxWidth:"fit-content"}}
+        >
         <form onSubmit={handleOnSubmit}>
         <div>
             <label><strong><u>Title:</u></strong><em style={{color:"red"}}>*</em>
             <input
                     type="text"
+                    className="form-control"
                     id="title"
                     autoComplete="off"
                     placeholder="Item's name ..."
@@ -114,17 +121,20 @@ function NewRewardForm(){
               <select onChange={handleChangeCategory}>
                 {categories.map((cat)=> {
                   return (
-                    <option key={cat} value={cat}>
+                    <option key={cat} value={cat} >
                       {cat}
                     </option>
                   )
                 })}
               </select>
             </label>
+            <br></br>
+            <br></br>
 
             <label><strong><u>Short Description:</u></strong>
             <input
                     type="text"
+                    className="form-control"
                     id="description"
                     autoComplete="off"
                     placeholder="Item's description ..."
@@ -136,6 +146,7 @@ function NewRewardForm(){
             <label><strong><u>Image :</u></strong><em style={{color:"red"}}>*</em>
             <input
                     type="text"
+                    className="form-control"
                     id="image"
                     autoComplete="off"
                     placeholder="Copy image's URL ..."
@@ -166,6 +177,8 @@ function NewRewardForm(){
             </label>
 
             <label>
+            <strong><u>Item's condition: </u></strong><em style={{color:"red"}}>*&nbsp;</em>
+            <ul className = "categories-list">
             {conditions.map((c)=>{
                             return(
                                 <div key={c} className="radio-Btn">
@@ -179,6 +192,7 @@ function NewRewardForm(){
                                 </div>
                             )
                         })}
+            </ul>
             </label>
 
             <label> <strong><u>Price:</u></strong><em style={{color:"red"}}>*</em>
@@ -188,12 +202,12 @@ function NewRewardForm(){
                   pattern="[0-20]*"
                   name="price"
                   value={newRForm.price}
-                  placeholder="How many ⭐️ are you asking for this item?"
+                  placeholder="How many ⭐️ are you asking for this item? (0-12)"
                   onChange={(e)=>setNewRForm({...newRForm, price:e.target.value})}
               />
             </label>
         </div>
-        <button type="submit">{isLoading ? "Loading..." : "Submit My Item"}</button>
+        <button type="submit" className="submitBtn">{isLoading ? "Loading..." : "Submit My Item"}</button>
 
               <div className="errors">
               <label id="errors" style={{color:"red"}}>
@@ -204,7 +218,9 @@ function NewRewardForm(){
               </label>
               </div>
         </form>
+        </div>
         
+        </>
     )
 }
 

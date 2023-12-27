@@ -296,7 +296,7 @@ function MyStudentGoalCard({onUpdateGoal, messages, setMessages, onPayGoal}){
        
     
         const myGoalMessages = goalMessages.map((m)=> {
-            return(<div key={m.id}>
+            return(<div key={m.id} style={{fontFamily:"caveat", fontSize:"24px"}}>
            ➢{m.content} from <em>{m.sender} </em>
        </div>)
         }) 

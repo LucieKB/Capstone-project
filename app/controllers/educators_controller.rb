@@ -1,10 +1,5 @@
 class EducatorsController < UsersController
 
-    validates :username, presence:true
-    validates :username, uniqueness:true
-    validates :type, presence:true
-    validates :email, presence:true, format: { with: /\A[^@\s]+@([^@.\s]+\.)+[^@.\s]+\z/ }
-
     def my_contacts
         my_kidObj = User.all.find_by(id: params[:student_id])
         my_parentId = my_kidObj.educator_id

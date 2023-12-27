@@ -42,11 +42,6 @@ function App() {
 
   if(goals.length === 0){
     console.log("no goals in App line 43")
-    return(
-        <div>
-            Loading...
-        </div>
-    )
 }
   
 console.log("Goals in app=",goals) 
