@@ -24,7 +24,6 @@ class StudentsController < UsersController
     def update_avatar
         student = Student.find_by(id: params[:id])
         student.update(avatar_params)
-        byebug
         render json: student, status: :accepted
     end
 

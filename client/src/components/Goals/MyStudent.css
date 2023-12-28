@@ -1,13 +1,14 @@
 
 
 .goal-wrapper{
-    background-image: url("https://assets.website-files.com/634681057b887c6f4830fae2/6367dd6c892c1187214114a6_62f481fcb5f1510e8d1589fa_Goals.png");
-    background-size: 500px;
+    background-image: url("https://cdn.vectorstock.com/i/preview-1x/43/31/apple-character-doing-archery-vector-42644331.jpg");
+    background-size: 370px;
     background-repeat: repeat;
     display: flex;
     flex-direction: column;
     background-position: right center;
     align-items: center;
+    padding: 5px;
     top: 0;
     bottom:0;
     left:0;
@@ -170,6 +171,7 @@
     z-index: -1;
     background-color: #333!important;
     box-shadow: 0 -4px #FFC000 inset, 0 4px #FFFAA0 inset, -4px 0 #FAFA33 inset, 4px 0 #FFEA00 inset;
+    
    }
    
   .yellowSubmitBtn:after {
@@ -203,10 +205,10 @@
 
 .yellowSubmitBtn{
     border: none;
-    width: 164px;
+    width: 194px;
     height: 41px;
     margin: auto;
-    margin-top: 30px;
+    margin-top: 10px;
     margin-bottom: 10px;
     cursor: pointer;
     display: flex;
@@ -222,4 +224,6 @@
     transform: perspective(1px) translateZ(0);
     -webkit-transition-duration: .3s;
     transition-duration: .3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }

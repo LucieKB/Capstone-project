@@ -13,7 +13,7 @@ div {
 }
 
 .wrapper{
-    background-image: url("https://www.vandelaydesign.com/wp-content/uploads/mountain-lake-13.jpg");
+    background-image: url("https://www.hdwallpapers.in/download/apple_tree_branches_bloom_spring_in_blue_sky_background_hd_flowers-1600x900.jpg");
     min-height: 80vh;
     background-size: cover;
     background-repeat: no-repeat;
@@ -62,6 +62,7 @@ div {
     max-width: 850px;
     margin: auto;
     display: flex;
+    border: black 5px ridge
 }
 
 .inner-signUp{
@@ -70,6 +71,7 @@ div {
     max-width: 850px;
     margin: auto;
     display: flex;
+    border: black 5px ridge
 }
 
 .inner-signUp .img-holder{

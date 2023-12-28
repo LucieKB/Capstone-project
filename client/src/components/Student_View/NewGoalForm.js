@@ -124,9 +124,9 @@ console.log("formData=",formData)
     
     return (
         <>
-        <div className="newGoal-wrapper">
+        <div className="goal-wrapper">
         <div className="newGoal-inner" 
-        // style={{marginTop:"350px", marginBottom:"100px"}}
+        style={{marginTop:"5%", marginBottom:"100px"}}
         >
         
             <div className="Header2">
@@ -173,7 +173,7 @@ console.log("formData=",formData)
                     type="text"
                     name="S"
                     value={goalDescription[0]}
-                    placeholder="S:Specific → What will you do?"
+                    placeholder="S: Specific → What will you do?"
                     onChange={(e)=>setGoalDescription([e.target.value])}/>
             
             <input
@@ -212,10 +212,7 @@ console.log("formData=",formData)
             </ul>
             <br />
 
-          
-            
-            
-            
+     
             <h3 style={{paddingLeft: "30px"}}><u> T: When would you like this goal to be achieved by?</u></h3>
                 <input
                     

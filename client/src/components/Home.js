@@ -46,6 +46,7 @@ function Home(){
 
     useEffect(() => {
             if (user.type === "Student"){
+            user.avatar? (setShowAvatarGenerator(false)):(setShowAvatarGenerator(true))
             user.educator_id? (setShowAddEducatorId(false)) : (setShowAddEducatorId(true))
             setShowStudentHome(true) 
             setShowAdultDirections(false) 
@@ -81,8 +82,7 @@ function Home(){
     navigate("/students/avatar")
     setShowAvatarGenerator(!showAvatarGenerator)
    }
-   console.log(showAddEducatorId)
-   console.log(user.educator_id)
+  
  
     return(
         <div className="wrapper">
@@ -90,8 +90,10 @@ function Home(){
             <div className = "upper-section" style={{display:"block", width:"35 rem"}}>
             <h1 style={{textAlign:"center"}}>Welcome, {user.username}</h1>
             </div> 
+
             {showAvatarGenerator?
             (<button className="submitBtn" onClick={handleCreateAvatar}>Create My Avatar</button>):(null)}
+
             {showStudentHome?(
                 <div className="avatar-ctn">
                 <img className="avatar-img" src={user.avatar} height={"150px"} maxWidth={"200px"}/>

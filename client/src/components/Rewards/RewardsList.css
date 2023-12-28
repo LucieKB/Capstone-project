@@ -1,3 +1,10 @@
+.table-container{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+}
+
 table {
     border-spacing: 0;
     border: 3px solid #149CEA;
@@ -16,12 +23,13 @@ td {
       padding: 0.5rem;
       border-right: 2px solid black;
       min-width: min-content;
- 
+      border-left: 2px solid black;
 }
    
 th {
       background: radial-gradient(circle, #5379f8 0%, #aabcf8 100%);
       border-right: 2px solid black;
+      border-left: 2px solid black;
       border-bottom: 3px solid #149CEA;
       color: white; 
       align-content: center; 
