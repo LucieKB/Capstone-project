@@ -72,8 +72,8 @@ function GoalList({goals}){
             </div>
         )
     }
-console.log("myActiveGoals in GoalList=", myActiveGoals)
-   console.log("notValidatedGoals in GoalList=", notValidatedGoals)    
+    
+    
 
 
     return(
@@ -83,7 +83,12 @@ console.log("myActiveGoals in GoalList=", myActiveGoals)
            
             <div className="activeGoal-inner">
                 <div>
-            <h1>List of My Goals</h1>
+            <h1 style={{textAlign:"center"}}>List of My Goals</h1>
+            {user.educator_id?(null):(
+                <div style={{color:"red", textAlign:"center"}}>
+                    <em>Don't forget to add your educator's I.d in "Home".</em>
+                    </div>)
+}
             <br></br>
             
             </div>

@@ -126,10 +126,8 @@ console.log("formData=",formData)
     
     return (
         <>
-        <div className="goal-wrapper">
-        <div className="newGoal-inner" 
-        style={{marginTop:"5%", marginBottom:"100px"}}
-        >
+        <div className="goal-wrapper2">
+        <div className="newGoal-inner" >
         
             <div className="Header2">
                 <h2 style={{textAlign:"center", lineHeight:"40px", fontSize:"30px"}}> {user.username}'s New Goal !</h2>

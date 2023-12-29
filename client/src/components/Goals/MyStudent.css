@@ -1,7 +1,7 @@
 
 
 .goal-wrapper{
-    background-image: url("https://cdn.vectorstock.com/i/preview-1x/43/31/apple-character-doing-archery-vector-42644331.jpg");
+    background-image: url("https://img.freepik.com/premium-vector/illustration-green-apple-character-doing-archery_152558-69883.jpg");
     background-size: 370px;
     background-repeat: repeat;
     display: flex;
@@ -16,7 +16,85 @@
     overflow:hidden;
     z-index:-1;
     justify-content: center;
+    min-height: 90vh;
 }
+
+.goal-wrapper2{
+    background-image: url("https://img.freepik.com/premium-vector/green-apple-character-cartoon-getting-idea-cute-style-design-t-shirt-sticker-logo-element_152558-11434.jpg");
+    background-size: 300px;
+    background-repeat: repeat;
+    display: flex;
+    flex-direction: column;
+    background-position: right center;
+    align-items: center;
+    padding: 5px;
+    top: 0;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow:hidden;
+    z-index:-1;
+    justify-content: center;
+    min-height: 90vh;
+}
+
+.goal-wrapper3{
+    background-image: url("https://img.freepik.com/premium-vector/illustration-green-apple-character-with-awkward-poses_152558-79704.jpg");
+    background-size: 300px;
+    background-repeat: repeat;
+    display: flex;
+    flex-direction: column;
+    background-position: right center;
+    align-items: center;
+    padding: 5px;
+    top: 0;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow:hidden;
+    z-index:-1;
+    justify-content: center;
+    min-height: 90vh;
+}
+
+.goal-wrapper4{
+    background-image: url("https://img.freepik.com/premium-vector/mascot-green-apple-holding-banner-that-says-thank-you-cute-style-design-t-shirt-sticker-logo-element_152558-15110.jpg");
+    background-size: 300px;
+    background-repeat: repeat;
+    display: flex;
+    flex-direction: column;
+    background-position: right center;
+    align-items: center;
+    padding: 5px;
+    top: 0;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow:hidden;
+    z-index:-1;
+    justify-content: center;
+    min-height: 90vh;
+}
+
+.goal-wrapper5{
+    background-image: url("https://img.freepik.com/premium-vector/dead-green-apple-mascot-character-cute-style-design-t-shirt-sticker-logo-element_152558-49299.jpg");
+    background-size: 300px;
+    background-repeat: repeat;
+    display: flex;
+    flex-direction: column;
+    background-position: right center;
+    align-items: center;
+    padding: 5px;
+    top: 0;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow:hidden;
+    z-index:-1;
+    justify-content: center;
+    min-height: 90vh;
+}
+
 
 .parentViewActiveGoal-inner{
     padding: 20px;

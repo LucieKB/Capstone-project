@@ -1,11 +1,11 @@
 .table-container{
       background-image: url("./MarketPlaceBck.png");
       background-size: 350px;
-
+      min-height: 90vh;
     background-repeat: repeat;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: flex-start;
       align-items: center;
 }
 
@@ -17,8 +17,7 @@ table {
     align-items: center;
     margin-right: 5%;
     margin-left: 5%;
-    margin-top: 5%;
-   
+    margin-top: 5%;  
 }
 
  

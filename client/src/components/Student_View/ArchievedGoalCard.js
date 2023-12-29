@@ -15,10 +15,12 @@ function ArchievedGoalCard({goals}){
     return(
         <div style={{height:"100%"}}>
       
-        <div className="goal-wrapper">
-        <div className="archievedGoal-inner">
+        <div className="goal-wrapper3">
+        <div className="archievedGoal-inner" style={{alignItems:"center", minHeight:"50rem"}}>
+        <div className="archievedGoal-inner-inner" style={{margin:"20px"}}>
             <h2 style={{textAlign:"center", top:"0", fontSize:"24px"}}>* My Archieved Goals *</h2>
             {goalsToDisplay}
+        </div>
         </div>
         </div>
         </div>

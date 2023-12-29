@@ -24,13 +24,15 @@
     max-height: fit-content;
 }
 
+
+
 .newGoal-inner{
     padding: 20px;
     background: #fff;
     border-radius: 18px;
     border: inset 10px darkgrey;
     max-width: 850px;
-    margin-top: 20%;
+    
     margin-bottom: 5%;
     margin-left: auto;
     margin-right: auto;
@@ -55,6 +57,22 @@
 }
 
 .archievedGoal-inner{
+    padding: 20px;
+    background: #fff;
+    border-radius: 18px;
+    border:  inset 10px #4CBB17;
+    width: 75%;
+    /* max-width: 850px; */
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.archievedGoal-inner-inner{
     padding: 20px;
     background: #fff;
     border-radius: 18px;
