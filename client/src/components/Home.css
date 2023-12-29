@@ -151,13 +151,15 @@
 .avatar-ctn{
     
 align-content: center;
-width: fit-content;
-height: fit-content;
+width: 150px;
+height: 150px;
 
 }
 
 .avatar-img{
     align-content: center;
-   border: 2px inset black
+   border: 2px inset black;
+   width: 150px;
+height: 150px;
 }
 

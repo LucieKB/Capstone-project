@@ -1,4 +1,8 @@
 .table-container{
+      background-image: url("./MarketPlaceBck.png");
+      background-size: 350px;
+
+    background-repeat: repeat;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -8,13 +12,13 @@
 table {
     border-spacing: 0;
     border: 3px solid #149CEA;
-    
+    background-color: white;
     align-content: center; 
     align-items: center;
     margin-right: 5%;
     margin-left: 5%;
     margin-top: 5%;
-    margin-bottom: 5%;
+   
 }
 
  

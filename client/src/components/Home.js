@@ -8,6 +8,7 @@ import Student from "./Student_View/Student"
 import Avatar from "./Avatars/Avatar"
 import "./Home.css"
 import MyStudentsGoals from "./Goals/MyStudentsGoals";
+import BizExplanations from "./Home/BizExplanations";
 
 
 function Home(){
@@ -21,6 +22,7 @@ function Home(){
     const [showAdultDirections, setShowAdultDirections] = useState(true)
     const [myStudents, setMyStudents] = useState([])
     const [showBusinessDirections, setShowBusinessDirections] = useState(false)
+    const [showBusinessExplanations, setShowBusinessExplanations] = useState(false)
    const navigate = useNavigate()
     
 
@@ -57,7 +59,7 @@ function Home(){
         if (user.type === "Student"){
         user.avatar? (console.log("avatar is generated")) : (setShowAvatarGenerator(true))
         }
-    },[])  
+    },[user.avatar])  
 
    const handleRegisterStudent = () =>{
     setShowStudentForm(true)
@@ -95,9 +97,12 @@ function Home(){
             (<button className="submitBtn" onClick={handleCreateAvatar}>Create My Avatar</button>):(null)}
 
             {showStudentHome?(
-                <div className="avatar-ctn">
-                <img className="avatar-img" src={user.avatar} height={"150px"} maxWidth={"200px"}/>
+                // showAvatarGenerator?(null):(
+                     <div className="avatar-ctn">
+                <img className="avatar-img" src={user.avatar} />
                 </div>
+                // )
+               
             ):( null)}
             {showAdultDirections?(
                 <>
@@ -185,11 +190,18 @@ function Home(){
                 </div>):(null)
             }
             {showBusinessDirections?
-            (<div>
-                <h1>Directions for Business</h1>
+            (<div style={{textAlign:"center"}}>
+                 <h1>Thank you for supporting students in your community !</h1> 
+                 <br></br>
+                <div className = "title">
+                   
+                    <button className="submitBtn" onClick={()=>navigate("/businessDirections")}>What is XXX?</button> 
+                    <button className="submitBtn" onClick={()=>navigate("/rewards")}> Go to the marketPlace </button>
+                </div>
             </div>):(null)}
             
-                
+           {showBusinessExplanations?
+           (<BizExplanations />):(null)}     
 
             {showStudentHome?
             (<button className="submitBtn" onClick={()=>navigate(`/students/${user.id}/me`)}> Go To My Goals Page </button>) : (null)}

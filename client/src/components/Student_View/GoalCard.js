@@ -20,11 +20,11 @@ function GoalCard({onUpdateGoal, goals, setGoals}){
     const [showMessages, setShowMessages] = useState(false)
     const [showUpdate, setShowUpdate] = useState(false)
     const navigate = useNavigate()
-    console.log("goals in GoalCard=", goals)
+    // console.log("goals in GoalCard=", goals)
     const goal = goals.find(goal => goal.id === parseInt(id))
-    console.log("goal=",goal)
     
-    console.log("messages=", goal.messages)
+    
+    // console.log("messages=", goal.messages)
     useEffect(()=>{
         if (goal.validated_by_educator === true && goal.validated_by_parent == true){
             setShowAchieved(true)
@@ -43,28 +43,23 @@ function GoalCard({onUpdateGoal, goals, setGoals}){
         }
     }, [achieved])
 
-
-    if(!goals){
-        console.log("!goals")
+     if(goals.length === 0){
+    console.log("no goals in GoalCard")
+    return(
+        <div>
+            Loading...
+        </div>
+    )
+}
+    if(!goal){  
         return(
             <div>
                 ...Loading
             </div>
         )
     }
-   
-    if(!goal){
-        console.log("!goal")
-        return(
-            <div>
-                ...Loading
-            </div>
-        )
-    }
-
-    // if(!goal.messages){
-    //     goal.messages = []
-    // }
+console.log("goal=",goal)
+    
 
     function handleGoalAchieved(){
         fetch(`/goals/${goal.id}`, {

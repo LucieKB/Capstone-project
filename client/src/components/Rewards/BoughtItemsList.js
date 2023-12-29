@@ -2,6 +2,7 @@ import React, {useEffect, useContext, useState} from "react";
 import { RewardsContext } from "../../contexts/RewardsContext";
 import { UserContext } from "../../contexts/UserContext";
 import BoughtItemCard from "./BoughtItemCard";
+import "./BoughtItems.css"
 
 function BoughtItemsList(){
     const {rewards, setRewards} = useContext(RewardsContext)
@@ -31,7 +32,7 @@ function BoughtItemsList(){
     const itemsToDisplay = myRewards.map((r)=>  <BoughtItemCard key={r.id} reward={r} onPickUpReward={handlePickUpReward}/>)
 
     return(
-        <div>
+        <div className="boughtItems-ctn">
             {itemsToDisplay}
         </div>
     )

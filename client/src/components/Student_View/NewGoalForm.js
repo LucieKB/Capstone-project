@@ -38,12 +38,14 @@ function NewGoalForm({onAddGoal, setSeeGoalForm}){
 
     const yesNo = ["Yes", "No", "I'm not sure"]
     const handleChangeRealistic = (e) => {
-        if(e.target.checked)
+        if(e.target.checked && e.target.value === "Yes")
             {  
-                console.log("checked")
                 setGoalDescription([goalDescription[0],goalDescription[1],goalDescription[2], e.target.value])
                 setFormData({...formData, description: goalDescription})
             }
+        else{
+            alert("If you don't feel that your goal is realistic, modify it. If you need help, ask an adult to assist you in writing that goal.")
+        }
     }
 
     

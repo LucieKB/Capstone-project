@@ -153,7 +153,7 @@ function StudentSignUpForm({showStudentForm, setShowStudentForm, onStudentSignUp
                   pattern="[1-12]*"
                   name="grade"
                   value={studentFormData.grade}
-                  placeholder="What grade are you in?"
+                  placeholder="What grade is that student in?"
                   onChange={(e)=>setStudentFormData({...studentFormData, grade:e.target.value})}
               />
             </label>

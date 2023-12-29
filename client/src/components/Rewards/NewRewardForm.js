@@ -99,7 +99,7 @@ function NewRewardForm(){
     return(
 
         <>
-        
+        <div className="table-container">
         <div className="newGoal-inner" 
         style={{flexDirection:"row", justifyContent:"center", marginTop:"10%", maxWidth:"fit-content"}}
         >
@@ -219,7 +219,7 @@ function NewRewardForm(){
               </div>
         </form>
         </div>
-        
+        </div>
         </>
     )
 }

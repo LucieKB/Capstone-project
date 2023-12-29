@@ -27,7 +27,7 @@ function SetAGoal(){
            
            
                 
-                    <h3>A step by step explanation on goal-setting in XXX.</h3>
+                    <h3>A step by step explanation for goal-setting in XXX.</h3>
                     <div style={{display:"flex", justifyContent:"center"}}>
                         <img style={{border:"4px inset darkgrey", borderRadius:"18px"}} src={Validation} />
                     </div>

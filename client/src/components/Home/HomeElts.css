@@ -10,8 +10,12 @@
 
   #Home-img {
     /* max-width: 50%; */
-    height:100px;
+    height:80px;
+    width:280px;
     float: left;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: black solid 1px
   }
 
   .text {

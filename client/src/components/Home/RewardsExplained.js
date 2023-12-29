@@ -61,7 +61,7 @@ function RewardsExplained(){
                             <img id="Home-img" src={Pay} />
                         </div>
                         <div className="text">
-                            4. The student is in control to change a goal's status to "achieved". You will see a "Pay Student ... ☆" button appear. It is up to you to agree with them and pay half of the goal's value (the other half is given by the other adult), or send a message to the student explaining why you don't think they have achieved their goal yet.
+                            4. The student is in control to change a goal's status to "Achieved". You will see a "Pay Student ...⭐️" button appear. It is up to you to agree with them and pay half of the goal's value (the other half is given by the other adult), or send a message to the student explaining why you don't think they have achieved their goal yet.
                         </div>
                     </div> 
                     <br></br>

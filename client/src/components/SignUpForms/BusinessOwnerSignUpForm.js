@@ -33,7 +33,7 @@ function BusinessOwnerSignUpForm(){
             setIsLoading(false);
                 if (r.ok) {
                     r.json().then((user) => setUser(user));
-                    setGoals([]);
+                   
                 } else {
                     r.json().then((err) => {console.log(err.errors)
                     setErrors(err.errors)}

@@ -22,27 +22,7 @@ function NavBar(){
     const [showSecondary, setShowSecondary] = useState(false)
     const navigate=useNavigate()
 
-    console.log("allGrades=",allGrades)
    
-    
-    //  let suffix;  
-    //    allGrades.map((grade)=>{ 
-    //     console.log("grade=",grade)
-    //     if (grade === "2"){
-    //         suffix = "nd"}
-    //         else if(grade === "3"){
-    //         suffix = "rd"}
-    //     else if(grade === "1"){
-    //         suffix = "st"}
-    //         else{
-    //         suffix = "th"}
-    //     console.log("suffix=",suffix)
-    //         })
-           
-            
-  
-            
-
     useEffect(()=>{
         if (user.type === "Student"){
             setShowStudentNav(true)
@@ -76,7 +56,6 @@ function NavBar(){
         )
     }
 
-   
     
             
                 const myKidsLink = user.students?.map((kid)=>{
@@ -119,7 +98,7 @@ function NavBar(){
 
             const myElementaryGradesLink = elementaryGrades.map((grade)=>{
                 return(
-                    <Link to = {`/educators/mystudents/${grade}`}>Grade {grade}</Link>)})
+                    <Link to = {`/educators/mystudents/${grade}`}>Grade {grade} </Link>)})
 
                     const mySecondaryGradesLink = secondaryGrades.map((grade)=>{
                         return(

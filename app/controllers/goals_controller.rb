@@ -18,6 +18,8 @@ class GoalsController < ApplicationController
              when "Student"
                  all_goals = Goal.all
                  goals = all_goals.filter{|g| g.user_id == user.id}
+             when "BusinessOwner"
+                goals = []
              end
         else
             goals = Goal.all

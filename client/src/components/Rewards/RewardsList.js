@@ -82,7 +82,7 @@ function RewardsList(){
     return(
         <div className="table-container">
             <br></br>
-            <h1 style={{textAlign:"center"}}><u>Available Items:</u></h1>
+            <h1 style={{textAlign:"center", backgroundColor:"white"}}><u>Available Items:</u></h1>
             <div>
             <table>
                 <thead>
@@ -111,7 +111,7 @@ function RewardsList(){
             </table>
         </div>
             {showAddRBtn?
-            (<button className="submitBtn" onClick={handleNewRewardForm}>Add an Item</button>):(null)}
+            (<button className="submitBtn" style={{marginTop:"20px"}} onClick={handleNewRewardForm}>Add an Item</button>):(null)}
         </div>
     )
 }

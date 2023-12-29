@@ -38,19 +38,20 @@ function BoughtItemCard({reward, onPickUpReward}){
     }
 
     return(
-    <div className="reward-card">
+        <div className="reward-card-ctn">
+    <div className="boughtReward-card">
             
         <ul><h3><u>My {reward.title}</u></h3></ul>
-        <img src={reward.image} />
+        <img style={{height:"50px", width:"50px"}} src={reward.image} />
        
-        <li><u>Pick-Up Location:</u> {reward.pickup_place} </li>
+        <li><u>Pick-Up Location:</u><p></p> {reward.pickup_place} </li>
         <br></br>
         <div>  
         <button className="submitBtn" onClick={handlePickUp}> I Picked My {reward.title} Up</button>
         </div>
         <hr></hr>
     </div>
-    
+    </div>
     )
 }
 
