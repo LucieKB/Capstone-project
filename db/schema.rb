@@ -10,9 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_11_27_155632) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_05_174119) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "business_owners", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "goals", force: :cascade do |t|
     t.string "title"
@@ -28,20 +33,35 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_27_155632) do
     t.boolean "validated_by_educator"
     t.boolean "achieved_by_parent"
     t.boolean "achieved_by_educator"
-    t.text "messages", default: [], array: true
     t.index ["user_id"], name: "index_goals_on_user_id"
+  end
+
+  create_table "messages", force: :cascade do |t|
+    t.string "content"
+    t.string "recipient"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "goal_id", null: false
+    t.boolean "read", default: false
+    t.index ["goal_id"], name: "index_messages_on_goal_id"
+    t.index ["user_id"], name: "index_messages_on_user_id"
   end
 
   create_table "rewards", force: :cascade do |t|
     t.string "title"
     t.string "description"
     t.string "image"
-    t.string "target_grade"
+    t.string "pickup_place"
     t.integer "price"
     t.boolean "available"
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "reward_category"
+    t.string "reward_condition"
+    t.boolean "collected"
+    t.integer "buyer"
     t.index ["user_id"], name: "index_rewards_on_user_id"
   end
 
@@ -66,12 +86,18 @@ ActiveRecord::Schema[7.1].define(version: 2023_11_27_155632) do
     t.bigint "parent_id"
     t.bigint "educator_id"
     t.integer "number_of_children"
+    t.string "business"
+    t.bigint "business_owners_id"
+    t.index ["business_owners_id"], name: "index_users_on_business_owners_id"
     t.index ["educator_id"], name: "index_users_on_educator_id"
     t.index ["parent_id"], name: "index_users_on_parent_id"
   end
 
   add_foreign_key "goals", "users"
+  add_foreign_key "messages", "goals"
+  add_foreign_key "messages", "users"
   add_foreign_key "rewards", "users"
+  add_foreign_key "users", "users", column: "business_owners_id"
   add_foreign_key "users", "users", column: "educator_id"
   add_foreign_key "users", "users", column: "parent_id"
 end

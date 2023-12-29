@@ -1,3 +1,29 @@
+html{
+  min-height:100%;
+  position:relative;
+}
+
+
+body {
+  position: relative;
+  font-family: ProximaNova,Helvetica Neue,Helvetica,Arial,sans-serif;
+  font-size: 1.4rem;
+  height:100%;
+  /* min-height: 100vh;
+  min-width: 100vw; */
+  background-color: #f5f5f5;
+
+}
+
+/* include border and padding in element width and height */
+* {
+  box-sizing: border-box;
+}
+
+.App {
+  text-align: center;
+}
+
 .App {
   text-align: center;
 }
@@ -36,3 +62,4 @@
     transform: rotate(360deg);
   }
 }
+

@@ -34,10 +34,11 @@ function LoginForm(){
 
     return (
         <>
+        
         <div className="wrapper">
             <div className="inner">
 
-                <form onSubmit={handleSubmit}>
+                <form style={{width:"90%"}} onSubmit={handleSubmit}>
                     <div className="form-wrapper">
                         <label>
                             Username: 
@@ -65,7 +66,7 @@ function LoginForm(){
                         </label>
                     </div>
                     
-                        <button type="submit">{isLoading ? "Loading..." : "Login"}</button>
+                        <button className="submitBtn" type="submit">{isLoading ? "Loading..." : "Login"}</button>
                         <label>
                             {errors.map((err) => (
                                 <p key={err}>{err}</p> 

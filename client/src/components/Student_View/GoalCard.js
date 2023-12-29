@@ -5,53 +5,64 @@ import { GoalsContext } from "../../contexts/GoalsContext";
 import { useNavigate } from "react-router-dom";
 import StarConditional from "../Goals/StarConditional";
 import NewMessageForm from "../Messages/NewMessageForm";
+import "./GoalCard.css"
+import UpdateGoalForm from "./UpdateGoalForm";
 
-function GoalCard(){
+function GoalCard({onUpdateGoal, goals, setGoals}){
     const {user, setUser} = useContext(UserContext)
     const {id} = useParams()
-    const {goals, setGoals} = useContext(GoalsContext)
+    // const {goals, setGoals} = useContext(GoalsContext)
     const [showAchieved, setShowAchieved] = useState(false)
     const [errors, setErrors] = useState([]);
     const [buttonColor, setButtonColor] = useState("")
     const [showMessageForm, setShowMessageForm] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-   
+    const [achieved, setAchieved] = useState (false)
+    const [showMessages, setShowMessages] = useState(false)
+    const [showUpdate, setShowUpdate] = useState(false)
     const navigate = useNavigate()
-
-    if(!goals){
-        setIsLoading(!isLoading)
-    }
-
+    // console.log("goals in GoalCard=", goals)
     const goal = goals.find(goal => goal.id === parseInt(id))
-    const [achieved, setAchieved] = useState (goal.achieved)
-    // useEffect(()=>{
-    //     const goal = goals.find(goal => goal.id === parseInt(id))
-    // }, [goals])
-
+    
+    
+    // console.log("messages=", goal.messages)
     useEffect(()=>{
-        if (goal.validated_by_educator == true && goal.validated_by_parent == true){
+        if (goal.validated_by_educator === true && goal.validated_by_parent == true){
             setShowAchieved(true)
         }
-    }, [])
+    }, [goal])
 
     useEffect(()=>{
-        if (achieved == true){
+        if (goal.validated_by_educator === false && goal.validated_by_parent == false){
+            setShowUpdate(true)
+        }
+    }, [goal])
+
+    useEffect(()=>{
+        if (achieved === true){
             setButtonColor("green")
         }
-    }, [goal.achieved])
+    }, [achieved])
 
-    const onUpdategoal = (updatedgoal) =>{
-        const modifiedgoal = 
-        goal.id == updatedgoal.id?
-            ( updatedgoal) : (goal)
-        setGoals({...goals, modifiedgoal})
-        setUser({...user, goals: modifiedgoal})   
+     if(goals.length === 0){
+    console.log("no goals in GoalCard")
+    return(
+        <div>
+            Loading...
+        </div>
+    )
+}
+    if(!goal){  
+        return(
+            <div>
+                ...Loading
+            </div>
+        )
     }
-
-    console.log(goal)
+console.log("goal=",goal)
+    
 
     function handleGoalAchieved(){
-        fetch(`${goal.id}`, {
+        fetch(`/goals/${goal.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json", 
@@ -61,47 +72,77 @@ function GoalCard(){
             }),
         }).then((r) => {
             if (r.ok) {
-                r.json().then((updatedgoal) => (onUpdategoal(updatedgoal)));
+                r.json().then((updatedgoal) => (onUpdateGoal(updatedgoal)));
             } else {
                 r.json().then((err)=>setErrors(err.errors))  
             }
             
         });
+        navigate(`/students/${user.id}/me`)
         }
     
     const handleShowMessageForm = () =>{
         setShowMessageForm(!showMessageForm)
-     }  
+     } 
      
-    const addMessageToGoal = (goalWithMessage) =>{
+   
+
+   
+        const myGoalMessages = goal.messages.map((m)=> {
+            return(<div key={m.id} style={{fontFamily:"caveat", fontSize:"24px"}}>
+           ➢{m.content} from <em>{m.sender} </em>
+       </div>)
+        }) 
+       
+     
+     const handleAddMessage = (newMessage) =>{
+        console.log("newMessage in handleAddMessages", newMessage)
+         let goalMessages=goal.messages
+         console.log(goalMessages)
         const modifiedGoals = goals.map((goal)=>{
-            if (goal.id === goalWithMessage.id) {
-                return goalWithMessage;
-            } else {
-                return goal
-            }
-        })
-        const updatedGoals = {...goals, goalWithMessage};
-        setGoals(updatedGoals);
-        navigate(`/students/${user.id}/me`)
+            if(newMessage.goal_id === goal.id){
+                console.log(newMessage)
+                goalMessages.push(newMessage)
+                console.log(goalMessages)
+            return ({...goal, messages: goalMessages}) 
+        } else {
+            return goal
         }
-     
-    const handleBackHome = () => {
+        })
+        setGoals(modifiedGoals)
+        } 
+
+        const handleBackHome = () => {
             navigate(`/students/${user.id}/me`)
            }
-   
         
+        const handleReadMessages = () => {
+          
+            setShowMessages(!showMessages)
+           
+        }
+
+        const handleUpdateGoal = () =>{
+            navigate(`/goals/${goal.id}/update`)
+        }
+       
 
     return(
-        <div>
-        <h2> {user.username}'s Goal #{goal.id}</h2>
-        <button onClick={handleBackHome}> 🔙 </button>
+        <div className="goal-wrapper">
+             
+            <div style={{backgroundColor:"white", border: "2px solid lightblue", borderRadius: "18px"}}>
+        <button className="backBtn" onClick={handleBackHome}> 🔙 to {user.username}'s goals </button>
+        </div>
+        <div className = "inner-wrapper">
+            <div className = "upper-container">
+                <div className = "text">
+        <h2> {user.username}'s "{goal.title}" Goal</h2>
         <em> Created on {goal.created_at.split('T')[0]}</em>
-        <li>Title : {goal.title}</li>
-        <li>Description : {goal.description}</li>
-        <li>Deadline : {goal.deadline}</li>
-        <li>Category : {goal.goal_category}</li>
-        <li>Value : 
+        <li><span id="titles">Title :</span> {goal.title}</li>
+        <li><span id="titles">Description :</span> {goal.description}</li>
+        <li><span id="titles">Deadline :</span> {goal.deadline}</li>
+        <li><span id="titles">Category :</span> {goal.goal_category}</li>
+        <li><span id="titles">Value :</span> 
         <span>
                 {Array(5)
                 .fill()
@@ -113,21 +154,38 @@ function GoalCard(){
                 ))}
             </span>
         </li>
-        {/* <li>Messages : <em>{goal.messages}</em></li> */}
         
+        
+        {showMessages?
+         (<li><span id="titles">📬 Messages :</span>  <div className="messages-container">{myGoalMessages}</div></li> ):(null)}
+         </div>
+        </div>
+        <div className = "btn-container">
             {showAchieved?
                 (<button 
+                    className="greenSubmitBtn"
                 onClick={handleGoalAchieved}
                 style = {{backgroundColor:buttonColor}}> Goal Achieved </button>) : (null)}
 
-                <button onClick={handleShowMessageForm}>Add Message</button>
+                {/* <button  className="submitBtn" onClick = {handleReadMessages}>{showMessages? ("Hide messages"):("Read Messages")}</button> */}
+                <button className="submitBtn" onClick={handleShowMessageForm}>{showMessageForm?("Hide form"):("Add Message")}</button>
+        {showUpdate?
+        (<button className= "yellowSubmitBtn"
+        style={{marginTop:"10px", marginLeft:"30px"}}
+            onClick={handleUpdateGoal}
+            > Update my Goal </button>
+            ):(null)}
+            </div>        
                 {showMessageForm?
-                (<div>
-                    <NewMessageForm goal={goal} onAddNewMessage={addMessageToGoal}/>
-                </div>): (<button>Read my messages</button>)}
+                (<div className = "inner-inner-wrapper">
+                    <NewMessageForm goal={goal} onAddNewMessage={handleAddMessage} setShowMessageForm={setShowMessageForm} showMessageForm={showMessageForm}/>
+                </div>): (<button className="submitBtn" onClick = {handleReadMessages}>{showMessages? ("Hide messages"):("Read Messages")}</button>)}
         </div>
 
+        
+        </div>
     )
 }
 
 export default GoalCard;
+

@@ -1,7 +1,6 @@
 Rails.application.routes.draw do
+  resources :messages
   resources :rewards
-  resources :avatars
-   
   resources :goals
  
   
@@ -17,18 +16,24 @@ Rails.application.routes.draw do
   #   end
   # end
 
-  resources :parents do
+  # resources :users do
     patch "/payment/:student_id/goals/:id", to: "students#update_payment"
-  end
+    patch "students/avatar/:id", to: "students#update_avatar"
+  # end
 
   patch "parents/students/:student_id/goals/:id", to: "goals#update"
   
 
   resources :educators
+  get "educators/mystudents/:grade", to: "educators#students_per_grade"
 
   resources :students do
     resources :goals, only: [:index, :show, :create, :update]
   end
+
+  get "students/:id/myadults", to: "students#my_adults"
+  get "parents/:student_id/mycontacts", to: "parents#my_contacts"
+  get "educators/:student_id/mycontacts", to: "educators#my_contacts"
 
  
   # patch "/payment/:student_id/goals/:id", to: "students#update_payment"
@@ -43,8 +48,13 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "posts#index"
   # Rails.application.routes.draw do
+  resources :messages
+  patch "messages/:goal_id/read", to: "messages#set_read"
+
   resources :rewards
-  resources :avatars
+  patch "rewards/:id/buy", to:"rewards#buy_reward"
+
+ 
   # resources :schools
   # resources :users
   # resources :parents

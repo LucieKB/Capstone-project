@@ -17,7 +17,6 @@ function EducatorSignUpForm(){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setErrors([]);
         setIsLoading(true);
         fetch("/signup", {
             method: "POST", 
@@ -35,13 +34,20 @@ function EducatorSignUpForm(){
                     )
                   }
               });
+              
       }
 
-      console.log(educatorFormData)
+      console.log("errors=",errors)
 
     return(
         <>
-        <h1>Educator Sign Up Form</h1>
+         <div className="wrapper">
+          <div className="inner-signUp">
+            
+            <div className="img-holder">
+              <h1 style={{textAlign:"center"}}>Educator Sign Up Form</h1>
+              <img id="quote" src="https://m.media-amazon.com/images/I/71JTYG-IMBL._AC_UF1000,1000_QL80_.jpg" alt="Teacher quote"/>
+            </div>
         <form onSubmit={handleSubmit}>
             <div className="form-wrapper">
             <label><strong><u>Username:</u></strong><em style={{color:"red"}}>*</em>
@@ -95,16 +101,20 @@ function EducatorSignUpForm(){
             </label>
           </div>
 
-          <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
+          <button className="submitBtn" type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>
               
-              <label style={{color:"red"}}>
+              <div className="errors">
+              <label id="errors" style={{color:"red"}}>
                 {errors.map((err) => (
-                  <em key={err}>{err}</em>
+                  <ul><em key={err}>{err}</em></ul>
                   ))}
                 
               </label>
+              </div>
 
         </form>
+        </div>
+        </div>
         </>
     )
 

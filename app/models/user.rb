@@ -17,8 +17,9 @@ class User < ApplicationRecord
 
     has_many :students, class_name: "User", foreign_key: "parent_id"
     has_many :students, class_name: "User", foreign_key: "educator_id"
-    has_many :goals
+    has_many :goals, dependent: :destroy
     has_many :rewards
+    has_many :messages, through: :goals
 
     belongs_to :parent, class_name: "User", optional: true
     belongs_to :educator, class_name: "User", optional: true

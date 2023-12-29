@@ -1,10 +1,9 @@
 import React, {useState, useEffect, useContext} from "react";
 import { UserContext } from "../../contexts/UserContext";
-import { Link } from "react-router-dom";
-import Avatar from "../Avatars/Avatar"
+import { useNavigate } from "react-router-dom";
 import "./custom.css"
 
-function StudentSignUpForm(parentId){
+function StudentSignUpForm({showStudentForm, setShowStudentForm, onStudentSignUp}){
     const {user, setUser} = useContext(UserContext)
     const [schools, setSchools] = useState ("")
     const [schoolSuggestions, setSchoolSuggestions] = useState([])
@@ -18,11 +17,14 @@ function StudentSignUpForm(parentId){
         grade: (""),
         school: (""),
         wallet: (0),
-        parent_id: (Object.values(parentId)[0])
+        parent_id: (user.id),
+        educator_id:("")
     })
     const [isLoading, setIsLoading] = useState(false);
     const [errors, setErrors] = useState([])
     const [schoolSearch, setSchoolSearch] = useState("")
+    const navigate = useNavigate()
+    const students = user.students
 
     useEffect(()=> {
         fetch("/schools/name")
@@ -39,7 +41,6 @@ function StudentSignUpForm(parentId){
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setErrors([]);
         setIsLoading(true);
         fetch("/students", {
             method: "POST", 
@@ -50,18 +51,20 @@ function StudentSignUpForm(parentId){
         }).then((r) => {
             setIsLoading(false);
                 if (r.ok) {
-                    r.json().then((user) => setUser(user));
-                    // cahnger setUser
+                    r.json().then((data) => onStudentSignUp(data));
+                    setShowStudentForm(!showStudentForm);
                 } else {
                     r.json().then((err) => {console.log(err.errors)
                     setErrors(err.errors)}
                     )
                   }
+            
+        
               });
+             
       }
 
-    // const handleShowAvatarForm = () =>{
-    // return(<Avatar user={user}/>)}
+
 
     return(
         <>
@@ -128,7 +131,7 @@ function StudentSignUpForm(parentId){
                 onChange={(e) => {
                     setSchoolSearch(e.target.value)
                     const mySchool = schools.filter((school) => {
-                    return school.toLowerCase().includes(schoolSearch.toLowerCase()) //Work on letter by letter
+                    return school.toLowerCase().includes(schoolSearch.toLowerCase()) 
                 })
                 console.log('mySchool', mySchool)
                 setSchoolSuggestions(mySchool)
@@ -150,25 +153,28 @@ function StudentSignUpForm(parentId){
                   pattern="[1-12]*"
                   name="grade"
                   value={studentFormData.grade}
-                  placeholder="What grade are you in?"
+                  placeholder="What grade is that student in?"
                   onChange={(e)=>setStudentFormData({...studentFormData, grade:e.target.value})}
               />
             </label>
           </div>
 
-          <div className="form-wrapper">
+          {/* <div className="form-wrapper">
             <Link to="students/avatar">
             <strong><u>Create My Avatar</u></strong>
             </Link> 
-          </div>
+          </div> */}
 
-          <button type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>   
-          <label style={{color:"red"}}>
-            {errors.map((err) => (
-              <em key={err}>{err}</em>
-              ))}
-            
-          </label>
+          <button className="submitBtn" type="submit">{isLoading ? "Loading..." : "Sign Up"}</button>  
+
+          <div className="errors">
+              <label id="errors" style={{color:"red"}}>
+                {errors.map((err) => (
+                  <ul><em key={err}>{err}</em></ul>
+                  ))}
+                
+              </label>
+              </div>
 
         </form>
         </>

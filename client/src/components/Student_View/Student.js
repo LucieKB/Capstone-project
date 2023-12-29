@@ -5,22 +5,24 @@ import { useNavigate } from "react-router-dom"
 import ArchievedGoalCard from "./ArchievedGoalCard";
 import dateFormat from "dateformat";
 import ExpiredGoalCard from "./ExpiredGoalCard";
-import NewGoalForm from "../Goals/NewGoalForm";
+import NewGoalForm from "./NewGoalForm";
 import GoalList from "./GoalList"
 import UnpaidGoals from "./UnpaidGoals";
 
 
 
-function Student(){
+function Student({goals, setGoals, messages, setMessages}){
     const {user, setUser} = useContext(UserContext)
-    const {goals, setGoals} = useContext(GoalsContext)
+    // const {goals, setGoals} = useContext(GoalsContext)
     const [seeArchived, setSeeArchived] = useState(false)
     const [seeExpired, setSeeExpired] = useState(false)
     const [seeGoalForm, setSeeGoalForm] = useState(false)
-    const [seeActiveGoals, setSeeActiveGoals] = useState(false) //doesn't work when set on true
+    const [seeActiveGoals, setSeeActiveGoals] = useState(true) //doesn't work when set on true
     const [seeUnpaidGoals, setSeeUnpaidGoals] = useState(false)
     const navigate = useNavigate()
+    // const goals=user.goals
 
+    console.log("goals in student=", goals)
     
     const now = new Date()
     const today = dateFormat(now, "isoDateTime")
@@ -40,23 +42,22 @@ function Student(){
     const myGoalsAwaitingPayment = myAchievedGoals.filter((goal)=>{
         return(goal.achieved_by_parent !== true || goal.achieved_by_educator !== true)
     })
-    console.log(goals)
-    console.log(myAchievedGoals)
-    console.log(myGoalsAwaitingPayment)
 
+    const handleAddGoal = (newGoal) =>{
+        setGoals([...goals, newGoal])
+        setUser({...user, goals:[...goals, newGoal]})
+    }
 
-    // const handleClickCreateGoal = () =>{
-    //     navigate("/goals/new")
-    // }
-
-    // const handleClickMyList = () => {
-    //     navigate (`students/${user.id}/goals`)
-    // }
+    console.log("myActiveGoals in Student=", myActiveGoals)
 
     return(
         <div>
-            <div>
-            <button onClick={() =>{
+            <div style={{
+                display:"flex",
+                backgroundColor: "white",
+                borderBottom: "inset"
+            }}>
+            <button className="submitBtn" style={{height:"55px", marginTop:"auto", marginBottom:"auto"}} onClick={() =>{
              setSeeGoalForm(!seeGoalForm) 
              setSeeActiveGoals(false) 
              setSeeArchived(false) 
@@ -64,7 +65,7 @@ function Student(){
              setSeeUnpaidGoals(false)
             } }> {seeGoalForm?("Hide the Form"):("Create a New Goal")} </button>
             
-            <button onClick={() =>{
+            <button className="submitBtn" style={{height:"55px", marginTop:"auto", marginBottom:"auto"}} onClick={() =>{
               setSeeActiveGoals(!seeActiveGoals) 
               setSeeGoalForm(false) 
               setSeeArchived(false) 
@@ -72,7 +73,7 @@ function Student(){
               setSeeUnpaidGoals(false)
             } }>{seeActiveGoals? ("Hide my Active Goal's List"):("Show Me the Goals I'm Working On!")} </button>
 
-            <button onClick={() => {
+            <button className="submitBtn" style={{height:"55px", marginTop:"auto", marginBottom:"auto"}} onClick={() => {
                 setSeeArchived(!seeArchived)
                 setSeeActiveGoals(false) 
                 setSeeGoalForm(false) 
@@ -80,7 +81,7 @@ function Student(){
                 setSeeUnpaidGoals(false)
             }}> {seeArchived? ("Hide My Archieved Goals"):("Show My Archieved Goals")} </button>
             
-            <button onClick={() => {
+            <button className="submitBtn" style={{height:"55px", marginTop:"auto", marginBottom:"auto"}} onClick={() => {
                 setSeeExpired(!seeExpired)
                 setSeeActiveGoals(false) 
                 setSeeArchived(false) 
@@ -88,20 +89,20 @@ function Student(){
                 setSeeUnpaidGoals(false)
             }}> {seeExpired? ("Hide My Expired Goals"):("Show My Expired Goals")} </button>
 
-            <button onClick={() => {
+            <button className="submitBtn" style={{height:"55px", marginTop:"15px", marginBottom:"15px"}} onClick={() => {
                 setSeeExpired(false)
                 setSeeActiveGoals(false) 
                 setSeeArchived(false) 
                 setSeeGoalForm(false)
                 setSeeUnpaidGoals(!seeUnpaidGoals)
-            }}> {seeExpired? ("Hide My Goals Awaiting Payment"):("Show My Goals Awaiting Payment")} </button>
+            }}> {seeUnpaidGoals? ("Hide My Goals Awaiting Payment"):("Show My Goals Awaiting Payment")} </button>
             </div>
             {seeGoalForm?
-            ( <NewGoalForm />
+            ( <NewGoalForm onAddGoal={handleAddGoal} setSeeGoalForm={setSeeGoalForm} setMessages={setMessages}/>
             ):(null)}
 
             {seeActiveGoals?
-            ( <GoalList goals={myActiveGoals}/>
+            (<GoalList goals={goals}/>
             ):(null)}
 
             {seeArchived?
@@ -113,7 +114,7 @@ function Student(){
             ):(null)}
 
             {seeUnpaidGoals?
-            ( <UnpaidGoals goals={myGoalsAwaitingPayment}/>
+            ( <UnpaidGoals goals={myGoalsAwaitingPayment} messages={messages}/>
             ):(null)}
         </div>
     )

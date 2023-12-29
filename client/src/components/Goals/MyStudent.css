@@ -1,0 +1,229 @@
+
+
+.goal-wrapper{
+    background-image: url("https://cdn.vectorstock.com/i/preview-1x/43/31/apple-character-doing-archery-vector-42644331.jpg");
+    background-size: 370px;
+    background-repeat: repeat;
+    display: flex;
+    flex-direction: column;
+    background-position: right center;
+    align-items: center;
+    padding: 5px;
+    top: 0;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow:hidden;
+    z-index:-1;
+    justify-content: center;
+}
+
+.parentViewActiveGoal-inner{
+    padding: 20px;
+    background: #fff;
+    border-radius: 18px;
+    border: inset 10px darkgrey;
+    width: 90%;
+    /* max-width: 850px; */
+    /* margin-top: 50px; */
+    margin-bottom: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    
+}
+
+
+.inner-left-left{
+    flex-grow: 1;
+    border: red double;
+    border-radius: 18%;
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 40%;
+    font-size:18px;
+    justify-content: center;
+}
+
+.inner-left{
+    flex-grow: 1;
+    border: orange double;
+    border-radius: 18%;
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 40%;
+    font-size:18px;
+    justify-content: center;
+}
+
+.inner-right{
+    float: right;
+    border: green double;
+    border-radius: 18%;
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 40%;
+    font-size:18px;
+}
+
+.inner-right-right{
+    float: right;
+    border: rgb(253, 218, 13) double;
+    border-radius: 18%;
+    padding: 20px;
+    margin-bottom: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+    width: 40%;
+    font-size:18px;
+}
+
+.greenSubmitBtn:before {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    content: '';
+    transition: .7s cubic-bezier(0,.8,.26,.99);
+    z-index: -1;
+    background-color: #333!important;
+    box-shadow: 0 -4px #00563B inset, 0 4px #7FFF00 inset, -4px 0 #018749 inset, 4px 0 #568203 inset;
+   }
+   
+  .greenSubmitBtn:after {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    content: '';
+    box-shadow: 0 4px 0 0 rgb(0 0 0 / 15%);
+    transition: .7s cubic-bezier(0,.8,.26,.99);
+   }
+   
+  .greenSubmitBtn:hover:before {
+    box-shadow: 0 -4px rgb(0 0 0 / 50%) inset, 0 4px rgb(255 255 255 / 20%) inset, -4px 0 rgb(255 255 255 / 20%) inset, 4px 0 rgb(0 0 0 / 50%) inset;
+   }
+   
+   .greenSubmitBtn:hover:after {
+    box-shadow: 0 4px 0 0 rgb(0 0 0 / 15%);
+   }
+   
+   .greenSubmitBtn:active {
+    transform: translateY(4px);
+   }
+   
+  .greenSubmitBtn:active:after {
+    box-shadow: 0 0px 0 0 rgb(0 0 0 / 15%);
+   }
+
+.greenSubmitBtn{
+    border: none;
+    width: 164px;
+    height: 41px;
+    margin: 10px;
+   
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: #333;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
+}
+
+.btn-container{
+    display: flex;
+    flex-direction: row;
+}
+
+.yellowSubmitBtn:before {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    content: '';
+    transition: .7s cubic-bezier(0,.8,.26,.99);
+    z-index: -1;
+    background-color: #333!important;
+    box-shadow: 0 -4px #FFC000 inset, 0 4px #FFFAA0 inset, -4px 0 #FAFA33 inset, 4px 0 #FFEA00 inset;
+    
+   }
+   
+  .yellowSubmitBtn:after {
+    position: absolute;
+    pointer-events: none;
+    top: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    content: '';
+    box-shadow: 0 4px 0 0 rgb(0 0 0 / 15%);
+    transition: .7s cubic-bezier(0,.8,.26,.99);
+   }
+   
+  .yellowSubmitBtn:hover:before {
+    box-shadow: 0 -4px rgb(0 0 0 / 50%) inset, 0 4px rgb(255 255 255 / 20%) inset, -4px 0 rgb(255 255 255 / 20%) inset, 4px 0 rgb(0 0 0 / 50%) inset;
+   }
+   
+   .yellowSubmitBtn:hover:after {
+    box-shadow: 0 4px 0 0 rgb(0 0 0 / 15%);
+   }
+   
+   .yellowSubmitBtn:active {
+    transform: translateY(4px);
+   }
+   
+  .yellowSubmitBtn:active:after {
+    box-shadow: 0 0px 0 0 rgb(0 0 0 / 15%);
+   }
+
+.yellowSubmitBtn{
+    border: none;
+    width: 194px;
+    height: 41px;
+    margin: auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: #333;
+    font-size: 15px;
+    font-weight: 600;
+    color: #fff;
+    vertical-align: middle;
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-duration: .3s;
+    transition-duration: .3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}

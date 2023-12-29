@@ -4,19 +4,22 @@ class GoalsController < ApplicationController
     def index
         user = User.find_by(id: session[:user_id])
         if user
+            
             case user.type
                 when "Parent"
                  students = user.students
                  goalsArr = students.map {|s| s.goals}
                  goals = goalsArr.flatten
+                 
              when "Educator"
                  students = user.students
                  goalsArr = students.map {|s| s.goals}
                  goals = goalsArr.flatten
              when "Student"
-                 goals = user.goals
-             else
-                 "Error : there are no goals to display"
+                 all_goals = Goal.all
+                 goals = all_goals.filter{|g| g.user_id == user.id}
+             when "BusinessOwner"
+                goals = []
              end
         else
             goals = Goal.all
@@ -31,7 +34,7 @@ class GoalsController < ApplicationController
     end
     
     def create
-        goal = @current_user.goals.create(goal_params)
+        goal = @current_user.goals.create!(goal_params)
         render json: goal, status: :created
     end
 
@@ -50,12 +53,9 @@ class GoalsController < ApplicationController
     private
 
     def goal_params
-        params.permit(:id, :goal_category, :title, :description, :user_id, :deadline, :achieved, :value, :validated_by_educator, :validated_by_parent, :achieved_by_educator, :achieved_by_parent, :messages)
+        params.permit(:id, :goal_category, :title, :created_at, :description, :user_id, :deadline, :achieved, :value, :validated_by_educator, :validated_by_parent, :achieved_by_educator, :achieved_by_parent)
     end
 
-    def payment_params
-        params.permit(:achieved_by_educator, :achieved_by_parent)
-    end
 
     def render_not_found_response
         render json: "Goal not found", status: :not_found

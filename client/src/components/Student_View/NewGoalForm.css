@@ -1,0 +1,122 @@
+.Header2{
+    background-color: lightgray;
+    border-radius: 18px;
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+    max-width: fit-content;
+}
+
+.newGoal-wrapper{
+    background-image: url("https://www.hdwallpapers.in/download/apple_tree_branches_bloom_spring_in_blue_sky_background_hd_flowers-1600x900.jpg");
+    background-size: 150px;
+    background-repeat: repeat;
+    display: flex;
+    background-position: right center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    bottom:0;
+    left:0;
+    right:0;
+    overflow:hidden;
+    z-index:-1;
+    max-height: fit-content;
+}
+
+.newGoal-inner{
+    padding: 20px;
+    background: #fff;
+    border-radius: 18px;
+    border: inset 10px darkgrey;
+    max-width: 850px;
+    margin-top: 20%;
+    margin-bottom: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    max-height: fit-content;
+}
+
+.activeGoal-inner{
+    padding: 20px;
+    background: #fff;
+    border-radius: 18px;
+    border: inset 10px darkgrey;
+    width: 75%;
+    /* max-width: 850px; */
+    margin-top: 5%;
+    margin-bottom: 5%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.archievedGoal-inner{
+    padding: 20px;
+    background: #fff;
+    border-radius: 18px;
+    border:  inset 10px darkgrey;
+    width: 75%;
+    /* max-width: 850px; */
+    margin-top: auto;
+    margin-bottom: auto;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+}
+
+.new-goal.form{
+    display: block;
+    margin-top: 0em;
+    padding-left: 10px;
+}
+
+.form-wrapper{
+    position: relative;
+    text-align: center
+
+}
+
+.form-control{
+    border: 1px solid #333;
+    border-top: none;
+    border-right: none;
+    border-left: 20px;
+    display: block;
+    width: 100%;
+    height: 30px;
+    padding-left: 5px;
+    margin-bottom: 25px;
+}
+
+input{
+    font-family: Arial, Helvetica, sans-serif;
+    color: #333;
+    font-size: 13px;
+}
+
+.GoalListinner-left{
+    float: left;
+    border: rgb(77, 220, 77) double;
+    border-radius: 18%;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 48%;
+    font-size:18px;
+    
+}
+
+.GoalListinner-right{
+    float: right;
+    border: orange double;
+    border-radius: 18%;
+    padding: 20px;
+    margin-bottom: 20px;
+    width: 48%;
+    font-size:18px;
+}

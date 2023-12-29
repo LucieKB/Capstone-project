@@ -1,22 +1,32 @@
 import React, {useState} from "react";
-import StudentSignUpForm from "./SignUpForms/StudentSignUpForm";
 import ParentSignUpForm from "./SignUpForms/ParentSignUpForm";
 import EducatorSignUpForm from "./SignUpForms/EducatorSignUpForm";
 import BusinessOwnerSignUpForm from "./SignUpForms/BusinessOwnerSignUpForm";
 
 function SignUpHomePage(){
     const [userType, setUserType] = useState("")
+    const [showButtonParent, setShowButtonParent] = useState(true)
+    const [showButtonEducator, setShowButtonEducator] = useState(true)
+    const [showButtonBO, setShowButtonBO] = useState(true)
 
+        const handleSignUpParent = () =>{
+            setUserType("parent")
+            setShowButtonParent(false)
+        }
+
+        const handleSignUpEducator = () =>{
+            setUserType("educator")
+            setShowButtonEducator(false)
+        }
+
+        const handleSignUpBusinessOwner = () =>{
+            setUserType("business_owner")
+            setShowButtonBO(false)
+        }
     
     return(
         <>
-        <div>
-        <button onClick={() => setUserType("parent")}> I'm a Parent </button>
-        <button onClick={() => setUserType("educator")}> I'm an Educator </button>
-        <button onClick={() => setUserType("business_owner")}> I'm a Business Owner </button>
-        </div>
-
-        <div>
+         <div >
             {(() => {
                 switch (userType){
                     case 'parent' :
@@ -26,9 +36,18 @@ function SignUpHomePage(){
                     case 'business_owner' :
                         return <BusinessOwnerSignUpForm />
                         default :
-                        return <p>Please select a user type.</p>
+                        return <h2 style={{textAlign:"center"}}>Please select a user type to sign-up : </h2>
                 }
             })()}
+        </div>
+
+        <div className= "bottom-wrap">
+            {showButtonParent?
+            (<button className="submitBtn" onClick={() => handleSignUpParent()}> I'm a Parent </button>):(null)}
+            {showButtonEducator?
+            ( <button className="submitBtn" onClick={() => handleSignUpEducator()}> I'm an Educator </button>):(null)}
+            {showButtonBO?
+            ( <button className="submitBtn" onClick={() => handleSignUpBusinessOwner()}> I'm a Business Owner </button>):(null)}
         </div>
         </>
     )
