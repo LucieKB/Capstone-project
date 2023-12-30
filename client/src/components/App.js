@@ -24,6 +24,7 @@ import MyStudentGoalsList from "./Goals/MyStudentGoalsList";
 import MyStudentsEducator from "./Goals/MyStudentsEducator";
 import UpdateGoalForm from "./Student_View/UpdateGoalForm";
 import BizExplanations from "./Home/BizExplanations";
+import EdExplanations from "./Home/EdExplanations";
 
 function App() {
   const {user, setUser} = useContext(UserContext)
@@ -126,6 +127,7 @@ const handlePayGoal = (updatedGoal) =>{
         <Route path = "rewardsExplained" element ={<RewardsExplained />} />
         <Route path = "/marketPlaceExplained" element ={<MarketPlaceExplained />} />
         <Route path= "/businessDirections" element ={<BizExplanations />} />
+        <Route path= "/educatorDirections" element ={<EdExplanations />} />
       </Routes>
     </main>
     </>

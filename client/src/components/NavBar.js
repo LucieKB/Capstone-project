@@ -64,11 +64,9 @@ function NavBar(){
                     const deadline = dateFormat(goal.deadline, "isoDateTime")
                     return(goal.achieved === false && deadline>today)
                 })
-                console.log(myKidActiveGoals)
                 const validationNeeded = myKidActiveGoals.filter((g)=>g.validated_by_parent === false)
-                console.log(validationNeeded.length)
                 const paymentNeeded = myKidGoals.filter((g)=>g.achieved_by_parent === false && g.achieved === true)
-                console.log(paymentNeeded.length)
+                
                 
                 function actionNeeded(){
                 if (validationNeeded.length>0 && paymentNeeded.length === 0){

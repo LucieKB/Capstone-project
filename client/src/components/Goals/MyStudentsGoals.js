@@ -85,7 +85,15 @@ useEffect(() => {
        </div>
     
             ):(
-        <h2>Educator Explanations</h2>
+                <div style={{padding:"10px"}}>
+        <h2 style={{textAlign:"center"}}>Educator Explanations</h2>
+        <h3>Welcome to XXX, {user.username}</h3>
+        <div className = "title">
+                   
+                    <button className="submitBtn" onClick={()=>navigate("/educatorDirections")}>Getting started with  XXX</button> 
+                   
+                </div>
+        </div>
             )}
         
            
