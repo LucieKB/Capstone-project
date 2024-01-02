@@ -19,13 +19,13 @@ useEffect(() => {
     setMyKids(user.students)
     setShowParentView(true)
     }
-},[user.students])
+},[user.students, user.type])
 
 useEffect(() => {
     if (user.type === "Educator") {
     setMyKids(user.students)
     }
-},[user.students])
+},[user.students, user.type])
 
     const myStudents = myKids.map((student)=>{
         const myStudentGoals = student.goals
@@ -44,7 +44,7 @@ useEffect(() => {
         console.log("myActiveStudentGoals=",myStudentActiveGoals)
         return(
         <td key={student.id}>
-            <img key= {student.id} src={student.avatar} height={"80px"}/>
+            <img key= {student.id} src={student.avatar} height={"80px"} alt="avatar"/>
             <h3>🌟 {student.wallet} 🌟</h3>
         <button className="tableBtn" style={{margin:"30px", marginLeft:"auto", marginRight:"auto"}}onClick={()=>{navigate(`/parents/${user.id}/students/${student.id}`)}}> {student.username} has {myStudentActiveGoals.length} goals.</button>
         </td>
@@ -58,19 +58,11 @@ useEffect(() => {
    } )
    
 
-
-
-
-
     return(
         <div>
-        
         <div>
-
-            
             {showParentView?
             (  <div> 
-            {/* <h1>🎯 My Students 🎯</h1> */}
                 <div className= "description">
                 <h2 style={{textAlign:"center"}}><u>🎯 My Kids 🎯</u></h2>
                 <table>

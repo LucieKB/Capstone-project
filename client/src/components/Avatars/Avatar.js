@@ -146,21 +146,19 @@ function Avatar(){
 
             } else {
                 r.json().then((err)=>setErrors(err.errors))
-            }
-
+            }   
             navigate("/")
          });    
-}
+    }
 
    
 
   const saveAvatarURL = () =>{
     const input = myRef.current
     html2canvas(input, {logging:true, letterRendering:1, useCORS:true}).then( canvas =>{
-        const imgWidth = 400;
-        const imgHeight = 400;
+        // const imgWidth = 400;
+        // const imgHeight = 400;
         const imgData = canvas.toDataURL(`${user.username}Avatar/png`)
-        console.log(imgData)
         handleSubmitAvatar(imgData)
     })
   }
@@ -185,7 +183,7 @@ function Avatar(){
                                     checked={head === h}
                                     onChange={handleChangeHead}
                                 />
-                                <img src={h} className="radio-btn"/>
+                                <img src={h} className="radio-btn" alt="Head"/>
                             </div>
                         )}
                     </div>  
@@ -208,7 +206,7 @@ function Avatar(){
                                     checked={ears === e}
                                     onChange={handleChangeEars}
                                 />
-                                <img src={e} className="radio-btn"/>
+                                <img src={e} className="radio-btn" alt="Ears"/>
                             </div>
                         )}
                     </div>  
@@ -220,22 +218,21 @@ function Avatar(){
                 (<div className="Avatar-form" >
                
                    <div className="RadioBtn-container"> 
-                   <div style = {{textAlign:"center"}}>
-                   <label><h2>Choose your eyes: </h2></label>
-                   
-                   </div>
-                    {allEyes.map((ey)=>
-                    <div key={ey} className="Avatar-img" >
-                        <input
-                            type="radio"
-                            name="eyes"
-                            value={ey}
-                            checked={eyes === ey}
-                            onChange={handleChangeEyes}
-                        />
-                        <img src={ey} className="radio-btn"/>
-                    </div>
-                    )}
+                        <div style = {{textAlign:"center"}}>
+                            <label><h2>Choose your eyes: </h2></label>
+                        </div>
+                        {allEyes.map((ey)=>
+                            <div key={ey} className="Avatar-img" >
+                                <input
+                                    type="radio"
+                                    name="eyes"
+                                    value={ey}
+                                    checked={eyes === ey}
+                                    onChange={handleChangeEyes}
+                                />
+                                <img src={ey} className="radio-btn" alt="Eyes"/>
+                            </div>
+                        )}
                     </div>  
                 </div>):
                 (null)
@@ -245,126 +242,130 @@ function Avatar(){
                 (<div className="Avatar-form" >
                 
                    <div className="RadioBtn-container">
-                    <div style = {{textAlign:"center"}}>
-                   <label><h2>Choose your eyebrows: </h2></label>
-                   
+                        <div style = {{textAlign:"center"}}>
+                            <label><h2>Choose your eyebrows: </h2></label>
                    </div>
-                    {allEyeBrows.map((eb)=>
-                    <div key={eb} className="Avatar-img" >
-                        <input
-                            type="radio"
-                            name="eyeBrows"
-                            value={eb}
-                            checked={eyeBrows === eb}
-                            onChange={handleChangeEyeBrows}
-                        />
-                        <img src={eb} className="radio-btn"/>
-                    </div>
-                    )} </div> 
+                        {allEyeBrows.map((eb)=>
+                            <div key={eb} className="Avatar-img" >
+                                <input
+                                    type="radio"
+                                    name="eyeBrows"
+                                    value={eb}
+                                    checked={eyeBrows === eb}
+                                    onChange={handleChangeEyeBrows}
+                                />
+                                <img src={eb} className="radio-btn"alt="Eyebrows"/>
+                            </div>
+                        )} 
+                    </div> 
                 </div>):
                 (null)
                 }    
 
                 {showNose?
                 (<div className="Avatar-form" >
-                
                    <div className="RadioBtn-container">
-                    <div style = {{textAlign:"center"}}>
-                   <label><h2>Choose your nose: </h2></label>
-                   
+                        <div style = {{textAlign:"center"}}>
+                            <label><h2>Choose your nose: </h2></label>
                    </div>
-                    {allNoses.map((n)=>
-                    <div key={n} className="Avatar-img" >
-                        <input
-                            type="radio"
-                            name="nose"
-                            value={n}
-                            checked={nose === n}
-                            onChange={handleChangeNose}
-                        />
-                        <img src={n} className="radio-btn"/>
-                    </div>
-                    )}</div>  
+                        {allNoses.map((n)=>
+                            <div key={n} className="Avatar-img" >
+                                <input
+                                    type="radio"
+                                    name="nose"
+                                    value={n}
+                                    checked={nose === n}
+                                    onChange={handleChangeNose}
+                                />
+                                <img src={n} className="radio-btn" alt="Nose"/>
+                            </div>
+                        )}
+                    </div>  
                 </div>):
                 (null)
                 }     
 
                 {showMouth?
                 (<div className="Avatar-form" >
-                
-                   <div className="RadioBtn-container">
-                    <div style = {{textAlign:"center"}}>
-                   <label><h2>Choose your mouth: </h2></label>
-                   
-                   </div>
-                    {allMouths.map((m)=>
-                    <div key={m} className="Avatar-img" >
-                        <input
-                            type="radio"
-                            name="mouth"
-                            value={m}
-                            checked={mouth === m}
-                            onChange={handleChangeMouth}
-                        />
-                        <img src={m} className="radio-btn"/>
-                    </div>
-                    )}</div>  
+                    <div className="RadioBtn-container">
+                        <div style = {{textAlign:"center"}}>
+                            <label><h2>Choose your mouth: </h2></label>
+                        </div>
+                        {allMouths.map((m)=>
+                            <div key={m} className="Avatar-img" >
+                                <input
+                                    type="radio"
+                                    name="mouth"
+                                    value={m}
+                                    checked={mouth === m}
+                                    onChange={handleChangeMouth}
+                                />
+                                <img src={m} className="radio-btn"alt="Mouth"/>
+                            </div>
+                        )}
+                    </div>  
                 </div>):
                 (null)
                 }   
 
                 {showHair?
                 (<div className="Avatar-form" >
-               
                    <div className="RadioBtn-container"> 
-                   <div style = {{textAlign:"center"}}>
-                   <label><h2>Choose your hair: </h2></label>
-                   
-                   </div>
-                    {allHair.map((h)=>
-                    <div key={h} className="Avatar-img" >
-                        <input
-                            type="radio"
-                            name="hair"
-                            value={h}
-                            checked={hair === h}
-                            onChange={handleChangeHair}
-                        />
-                        <img src={h} className="radio-btn"/>
-                    </div>
-                    )}</div>  
+                        <div style = {{textAlign:"center"}}>
+                            <label><h2>Choose your hair: </h2></label>
+                        </div>
+                        {allHair.map((h)=>
+                            <div key={h} className="Avatar-img" >
+                                <input
+                                    type="radio"
+                                    name="hair"
+                                    value={h}
+                                    checked={hair === h}
+                                    onChange={handleChangeHair}
+                                />
+                                <img src={h} className="radio-btn" alt="Hair"/>
+                            </div>
+                        )}
+                    </div>  
                 </div>):
                 (null)
                 }                                                  
 
                 {showAccessories?
                 (<div className="Avatar-form" style={{flexWrap:"wrap"}}>
-               
                    <div className="RadioBtn-container"> 
-                   <div style = {{textAlign:"center"}}>
-                   <label><h2 style={{backgroundColor: "transparent"}}>If you want, choose an accessory: </h2>
-                   <p style={{marginLeft:"10px", backgroundColor: "transparent", borderRadius:"18px"}}><em >If you don't want any, select the first button.</em></p></label>
-                   
-                   </div>
-                    {allAccessories.map((a)=>
-                    <div key={a} className="Avatar-img" >
-                        <input
-                            type="radio"
-                            name="accessories"
-                            value={a}
-                            checked={accessories === a}
-                            onChange={handleChangeAcc}
-                        />
-                        <img src={a} className="radio-btn"/>
-                    </div>
-                    )}</div>  
+                        <div style = {{textAlign:"center"}}>
+                            <label><h2 style={{backgroundColor: "transparent"}}>If you want, choose an accessory: </h2>
+                                <p style={{marginLeft:"10px", backgroundColor: "transparent", borderRadius:"18px"}}><em >If you don't want any, select the first button.</em></p></label>
+                        </div>
+                        {allAccessories.map((a)=>
+                            <div key={a} className="Avatar-img" >
+                                <input
+                                    type="radio"
+                                    name="accessories"
+                                    value={a}
+                                    checked={accessories === a}
+                                    onChange={handleChangeAcc}
+                                />
+                                <img src={a} className="radio-btn" alt="Accessories"/>
+                            </div>
+                        )}
+                    </div>  
                 </div>):
                 (null)
                 }
-                </form>
+
+                <div className="errors">
+                    <label id="errors" style={{color:"red"}}>
+                        {errors.map((err) => (
+                        <ul><em key={err}>{err}</em></ul>
+                        ))}   
+                    </label>
+                </div>
+            </form>
 
                <div style={{marginTop:"50px",marginBottom:"50px", display:"flex", justifyContent:"center" }}>
-                <img src = {border} className="Film-overlay"/>
+                <img src = {border} className="Film-overlay" alt="border"/>
                 <div ref={myRef} style={{marginTop:"10px",marginBottom:"50px", display:"flex", justifyContent:"center" }}> 
                     
                         <AvatarScreenShot head={head} ears={ears} eyes={eyes} eyeBrows={eyeBrows} nose={nose} mouth={mouth} hair={hair} accessories={accessories} />

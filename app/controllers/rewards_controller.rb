@@ -36,13 +36,8 @@ class RewardsController < ApplicationController
         student = @current_user
         reward.update!(reward_params)
         price = reward.price
-        # if student.wallet >= price
-            student.wallet -= price
-            student.update!(transaction_params)
-            
-        # else
-        #     flash[:alert] =  "You don't have enough stars in your wallet to buy this item"
-        # end
+        student.wallet -= price
+        student.update!(transaction_params)
         render json: reward, status: :accepted
     end
    

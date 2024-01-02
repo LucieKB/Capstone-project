@@ -2,39 +2,28 @@ import React, {useState, useContext, useEffect} from "react";
 import {useParams} from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import { GoalsContext } from "../../contexts/GoalsContext";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import StarConditional from "./StarConditional";
 import ParentMessageForm from "../Messages/ParentMessageForm";
 
 
 function MyStudentGoalCard({onUpdateGoal, messages, setMessages, onPayGoal}){
-    const {user, setUser} = useContext(UserContext)
+    const {user} = useContext(UserContext)
     const {goal_id} = useParams()
     const {student_id} = useParams()
-    const {goals, setGoals} = useContext(GoalsContext)
+    const {goals} = useContext(GoalsContext)
     const [showAchieved, setShowAchieved] = useState(false)
     const [errors, setErrors] = useState([]);
     const [isDisabled, setIsDisabled] = useState(false)
     const student = user.students.find(student => student.id === parseInt(student_id))
     const [showMessageForm, setShowMessageForm] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
-    const [achieved, setAchieved] = useState (false)
     const navigate = useNavigate()
     const [showValidate, setShowValidate] = useState(true)
     const [showPay, setShowPay] = useState(false)
     const [showMessages, setShowMessages] = useState(false)
     const [goalMessages, setGoalMessages] = useState([])
-    const [messageStyle, setMessageStyle] = useState("")
-    // const location = useLocation()
-    // const { from } = location.state
-
-    // if(!goals){
-    //    return(
-    //     <div>
-    //         ...Loading
-    //     </div>
-    //    )
-    // }
+   
+    
 
    console.log(goals)
     console.log(student)
@@ -42,148 +31,56 @@ function MyStudentGoalCard({onUpdateGoal, messages, setMessages, onPayGoal}){
 
     const goal = goals.find(goal => goal.id === parseInt(goal_id))
   
-    console.log("goal=",goal)
+    
 
     useEffect(()=>{
         const thisGoalMessages = messages.filter((m)=> m.goal_id === goal.id)
         setGoalMessages(thisGoalMessages)
-    }, [messages])
+    }, [messages, goal.id])
     
    useEffect(()=>{
     const adultType = (user.type)
-    if (adultType == "Parent" && goal.validated_by_parent == true){
+    if (adultType === "Parent" && goal.validated_by_parent === true){
         setShowValidate(false)
     } else if 
-        (adultType == "Educator" && goal.validated_by_educator == true){
+        (adultType === "Educator" && goal.validated_by_educator === true){
         setShowValidate(false)
     }
-    }, [])
+    }, [goal.validated_by_educator, goal.validated_by_parent, user.type])
 
     useEffect(()=>{
-        if (goal.validated_by_educator === true && goal.validated_by_parent == true){
+        if (goal.validated_by_educator === true && goal.validated_by_parent === true){
             setShowAchieved(true)
         }
-    }, [])
+    }, [goal.validated_by_educator, goal.validated_by_parent])
 
     useEffect(()=>{
-        if (goal.achieved == true){
-        if (goal.validated_by_educator == true && goal.validated_by_parent == true){
+        if (goal.achieved === true){
+        if (goal.validated_by_educator === true && goal.validated_by_parent === true){
             setShowPay(true)
         }}
-    }, [])
+    }, [goal.achieved, goal.validated_by_educator, goal.validated_by_parent])
 
     useEffect(()=>{
         if (goal.achieved === true){
         const adultType = (user.type)
-        if (adultType == "Parent" && goal.achieved_by_parent == true){
+        if (adultType === "Parent" && goal.achieved_by_parent === true){
             setIsDisabled(true)
         }
         else if 
-        (adultType == "Educator" && goal.achieved_by_educator == true){
+        (adultType === "Educator" && goal.achieved_by_educator === true){
         setIsDisabled(true)
     }}
-    // }, [goal.achieved_by_educator, goal.achieved_by_parent]) 
-}, []) 
+}, [goal.achieved, goal.achieved_by_educator, goal.achieved_by_parent, user.type]) 
 
-    useEffect(()=>{
-        const readStatus = goalMessages.map((g)=> g.read)
-        if(readStatus.includes(false)){
-            setMessageStyle("green")}
-        else{
-            setMessageStyle("")
-        }
-        
-    })
-
-    if(!goal){
-        console.log("no goal GoalCard")
-        return(
-            <div>
-                Loading...
-            </div>
-        )
-    }
-
-    // const onUpdategoal = (newMessage) =>{
-    //     const modifiedgoal = student.goals.map((goal)=>{
-    //         if(goal.id === newMessage.id){
-    //             return newMessage
-    //         }else{
-    //             return goal
-    //         }
-    //         })
-    //     setGoals(modifiedgoal)
-        
-    //     const updatedStudent = [...student.goals, modifiedgoal] 
-    //     const updatedStudents = user.students.map((student) =>{
-    //     if (updatedStudent.id === student.id){
-    //         return updatedStudent
-    //     } else {
-    //         return student
-    //     }
-    //     })
-    //     setUser({...user, students: updatedStudents}) 
-    // }
-
-    // const onUpdategoal = (updatedgoal) =>{
-    //     console.log(updatedgoal)
-    //     const modifiedgoals = goals.map((goal)=>{
-    //         if(goal.id === updatedgoal.id){
-    //             return updatedgoal
-    //         }else{
-    //             return goal
-    //         }
-    //         })
-    //         console.log(modifiedgoals)
-    //     setGoals(modifiedgoals)
-        
-    //     const updatedStudent = [...student.goals, modifiedgoals] 
-    //     console.log(updatedStudent)
-    //     const updatedStudents = user.students.map((student) =>{
-    //     if (updatedStudent.id === student_id){
-    //         return updatedStudent
-    //     } else {
-    //         return student
-    //     }
-    //     })
-    //     console.log(updatedStudents)
-    //     setUser({...user, students: updatedStudents}) 
-    // }
-
-
-    // const onUpdategoal = (updatedgoal) =>{
-    //     const modifiedgoal = goals.map((goal)=>{
-    //         if(goal.id === updatedgoal.id){
-    //             return updatedgoal
-    //         }else{
-    //             return goal
-    //         }
-    //         })
-    //     setGoals(modifiedgoal)
-    //     setUser({...user, goals: modifiedgoal})   
-    // }
-
-    // const onPayGoal = (updatedGoal) =>{
-    //     const modifiedgoal = student.goals.map((goal)=>{
-    //         if(goal.id === updatedGoal.id){
-    //             return updatedGoal
-    //         }else{
-    //             return goal
-    //         }
-    //         })
-    //     setGoals(modifiedgoal);
-
-    //     const updatedStudent = [...student.goals, modifiedgoal] 
-    //     const updatedStudents = user.students.map((student) =>{
-    //     if (updatedStudent.id === student.id){
-    //         return updatedStudent
-    //     } else {
-    //         return student
-    //     }
-    //     })
-    //     setUser({...user, students: updatedStudents})  
-        
-    // }
+if(!goal){
+    return(
+        <div>
+            ...Loading
+        </div>
+    )
+}
+   
 
     function handlePay(){
         if (user.type === "Parent"){
@@ -317,9 +214,7 @@ function MyStudentGoalCard({onUpdateGoal, messages, setMessages, onPayGoal}){
         }).then((r) => {
             if (r.ok) {
                 r.json().then((updatedMessage) =>
-                //  console.log(updatedMessage)
                 handleUpdateMessage(updatedMessage)
-                // (setMessages([...messages, updatedMessage]))
                 );
                 navigate(`/parents/${user.id}/students/${student.id}/goals/${goal.id}`)
             } else {
@@ -327,10 +222,10 @@ function MyStudentGoalCard({onUpdateGoal, messages, setMessages, onPayGoal}){
             }   
         });
         setShowMessages(!showMessages)
-        setMessageStyle("")
+        
     }
 
-    console.log("messageStyle=", messageStyle)
+    
 
 
     return(
@@ -381,7 +276,7 @@ function MyStudentGoalCard({onUpdateGoal, messages, setMessages, onPayGoal}){
                             {showMessageForm?
                 (<div className = "inner-inner-wrapper">
                     <ParentMessageForm goal={goal} onAddNewMessage={handleAddMessage}/>
-                </div>): (<button className="submitBtn" style={{backgroundColor:messageStyle}} onClick = {handleReadMessages}>{showMessages? ("Hide messages"):("Read Messages")}</button>)}
+                </div>): (<button className="submitBtn" onClick = {handleReadMessages}>{showMessages? ("Hide messages"):("Read Messages")}</button>)}
                             </div>
         </div>
         </div>

@@ -20,7 +20,6 @@ import SetAGoal from "./Home/SetAGoal";
 import RewardsExplained from "./Home/RewardsExplained";
 import MarketPlaceExplained from "./Home/MarketPlaceExplained";
 import MyStudentGoalCard from "./Goals/MyStudentGoalCard";
-import MyStudentGoalsList from "./Goals/MyStudentGoalsList";
 import MyStudentsEducator from "./Goals/MyStudentsEducator";
 import UpdateGoalForm from "./Student_View/UpdateGoalForm";
 import BizExplanations from "./Home/BizExplanations";
@@ -30,7 +29,7 @@ function App() {
   const {user, setUser} = useContext(UserContext)
   const {goals, setGoals} = useContext(GoalsContext)
   const [messages, setMessages] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
+ 
  
   
  useEffect(()=>{
@@ -44,8 +43,7 @@ function App() {
   if (!user) return <GeneralLogin />
 
 
-
-  if((goals.length === 0 && user.type !== "BusinessOwner")&&(user.goals.length !== 0) ){
+  if((goals.length === 0 && user.goals.length !== 0)){
     console.log("no goals in App line 43")
     return(
         <div>

@@ -1,19 +1,18 @@
-import React, {useState, useEffect, useContext} from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
-import { GoalsContext } from "../../contexts/GoalsContext";
 import dateFormat from "dateformat";
 
 
 
 function GoalList({goals}){
-    const [validatedGoals, setValidatedGoals] = useState([])
-    const [halfValidatedGoals, setHalfValidatedGoals] = useState([])
-    const [notValidatedGoals, setNotValidatedGoals] = useState([])
+    // const [validatedGoals, setValidatedGoals] = useState([])
+    // const [halfValidatedGoals, setHalfValidatedGoals] = useState([])
+    // const [notValidatedGoals, setNotValidatedGoals] = useState([])
     const {user, setUser} = useContext(UserContext)
-    const [isLoading, setIsLoading] = useState(false)
+    // const [isLoading, setIsLoading] = useState(false)
     // const {goals, setGoals} = useContext(GoalsContext)
-    const navigate = useNavigate()
+    // const navigate = useNavigate()
 
     const myGoals = goals
     const now = new Date()
@@ -25,12 +24,8 @@ function GoalList({goals}){
         const deadline = dateFormat(goal.deadline, "isoDateTime")
         return(goal.achieved === false && deadline>today)
     })
-    // const [showGoalsValidated, setShowGoalsValidated] = useState(true)
-    // const [showGoalsOneValidation, setShowGoalsOneValidation] = useState(true)
-    // const [showGoalsZeroValidation, setShowGoalsZeroValidation] = useState(true)
 
-    
-    
+
             const zeroValidation = [];
             const oneValidation = [];
             const twoValidations = [];
@@ -47,23 +42,7 @@ function GoalList({goals}){
                twoValidations.push(g)
             }   
         })  
-   
 
-    // useEffect(()=>{
-    //     if (validatedGoals.length === 0){
-    //         setShowGoalsValidated(false)
-    //     }
-    //     if(halfValidatedGoals.length === 0){
-    //         setShowGoalsOneValidation(false)
-    //     }
-    //     if(notValidatedGoals.length === 0){
-    //         setShowGoalsZeroValidation(false)
-    //     }
-    // }, [])
-
-    const handleBackHome = () => {
-        navigate(`/students/${user.id}/me`)
-       }
 
        if(!goals){
         return(

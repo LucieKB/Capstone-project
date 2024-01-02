@@ -1,14 +1,12 @@
 import React, {useContext, useState, useEffect} from "react";
 import { useParams} from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
-import { GoalsContext } from "../../contexts/GoalsContext";
 import MyStudentGoalsList from "./MyStudentGoalsList";
 import dateFormat from "dateformat";
 import "./MyStudent.css"
 
 function MyStudent({goals, setGoals}){
     const {user, setUser} = useContext(UserContext)
-    
     const {student_id}=useParams()
     const student = user.students.find(student => student.id === parseInt(student_id))
     const now = new Date()
@@ -29,7 +27,7 @@ function MyStudent({goals, setGoals}){
         else if (user.type === "Educator"){
             setOtherAdult(" my student's parent")
         }
-    })
+    }, [user.type])
 
     if(!goals){
         console.log("loading", goals)
@@ -70,7 +68,8 @@ const goalsINeedToValidate = myStudentActiveGoals.filter((g) => {
         return g
     } else if (user.type === "Educator" && g.validated_by_educator === false){
         return g
-    }
+    } 
+    
 })
 
 
@@ -116,7 +115,7 @@ console.log("myStudentGoal in MyStudent=",myStudentGoals)
 
             <div className="parentViewActiveGoal-inner">
                     <div className="inner-left-left">
-<h3 style={{textAlign:"center"}}> 🛑 <u>Goals that I need to validate : </u></h3>
+<h3 style={{textAlign:"center", fontSize:"22px"}}> 🛑 <u>Goals that I need to validate : </u></h3>
             {goalsINeedToValidate.map((goal) => {
                 return(
                     <div key={goal.id}>
@@ -126,7 +125,7 @@ console.log("myStudentGoal in MyStudent=",myStudentGoals)
             })}
             </div>
             <div className="inner-left">
-<h3> ⚙️ <u>Goals awaiting validation from {otherAdult} : </u></h3>
+<h3 style={{textAlign:"center", fontSize:"22px"}}> ⚙️ <u>Goals awaiting validation from {otherAdult} : </u></h3>
             {goalsIValidated.map((goal) => {
                 return(
                     <div key={goal.id}>
@@ -136,7 +135,7 @@ console.log("myStudentGoal in MyStudent=",myStudentGoals)
             })}</div>
 
 <div className="inner-right">
-<h3> ⚙️⚙️ <u>Goals that {student.username} is currently working on : </u></h3>
+<h3 style={{textAlign:"center", fontSize:"22px"}}> ⚙️⚙️ <u>Goals that {student.username} is currently working on : </u></h3>
             {goalsInTheWorks.map((goal) => {
                 return(
                     <div key={goal.id}>
@@ -145,7 +144,7 @@ console.log("myStudentGoal in MyStudent=",myStudentGoals)
                 )
             })}</div>
 <div className="inner-right-right">
-<h3> 💰 <u>Goals that {student.username} achieved but that I haven't paid yet : </u></h3>
+<h3 style={{textAlign:"center", fontSize:"22px"}}> 💰 <u>Goals that {student.username} achieved but that I haven't paid yet : </u></h3>
             {goalsINeedToPay.map((goal) => {
                 return(
                     <div key={goal.id}>
@@ -153,7 +152,7 @@ console.log("myStudentGoal in MyStudent=",myStudentGoals)
                    </div>  
                 )
             })}</div>
-           {/* </div> */}
+           
         </div>
         </div>
         </div>

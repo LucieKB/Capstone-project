@@ -1,7 +1,7 @@
 import React, {useState, useContext, useEffect} from "react";
 import { UserContext } from "../contexts/UserContext";
 import { GoalsContext } from "../contexts/GoalsContext";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import dateFormat from "dateformat";
 import "./NavBar.css"
 
@@ -18,35 +18,35 @@ function NavBar(){
     const today = dateFormat(now, "isoDateTime")
     const elementaryGrades = ["1","2","3","4","5"]
     const secondaryGrades = ["6","7","8","9","10","11","12"]
-    const allGrades = secondaryGrades.concat(elementaryGrades)
+    // const allGrades = secondaryGrades.concat(elementaryGrades)
     const [showSecondary, setShowSecondary] = useState(false)
-    const navigate=useNavigate()
+    // const navigate=useNavigate()
 
    
     useEffect(()=>{
         if (user.type === "Student"){
             setShowStudentNav(true)
         }
-    }, [])
+    }, [user.type])
 
     useEffect(()=>{
         if (user.type === "Parent"){
             setShowParentNav(true)
             
         }
-    }, [])
+    }, [user.type])
 
     useEffect(()=>{
         if (user.type === "Educator"){
             setShowEducatorNav(true)
         }
-    }, [])
+    }, [user.type])
 
     useEffect(()=>{
         if (user.type === "BusinessOwner"){
             setShowBusinessNav(true)
         }
-    }, [])
+    }, [user.type])
 
     if(!user){
         return(
@@ -81,7 +81,7 @@ function NavBar(){
                 else{return("")}
                 }
                 return(        
-                    <Link to = {`/parents/${user.id}/students/${kid.id}`}>{kid.username} {actionNeeded()}</Link>)})
+                    <Link to = {`/parents/${user.id}/students/${kid.id}`} >{kid.username} {actionNeeded()}</Link>)})
                 
       
 
@@ -96,11 +96,11 @@ function NavBar(){
 
             const myElementaryGradesLink = elementaryGrades.map((grade)=>{
                 return(
-                    <Link to = {`/educators/mystudents/${grade}`}>Grade {grade} </Link>)})
+                    <Link to = {`/educators/mystudents/${grade}`} >Grade {grade} </Link>)})
 
                     const mySecondaryGradesLink = secondaryGrades.map((grade)=>{
                         return(
-                            <a><Link to = {`/educators/mystudents/${grade}`}>Grade {grade}</Link></a>)})
+                            <a><Link to = {`/educators/mystudents/${grade}`} >Grade {grade}</Link></a>)})
                 
             
 
@@ -137,9 +137,7 @@ function NavBar(){
                     <Link to ="/" style={{fontWeight:"600", marginLeft:"1%", fontSize:"20px"}}>Home</Link>
                     {myKidsLink}
                     <Link to = "/rewards" style={{fontWeight:"600", marginLeft:"1%", fontSize:"20px"}}> MarketPlace </Link>
-                    
                     <button id="Btn-Logout" onClick={handleLogoutClick}>Logout</button>
-        
                 </nav>  
         ):(null)} 
 

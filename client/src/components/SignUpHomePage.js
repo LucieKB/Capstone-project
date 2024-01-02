@@ -40,14 +40,13 @@ function SignUpHomePage(){
                 }
             })()}
         </div>
-
         <div className= "bottom-wrap">
             {showButtonParent?
             (<button className="submitBtn" onClick={() => handleSignUpParent()}> I'm a Parent </button>):(null)}
             {showButtonEducator?
             ( <button className="submitBtn" onClick={() => handleSignUpEducator()}> I'm an Educator </button>):(null)}
             {showButtonBO?
-            ( <button className="submitBtn" onClick={() => handleSignUpBusinessOwner()}> I'm a Business Owner </button>):(null)}
+            ( <button className="submitBtn" onClick={() => handleSignUpBusinessOwner()}> I'm a Business Owner </button>):(null)}    
         </div>
         </>
     )

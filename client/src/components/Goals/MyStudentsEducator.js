@@ -60,7 +60,7 @@ function MyStudentsEducator(){
                 }
         
         return( 
-            <ul>
+            <ul key={s.id}>
                  <Link to = {`/parents/${user.id}/students/${s.id}`} style={{fontSize:"20px"}}>{s.username} {actionNeeded()}</Link>
             </ul>       
            )})
