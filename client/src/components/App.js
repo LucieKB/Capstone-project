@@ -52,7 +52,7 @@ function App() {
     )
 }
   
-console.log("Goals in app=",goals) 
+
 
   const handleAddGoal = (myNewGoal) =>{
     setGoals([...goals, myNewGoal])
@@ -134,5 +134,4 @@ const handlePayGoal = (updatedGoal) =>{
 
 export default App;
 
-// Move the Child Sign Up to the homepage - and then have a dashboard with details :)
-// @mui/material/Typography
+

@@ -23,7 +23,7 @@ function MyStudentGoalCard({onUpdateGoal, messages, setMessages, onPayGoal}){
     const [showMessages, setShowMessages] = useState(false)
     const [goalMessages, setGoalMessages] = useState([])
    
-    
+
 
    console.log(goals)
     console.log(student)

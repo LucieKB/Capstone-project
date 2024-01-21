@@ -120,7 +120,7 @@ function NavBar(){
                     <Link to ="/" style={{fontWeight:"600", marginLeft:"1%", fontSize:"20px"}}>Home</Link>
                     <Link to = {`/students/${user.id}/me`}> My Goals Page </Link>
                     <Link to = "/rewards" style={{fontWeight:"600", marginLeft:"1%", fontSize:"20px"}}> MarketPlace </Link>
-                    <Link to = "/students/:id/myItems" style={{fontWeight:"600", marginLeft:"1%", fontSize:"20px"}}> My Items </Link>
+                    <Link to = {`/students/${user.id}/myItems`} style={{fontWeight:"600", marginLeft:"1%", fontSize:"20px"}}> My Items </Link>
                      <span>My Wallet : {user.wallet} 🌟</span> 
                     
             <span><button id="Btn-Logout" onClick={handleLogoutClick}>Logout</button></span>

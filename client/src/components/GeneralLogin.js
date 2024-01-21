@@ -9,7 +9,7 @@ function GeneralLogin(){
 return(
     <>
         <div className="header">
-            <div className="fixed"><h2>Goals App :</h2></div>
+            <div className="fixed"><h2>OBJ≡KTV App :</h2></div>
             <ul className="typed">
                 <li><span>I will find a name</span></li>
                 <li><span>...when everything else works...</span></li>  
